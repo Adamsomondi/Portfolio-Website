@@ -1,6 +1,9 @@
 #  Portflio Website
+<p>
+ https://adamxswebsite.netlify.app/
+</p>
 
-**Software Engineer & Data Analyst**
+## Software Engineer & Data Analyst
 
 ###  Experience
 - 8+ Years • 15+ Projects • 13+ Technologies
