@@ -42,8 +42,9 @@ const Layout = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-          <Link to="/" className="flex items-center  space-x-3 text-2xl font-serif  font-bold text-green-900">
-  <span>My Portfolio</span>
+
+    <Link to="/" className="group flex items-center space-x-3 px-8 py-3 bg-gradient-to-r from-green-50/80 to-emerald-50/80 backdrop-blur-sm rounded-full border-2 border-transparent bg-clip-padding hover:shadow-2xl hover:scale-110 hover:-translate-y-1 transition-all duration-500 relative before:absolute before:inset-0 before:rounded-full before:p-[2px] before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600 before:-z-10">
+  <span className="text-2xl font-serif font-bold text-green-900 group-hover:-translate-y-0.5 transition-transform duration-300">My Portfolio</span>
 </Link>
             </div>
             
