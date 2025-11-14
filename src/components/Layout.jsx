@@ -1,5 +1,3 @@
-
-//This is the structed Layout of the website.
 import React, { useState} from 'react';
 import { 
   Link, 
@@ -8,9 +6,9 @@ import {
   useNavigation, 
   Outlet
 } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion'; //UI for Animations
-import { Fragment } from 'react'; //Wrapper in React to avoid extra nodes.
-import { Transition } from '@headlessui/react'; //Animations for the Mobile Menu.
+import { motion, AnimatePresence } from 'framer-motion';
+import { Fragment } from 'react';
+import { Transition } from '@headlessui/react';
 import { 
   HomeIcon, 
   UserIcon, 
@@ -19,34 +17,32 @@ import {
   DocumentTextIcon,
   Bars3Icon,
   XMarkIcon,
-} from '@heroicons/react/24/outline'; //Icons from Heroicons library.
-import { FaGithub, FaLinkedin, FaXTwitter} from 'react-icons/fa6'; //Icons from the Headles UI Library.
+} from '@heroicons/react/24/outline';
+import { FaGithub, FaLinkedin, FaXTwitter} from 'react-icons/fa6';
 
-//Layout Component illustrates the whole idea to make the app structured.
 const Layout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
   const navigation = useNavigation();
   const location = useLocation();
 
   const navigationItems = [
-{ name: 'Home', to: '/', icon: HomeIcon, className: 'text-green-900' },
-{ name: 'About', to: '/about', icon: UserIcon, className: 'text-green-900' },
-{ name: 'Projects', to: '/projects', icon: BriefcaseIcon, className: 'text-green-900' },
-{ name: 'Blog', to: '/blog', icon: DocumentTextIcon, className: 'text-green-900' },
-{ name: 'Contact', to: '/contact', icon: EnvelopeIcon, className: 'text-green-900' }
+    { name: 'Home', to: '/', icon: HomeIcon, className: 'text-green-900' },
+    { name: 'About', to: '/about', icon: UserIcon, className: 'text-green-900' },
+    { name: 'Projects', to: '/projects', icon: BriefcaseIcon, className: 'text-green-900' },
+    { name: 'Blog', to: '/blog', icon: DocumentTextIcon, className: 'text-green-900' },
+    { name: 'Contact', to: '/contact', icon: EnvelopeIcon, className: 'text-green-900' }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* Navigation */}
       <nav className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-
-    <Link to="/" className="group flex items-center space-x-3 px-8 py-3 bg-gradient-to-r from-green-50/80 to-emerald-50/80 backdrop-blur-sm rounded-full border-2 border-transparent bg-clip-padding hover:shadow-2xl hover:scale-110 hover:-translate-y-1 transition-all duration-500 relative before:absolute before:inset-0 before:rounded-full before:p-[2px] before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600 before:-z-10">
-  <span className="text-2xl font-serif font-bold text-green-900 group-hover:-translate-y-0.5 transition-transform duration-300">My Portfolio</span>
-</Link>
+              <Link to="/" className="group flex items-center space-x-3 px-8 py-3 bg-gradient-to-r from-green-50/80 to-emerald-50/80 backdrop-blur-sm rounded-full border-2 border-transparent bg-clip-padding hover:shadow-2xl hover:scale-110 hover:-translate-y-1 transition-all duration-500 relative before:absolute before:inset-0 before:rounded-full before:p-[2px] before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600 before:-z-10">
+                <span className="text-2xl font-serif font-bold text-green-900 group-hover:-translate-y-0.5 transition-transform duration-300">My Portfolio</span>
+              </Link>
             </div>
             
             {/* Desktop Navigation */}
@@ -134,109 +130,122 @@ const Layout = () => {
         </div>
       )}
 
-      {/* Main Content */}
-      <main className="flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+      {/* Main Content with Glassmorphic Design */}
+      <main className="flex-1 relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute top-20 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-75"></div>
+          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-150"></div>
+        </div>
+
+        {/* Glassmorphic Content Container */}
+        <div className="relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <div className="backdrop-blur-md bg-white/40 rounded-3xl shadow-2xl border border-white/50 p-6 md:p-8 lg:p-12 min-h-[calc(100vh-20rem)]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={location.pathname}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Outlet />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </main>
 
       {/* Footer */}
       <footer className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div className="absolute top-20 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-75"></div>
-        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-150"></div>
-      </div>
+        {/* Animated background elements */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+          <div className="absolute top-20 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-75"></div>
+          <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-150"></div>
+        </div>
 
-      <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div className="backdrop-blur-md bg-white/40 rounded-3xl shadow-2xl border border-white/50 p-8 md:p-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {/* Brand Section */}
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-              
-              </div>
-              <p className="text-gray-700 leading-relaxed text-sm">
-                I'm currently focused on expanding my experience designing 
-                and developing high performing systems.
-              </p>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h3 className="text-lg font-bold mb-6 text-gray-900">Quick Links</h3>
-              <div className="space-y-3">
-                {navigationItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.to}
-                    className="block text-gray-700 hover:text-purple-600 transition-all duration-300 hover:translate-x-2 font-medium"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Connect Section */}
-            <div>
-              <h3 className="text-lg font-bold mb-6 text-gray-900">Connect</h3>
+        <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+          <div className="backdrop-blur-md bg-white/40 rounded-3xl shadow-2xl border border-white/50 p-8 md:p-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+              {/* Brand Section */}
               <div className="space-y-4">
-                <a 
-                  href="https://github.com/Adamsomondi" 
-                  target="_blank"
-                  rel="noopener noreferrer" 
-                  className="flex items-center space-x-3 text-gray-700 hover:text-gray-900 transition-all duration-300 group"
-                >
-                  <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition-all duration-300 shadow-md">
-                    <FaGithub className="w-5 h-5" />
-                  </div>
-                  <span className="font-medium">GitHub</span>
-                </a>
-                <a 
-                  href="https://www.linkedin.com/in/adams-omondi-338b94304" 
-                  target="_blank"
-                  rel="noopener noreferrer" 
-                  className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-all duration-300 group"
-                >
-                  <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-all duration-300 shadow-md">
-                    <FaLinkedin className="w-5 h-5" />
-                  </div>
-                  <span className="font-medium">LinkedIn</span>
-                </a>
-                <a 
-                  href="https://x.com/deepneuralmess" 
-                  target="_blank"
-                  rel="noopener noreferrer" 
-                  className="flex items-center space-x-3 text-gray-700 hover:text-gray-900 transition-all duration-300 group"
-                >
-                  <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-all duration-300 shadow-md">
-                    <FaXTwitter className="w-5 h-5" />
-                  </div>
-                  <span className="font-medium">Twitter</span>
-                </a>
+                <div className="flex items-center space-x-3">
+                
+                </div>
+                <p className="text-gray-700 leading-relaxed text-sm">
+                  I'm currently focused on expanding my experience designing 
+                  and developing high performing systems.
+                </p>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <h3 className="text-lg font-bold mb-6 text-gray-900">Quick Links</h3>
+                <div className="space-y-3">
+                  {navigationItems.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.to}
+                      className="block text-gray-700 hover:text-purple-600 transition-all duration-300 hover:translate-x-2 font-medium"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Connect Section */}
+              <div>
+                <h3 className="text-lg font-bold mb-6 text-gray-900">Connect</h3>
+                <div className="space-y-4">
+                  <a 
+                    href="https://github.com/Adamsomondi" 
+                    target="_blank"
+                    rel="noopener noreferrer" 
+                    className="flex items-center space-x-3 text-gray-700 hover:text-gray-900 transition-all duration-300 group"
+                  >
+                    <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition-all duration-300 shadow-md">
+                      <FaGithub className="w-5 h-5" />
+                    </div>
+                    <span className="font-medium">GitHub</span>
+                  </a>
+                  <a 
+                    href="https://www.linkedin.com/in/adams-omondi-338b94304" 
+                    target="_blank"
+                    rel="noopener noreferrer" 
+                    className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-all duration-300 group"
+                  >
+                    <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-all duration-300 shadow-md">
+                      <FaLinkedin className="w-5 h-5" />
+                    </div>
+                    <span className="font-medium">LinkedIn</span>
+                  </a>
+                  <a 
+                    href="https://x.com/deepneuralmess" 
+                    target="_blank"
+                    rel="noopener noreferrer" 
+                    className="flex items-center space-x-3 text-gray-700 hover:text-gray-900 transition-all duration-300 group"
+                  >
+                    <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-all duration-300 shadow-md">
+                      <FaXTwitter className="w-5 h-5" />
+                    </div>
+                    <span className="font-medium">Twitter</span>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mt-12 pt-8 border-t border-white/40 text-center">
-            <p className="text-gray-700 font-medium mb-2">Made with ❤️ by Adams.</p>
-            <p className="text-gray-600 text-sm">&copy; 2025 Adams. All rights reserved.</p>
+            <div className="mt-12 pt-8 border-t border-white/40 text-center">
+              <p className="text-gray-700 font-medium mb-2">Made with ❤️ by Adams.</p>
+              <p className="text-gray-600 text-sm">&copy; 2025 Adams. All rights reserved.</p>
+            </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
     </div>
   );
 };
+
 export default Layout;

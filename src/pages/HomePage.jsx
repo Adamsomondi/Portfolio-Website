@@ -9,7 +9,7 @@ import { motion } from 'framer-motion';
 import { 
   ArrowRightIcon,
 } from '@heroicons/react/24/outline';
-import backgroundImage from '../assets/Bulldog1.png';
+import backgroundImage from '../assets/THE THIRD BEST.png';
 
 // Mock Data Store - To simulate API data.
 const mockData = {
@@ -166,7 +166,7 @@ const HomePage = () => {
 
 //Typed Text
   const [typedText, setTypedText] = useState('');
-  const fullText = "Building Scalable Systems & Data Pipelines";
+  const fullText = "Building Scalable Software Systems & ETL Data Pipelines";
   
   useEffect(() => {
     let index = 0;
@@ -184,185 +184,165 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-     <section className="relative min-h-screen">
-  {/* Mobile Background - Full screen background for mobile */}
-  <div className="lg:hidden absolute inset-0 overflow-hidden bg-white">
-    <img 
-      src={backgroundImage}
-      alt="Background"
-      className="w-full h-60 object-contain"
-      style={{ minHeight: '35vh' }}
-    />
-  </div>
-  
-  {/* Desktop Layout - Split screen with philosophy content at bottom */}
-  <div className="hidden lg:flex h-screen flex-col">
-    {/* Main Hero Content - Takes most of the screen */}
-    <div className="flex-1 flex">
-      {/* Text Content - Left side on desktop */}
-      <div className="flex-1 flex items-center justify-start bg-white">
-        <div className="max-w-2xl px-8  xl:px-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-left"
-          >
-            <p className="text-5xl md:text-6xl  font-serif font-bold mb-13 text-green-900">
-            
-            </p>
-            
-            <p className="text-4xl font-bold text-green-900 mb-8 py-3">
-              {typedText}
-             
-              <span className="animate-pulse">|</span>
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-5 justify-start py-3">
-              <button
-                onClick={() => navigate('/projects')}
-                className="bg-black bg-opacity-90 border border-green-200 text-green-500 px-8 py-3 rounded-lg font-bold transition-colors duration-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
-              >
-                View My Work
-              </button>
-              <button
-                onClick={() => navigate('/contact')}
-                className="bg-black bg-opacity-90 border border-green-200 text-green-500 px-8 py-3 rounded-lg font-bold transition-colors duration-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
-              >
-                Get In Touch
-              </button>
+      {/* Hero Section - Now immersed in glassmorphic background */}
+      <section className="relative -mt-8 -mx-6 md:-mx-8 lg:-mx-12 mb-8">
+        
+        {/* Desktop Layout */}
+        <div className="hidden lg:flex min-h-screen flex-col">
+          {/* Main Hero Content */}
+          <div className="flex-1 flex">
+            {/* Text Content - Left side */}
+            <div className="flex-1 flex items-center justify-start">
+              <div className="max-w-2xl px-8 xl:px-16">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-left"
+                >
+                  <p className="text-4xl font-bold text-gray-800 mb-8 py-3">
+                    {typedText}
+                    <span className="animate-pulse">|</span>
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row gap-5 justify-start py-3">
+                    <button
+                      onClick={() => navigate('/projects')}
+                      className="backdrop-blur-sm bg-white/30 border-2 border-white/50 text-gray-800 px-8 py-3 rounded-lg font-bold transition-all duration-300 hover:bg-white/50 hover:shadow-xl hover:scale-105"
+                    >
+                      View My Work
+                    </button>
+                    <button
+                      onClick={() => navigate('/contact')}
+                      className="backdrop-blur-sm bg-white/30 border-2 border-white/50 text-gray-800 px-8 py-3 rounded-lg font-bold transition-all duration-300 hover:bg-white/50 hover:shadow-xl hover:scale-105"
+                    >
+                      Get In Touch
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
             </div>
-          </motion.div>
+
+            {/* Image Container - Right side */}
+            <div className="flex-1 relative">
+              <img 
+                src={backgroundImage}
+                alt="Background"
+                className="absolute inset-0 w-full h-full object-cover opacity-80"
+              />
+            </div>
+          </div>
+
+          {/* Philosophy Content */}
+          <div className="backdrop-blur-md bg-white/20 py-6 border-t border-white/30">
+            <div className="px-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="text-center space-y-3"
+              >
+                <blockquote className="text-base font-bold text-gray-800 italic">
+                  "Talk is cheap. Show me the code."
+                </blockquote>
+                <cite className="text-sm text-gray-700 font-medium block">— Linus Torvalds</cite>
+                
+                <div className="flex justify-center gap-8 pt-2">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-800">8+</div>
+                    <div className="text-xs text-gray-700">Years Of Experience</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-800">15+</div>
+                    <div className="text-xs text-gray-700">Projects</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-800">13+</div>
+                    <div className="text-xs text-gray-700">Technologies</div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Image Container - Right side on desktop */}
-      <div className="flex-1 relative">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat pb-16"
-          style={{ 
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center center'
-          }}
-        />
-      </div>
-    </div>
-
-   {/* Philosophy Content - Closer to buttons with comfortable spacing */}
-    <div className="bg-gradient-to-r from-slate-50 to-gray-100 py-4 mt-8">
-      <div className="px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center space-y-3"
-        >
-          {/* Quote */}
-          <blockquote className="text-base font-bold text-gray-800 italic">
-            "Talk is cheap. Show me the code."
-          </blockquote>
-          <cite className="text-sm text-gray-600 font-medium block">— Linus Torvalds</cite>
+        {/* Mobile Layout */}
+        <div className="lg:hidden relative min-h-screen flex flex-col">
+          {/* Background Image */}
+          <div className="absolute inset-0 overflow-hidden">
+            <img 
+              src={backgroundImage}
+              alt="Background"
+              className="w-full h-60 object-contain opacity-70"
+              style={{ minHeight: '10vh' }}
+            />
+          </div>
           
-          {/* Stats */}
-          <div className="flex justify-center gap-8 pt-2">
-            <div className="text-center">
-              <div className="text-xl font-bold text-green-900">8+</div>
-              <div className="text-xs text-gray-600">Years Of Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl font-bold text-green-900">15+</div>
-              <div className="text-xs text-gray-600">Projects</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl font-bold text-green-900">13+</div>
-              <div className="text-xs text-gray-600">Technologies</div>
+          {/* Main Content */}
+          <div className="relative z-10 flex-grow flex items-center justify-center pt-12">
+            <div className="w-full px-6">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-center space-y-6"
+              >
+                <h2 className="text-2xl text-gray-800 font-bold drop-shadow-lg pt-24">
+                  {typedText}
+                  <span className="animate-pulse">|</span>
+                </h2>
+                
+                <div className="flex flex-col gap-4 pt-0">
+                  <button
+                    onClick={() => navigate('/projects')}
+                    className="backdrop-blur-sm bg-white/30 border-2 border-white/50 text-gray-800 px-8 py-3 rounded-lg font-bold transition-all duration-300 hover:bg-white/50 hover:shadow-xl"
+                  >
+                    View My Work
+                  </button>
+                  <button
+                    onClick={() => navigate('/contact')}
+                    className="backdrop-blur-sm bg-white/30 border-2 border-white/50 text-gray-800 px-8 py-3 rounded-lg font-bold transition-all duration-300 hover:bg-white/50 hover:shadow-xl"
+                  >
+                    Get In Touch
+                  </button>
+                </div>
+              </motion.div>
             </div>
           </div>
-        </motion.div>
-      </div>
-    </div>
-  </div>
 
-  {/* MOBILE LAYOUT - SIMPLIFIED AND CLEAN */}
-<div className="lg:hidden relative z-5 h-screen flex flex-col justify-between">
-    
-    {/* Main Hero Content - Top 70% */}
-    <div className="flex-grow flex items-center justify-center pt-8">
-      <div className="w-full px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center space-y-6"
-        >
-          {/* Main Heading */}
-          <h1 className="text-4xl font-bold text-green-900 drop-shadow-lg">
-            
-          </h1>
-          
-          {/* Typed Text */}
-          <h2 className="text-2xl text-green-900 font-bold drop-shadow-lg">
-            {typedText}
-            <span className="animate-pulse">|</span>
-          </h2>
-          
-          {/* Buttons */}
-          <div className="flex flex-col gap-4 pt-4">
-            <button
-              onClick={() => navigate('/projects')}
-              className="bg-black bg-opacity-90 border border-green-200 text-green-500 px-8 py-3 rounded-lg font-bold transition-colors duration-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
-            >
-              View My Work
-            </button>
-            <button
-              onClick={() => navigate('/contact')}
-              className="bg-black bg-opacity-90 border mb-0 border-green-200 text-green-500 px-8 py-3 rounded-lg font-bold transition-colors duration-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
-            >
-              Get In Touch
-            </button>
-          </div>
-        </motion.div>
-      </div>
-    </div>
-
-    {/* Philosophy Content - Bottom 30% */}
-    <div className="bg-gradient-to-r from-slate-50 to-gray-100 py-0">
-      <div className="px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center space-y-3"
-        >
-          {/* Quote */}
-          <blockquote className="text-base font-bold text-gray-800 italic">
-            "Talk is cheap. Show me the code."
-          </blockquote>
-          <cite className="text-sm text-gray-600 font-medium block">— Linus Torvalds</cite>
-          
-          {/* Stats */}
-          <div className="flex justify-center gap-8 pt-2">
-            <div className="text-center">
-              <div className="text-xl font-bold text-green-900">8+</div>
-              <div className="text-xs text-gray-600">Years Of Experience</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl font-bold text-green-900">15+</div>
-              <div className="text-xs text-gray-600">Projects</div>
-            </div>
-            <div className="text-center">
-              <div className="text-xl font-bold text-green-900">13+</div>
-              <div className="text-xs text-gray-600">Technologies</div>
+          {/* Philosophy Content */}
+          <div className="pt-5 backdrop-blur-md bg-white/20 py-6 border-t border-white/30">
+            <div className="px-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="text-center space-y-3"
+              >
+                <blockquote className="text-base font-bold text-gray-800 italic">
+                  "Talk is cheap. Show me the code."
+                </blockquote>
+                <cite className="text-sm text-gray-700 font-medium block">— Linus Torvalds</cite>
+                
+                <div className="flex justify-center gap-8 pt-2">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-800">8+</div>
+                    <div className="text-xs text-gray-700">Years Of Experience</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-800">15+</div>
+                    <div className="text-xs text-gray-700">Projects</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-gray-800">13+</div>
+                    <div className="text-xs text-gray-700">Technologies</div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
-        </motion.div>
-      </div>
-    </div>
-    
-  </div>
-</section>
+        </div>
+      </section>
 
       {/* Featured Projects */}
       <section className="py-1">
