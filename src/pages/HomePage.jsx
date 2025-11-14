@@ -166,7 +166,7 @@ const HomePage = () => {
 
 //Typed Text
   const [typedText, setTypedText] = useState('');
-  const fullText = "Building scalable systems & data pipelines";
+  const fullText = "Building Scalable Systems & Data Pipelines";
   
   useEffect(() => {
     let index = 0;
@@ -210,7 +210,7 @@ const HomePage = () => {
             className="text-left"
           >
             <p className="text-5xl md:text-6xl  font-serif font-bold mb-13 text-green-900">
-              Adams Here👋
+            
             </p>
             
             <p className="text-4xl font-bold text-green-900 mb-8 py-3">
@@ -240,7 +240,7 @@ const HomePage = () => {
       {/* Image Container - Right side on desktop */}
       <div className="flex-1 relative">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pb-16"
           style={{ 
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: 'cover',
@@ -286,7 +286,7 @@ const HomePage = () => {
   </div>
 
   {/* MOBILE LAYOUT - SIMPLIFIED AND CLEAN */}
-  <div className="lg:hidden relative z-10 h-screen flex flex-col justify-between">
+<div className="lg:hidden relative z-5 h-screen flex flex-col justify-between">
     
     {/* Main Hero Content - Top 70% */}
     <div className="flex-grow flex items-center justify-center pt-8">
@@ -299,7 +299,7 @@ const HomePage = () => {
         >
           {/* Main Heading */}
           <h1 className="text-4xl font-bold text-green-900 drop-shadow-lg">
-            Adams Here👋
+            
           </h1>
           
           {/* Typed Text */}

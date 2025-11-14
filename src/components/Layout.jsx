@@ -1,3 +1,4 @@
+
 //This is the structed Layout of the website.
 import React, { useState} from 'react';
 import { 
@@ -149,61 +150,92 @@ const Layout = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white-900 text-white">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <footer className="relative bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div className="absolute top-20 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-75"></div>
+        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-150"></div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex flex-col items-start space-y-2">
-                <Link to="/" className="text-pink-600 hover:text-pink-400">
-            <img 
-              src="./src/assets/Bulldog1.png" 
-              alt="Logo" 
-              className="w-6 h-6 object-contain hover:opacity-80 transition-opacity"
-            />
-          </Link>
+      <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div className="backdrop-blur-md bg-white/40 rounded-3xl shadow-2xl border border-white/50 p-8 md:p-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {/* Brand Section */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+              
               </div>
-              <h3 className="text-lg font-semibold mb-4"></h3>
-              <p className="text-gray-900">
-               I'm currently focused on expanding my experience designing 
-               and developing high performing systems.
+              <p className="text-gray-700 leading-relaxed text-sm">
+                I'm currently focused on expanding my experience designing 
+                and developing high performing systems.
               </p>
             </div>
+
+            {/* Quick Links */}
             <div>
-              <h3 className="text-lg text-gray-900 font-bold mb-4">Quick Links</h3>
-              <div className="space-y-2">
+              <h3 className="text-lg font-bold mb-6 text-gray-900">Quick Links</h3>
+              <div className="space-y-3">
                 {navigationItems.map((item) => (
-                  <Link
+                  <a
                     key={item.name}
-                    to={item.to}
-                    className="block text-gray-900 hover:text-blue-600 transition-colors"
+                    href={item.to}
+                    className="block text-gray-700 hover:text-purple-600 transition-all duration-300 hover:translate-x-2 font-medium"
                   >
                     {item.name}
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
+
+            {/* Connect Section */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Connect</h3>
-              <div className="flex space-x-4">
-                <a href="https://github.com/Adamsomondi"target="_blank"
-  rel="noopener noreferrer" className="text-gray-900 hover:text-blue-600"><FaGithub className="w-5 h-5" />
-    <span>GitHub</span></a>
-                <a href="https://www.linkedin.com/in/adams-omondi-338b94304?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"target="_blank"
-  rel="noopener noreferrer" className="text-gray-900 hover:text-blue-600"> <FaLinkedin className="w-5 h-5" />
-    <span>LinkedIn</span></a>
-                <a href="https://x.com/deepneuralmess?t=KSiZQak-6eJCGLcEC6O4fA&s=08" target="_blank"
-  rel="noopener noreferrer"className="text-gray-900 hover:text-blue-600"><FaXTwitter className="w-5 h-5" />
-    <span>Twitter</span></a>
+              <h3 className="text-lg font-bold mb-6 text-gray-900">Connect</h3>
+              <div className="space-y-4">
+                <a 
+                  href="https://github.com/Adamsomondi" 
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className="flex items-center space-x-3 text-gray-700 hover:text-gray-900 transition-all duration-300 group"
+                >
+                  <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition-all duration-300 shadow-md">
+                    <FaGithub className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium">GitHub</span>
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/adams-omondi-338b94304" 
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-all duration-300 group"
+                >
+                  <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-all duration-300 shadow-md">
+                    <FaLinkedin className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium">LinkedIn</span>
+                </a>
+                <a 
+                  href="https://x.com/deepneuralmess" 
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className="flex items-center space-x-3 text-gray-700 hover:text-gray-900 transition-all duration-300 group"
+                >
+                  <div className="w-10 h-10 bg-white/60 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-all duration-300 shadow-md">
+                    <FaXTwitter className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium">Twitter</span>
+                </a>
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-gray-600 text-center text-gray-900">
-            <p>Made with ❤️ by Adams.</p>
-              <p>&copy; 2025 Adams. All rights reserved.</p>
+
+          <div className="mt-12 pt-8 border-t border-white/40 text-center">
+            <p className="text-gray-700 font-medium mb-2">Made with ❤️ by Adams.</p>
+            <p className="text-gray-600 text-sm">&copy; 2025 Adams. All rights reserved.</p>
           </div>
         </div>
-      </footer>
+      </div>
+    </footer>
     </div>
   );
 };
