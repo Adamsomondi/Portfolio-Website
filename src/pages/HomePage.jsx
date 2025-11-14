@@ -166,7 +166,7 @@ const HomePage = () => {
 
 //Typed Text
   const [typedText, setTypedText] = useState('');
-  const fullText = "Building Scalable Software Systems & ETL / ELT Data Pipelines";
+  const fullText = "Building Scalable Software Systems & ETL Data Pipelines";
   
   useEffect(() => {
     let index = 0;
