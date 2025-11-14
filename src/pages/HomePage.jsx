@@ -166,7 +166,7 @@ const HomePage = () => {
 
 //Typed Text
   const [typedText, setTypedText] = useState('');
-  const fullText = "Building Scalable Software Systems & ETL Data Pipelines";
+  const fullText = "Building Scalable Software Systems & ETL / ELT Data Pipelines";
   
   useEffect(() => {
     let index = 0;
@@ -185,7 +185,7 @@ const HomePage = () => {
   return (
     <div>
       {/* Hero Section - Now immersed in glassmorphic background */}
-      <section className="relative -mt-8 -mx-6 md:-mx-8 lg:-mx-12 mb-8">
+      <section className="relative -mt-8 -mx-6 md:-mx-8 lg:-mx-12 mb-8 ">
         
         {/* Desktop Layout */}
         <div className="hidden lg:flex min-h-screen flex-col">
@@ -269,12 +269,12 @@ const HomePage = () => {
         {/* Mobile Layout */}
         <div className="lg:hidden relative min-h-screen flex flex-col">
           {/* Background Image */}
-          <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden overflow-x-hidden">
             <img 
               src={backgroundImage}
               alt="Background"
-              className="w-full h-60 object-contain opacity-70"
-              style={{ minHeight: '10vh' }}
+              className="w-full h-60 object-contain opacity-70 pt-3"
+              style={{ minHeight: '5vh' }}
             />
           </div>
           
