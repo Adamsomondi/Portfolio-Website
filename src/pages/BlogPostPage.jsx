@@ -8,38 +8,7 @@ import { motion } from 'framer-motion';
 
 // Mock Data Store
 const mockData = {
-  projects: [
-    {
-      id: '1',
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce solution with React and Node.js',
-      tech: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      image: 'https://via.placeholder.com/400x300/3B82F6/white?text=E-Commerce',
-      github: 'https://github.com/example/ecommerce',
-      demo: 'https://demo.example.com',
-      featured: true
-    },
-    {
-      id: '2', 
-      title: 'Task Management App',
-      description: 'Collaborative task management with real-time updates',
-      tech: ['React', 'Firebase', 'Material-UI', 'Socket.io'],
-      image: 'https://via.placeholder.com/400x300/10B981/white?text=Task+Manager',
-      github: 'https://github.com/example/taskmanager',
-      demo: 'https://taskmanager.example.com',
-      featured: false
-    },
-    {
-      id: '3',
-      title: 'Weather Dashboard',
-      description: 'Beautiful weather dashboard with location-based forecasts',
-      tech: ['React', 'OpenWeather API', 'Chart.js', 'Tailwind'],
-      image: 'https://via.placeholder.com/400x300/F59E0B/white?text=Weather+App',
-      github: 'https://github.com/example/weather',
-      demo: 'https://weather.example.com',
-      featured: true
-    }
-  ],
+
   blogPosts: [
     {
       id: '1',

@@ -9,7 +9,9 @@ import { motion } from 'framer-motion';
 import { 
   ArrowRightIcon,
 } from '@heroicons/react/24/outline';
-import backgroundImage from '../assets/THE THIRD BEST.png';
+//import backgroundImage from '../assets/THE THIRD BEST.png';
+import Rick from '../assets/tumblr_ea2ff7fad956387edb2c0a923c083692_ec1981e2_540.gif';
+import Bank from '../assets/tumblr_067e8938c05051db6164caca9e552952_6afccc6b_540.gif';
 
 // Mock Data Store - To simulate API data.
 const mockData = {
@@ -19,27 +21,17 @@ const mockData = {
       title: 'Rick and Morty Website',
       description: 'Full-stack rick and morty website solution with React and Node.js',
       tech: ['React', 'Node.js', 'MongoDB', 'API Integration'],
-      image: 'https://images.unsplash.com/photo-1579547945413-497e1b99dac0?w=800',
+      image: Rick,
       github: 'https://github.com/Adamsomondi/Rick-and-Morty.git',
       demo: 'https://mortymultiverse.netlify.app/',
       featured: true
-    },
-    {
-      id: '2', 
-      title: 'Whisper AI',
-      description: 'Implementation of OpenAI\'s Whisper model for speech-to-text transcription',
-      tech:  ['Python', 'Machine Learning', 'OpenAI', 'Flask'],
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
-      github: 'https://github.com/Adamsomondi/Whisper-Model',
-      demo: '',
-      featured: false
     },
     {
       id: '3',
       title: 'Bank-Churn-Prediction',
       description: 'Predicting customer churn for a bank using machine learning techniques',
       tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Analysis'],
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800',
+      image: Bank,
       github: 'https://github.com/Adamsomondi/Bank-Churn-Prediction',
       demo: '',
       featured: true
@@ -357,7 +349,7 @@ const HomePage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                className="rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                 onClick={() => navigate(`/projects/${project.id}`)}
               >
                 <img
@@ -395,11 +387,11 @@ const HomePage = () => {
       </section>
 
       {/* Recent Blog Posts */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-green-900 mb-4">
-              Latest from My Blog
+              Latest From Blogs
             </h2>
             <p className="text-lg text-green-900">
               
@@ -412,7 +404,7 @@ const HomePage = () => {
                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
+                className="rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
                 onClick={() => navigate(`/blog/${post.id}`)}
               >
                 <h3 className="text-xl font-semibold mb-2">{post.title}</h3>

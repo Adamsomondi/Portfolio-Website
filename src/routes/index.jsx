@@ -1,4 +1,4 @@
-import React, {Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import {  
   createBrowserRouter, 
   Navigate
@@ -10,8 +10,8 @@ import AboutPage, { aboutLoader } from '../pages/AboutPage';
 import ProjectsPage, { projectsLoader } from '../pages/ProjectsPage';
 import ProjectDetailPage, { projectDetailLoader } from '../pages/ProjectDetailPage';
 import BlogPage, { blogLoader } from '../pages/BlogPage';
-import BlogPostPage, { blogPostLoader } from '../pages/BlogPostPage';
 import ContactPage, { contactAction } from '../pages/ContactPage';
+import BlogPostPage, { blogPostLoader } from '../pages/BlogPostPage';
 
 // Shared
 import Layout from '../components/Layout';
@@ -26,7 +26,6 @@ const LazyBlog = lazy(() => Promise.resolve({ default: BlogPage }));
 const LazyBlogPost = lazy(() => Promise.resolve({ default: BlogPostPage }));
 const LazyContact = lazy(() => Promise.resolve({ default: ContactPage }));
 
-//Hash
 const router = createBrowserRouter([
   {
     path: '/',
@@ -105,10 +104,14 @@ const router = createBrowserRouter([
       {
         path: 'redirect-demo',
         element: <Navigate to="/projects" replace />
+      },
+      // Catch-all route for 404
+      {
+        path: '*',
+        element: <ErrorPage />
       }
     ]
   }
 ]);
+
 export default router;
-
-

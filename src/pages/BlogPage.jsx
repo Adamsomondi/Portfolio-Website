@@ -7,39 +7,6 @@ import { motion } from 'framer-motion';
 
 // Mock Data Store
 const mockData = {
-  projects: [
-    {
-      id: '1',
-      title: 'Rick and Morty Website',
-      description: 'Full-stack website that displays data from the Rick and Morty API',
-      tech: ['React', 'Node.js', 'MongoDB', 'API Integration'],
-      image: 'https://images.unsplash.com/photo-1579547945413-497e1b99dac0?w=800',
-      github: 'https://github.com/Adamsomondi/Rick-and-Morty',
-      demo: 'https://mortymultiverse.netlify.app/',
-      featured: true
-    },
-    {
-      id: '2', 
-      title: 'Whisper AI',
-      description: 'Implementation of OpenAI\'s Whisper model for speech-to-text transcription',
-      tech: ['Python', 'Machine Learning', 'OpenAI', 'Flask'],
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
-      github: 'https://github.com/Adamsomondi/Whisper-Model',
-      demo: '',
-      featured: false
-    },
-    {
-      id: '3',
-      title: 'Bank-Churn-Prediction',
-      description: 'Predicting customer churn for a bank using machine learning techniques',
-      tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Analysis'],
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800',
-      github: 'https://github.com/Adamsomondi/Bank-Churn-Prediction',
-      demo: '',
-      featured: true
-    }
-  ],
-
   blogPosts: [
   {
     id: '1',
@@ -112,14 +79,6 @@ MongoDB's architecture embraces horizontal scaling as a first-class citizen, pro
     tags: ['MongoDB', 'NoSQL', 'Databases', 'Sharding', 'Replication', 'Scalability']
   },
 ],
-  profile: {
-    name: 'Adams Omondi',
-    title: 'Full Stack Developer',
-    bio: 'Passionate developer with 5+ years of experience building modern web applications',
-    skills: ['React', 'Node.js', 'TypeScript', 'Python', 'AWS', 'MongoDB'],
-    experience: '5+ years',
-    location: 'Nairobi, Kenya'
-  }
 };
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -150,7 +109,7 @@ const BlogPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow cursor-pointer"
+              className="rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow cursor-pointer"
               onClick={() => navigate(`/blog/${post.id}`)}
             >
               <div className="flex items-center justify-between mb-4">

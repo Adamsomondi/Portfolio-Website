@@ -4,7 +4,9 @@ import {
   useLoaderData
 } from 'react-router-dom';
 import { motion} from 'framer-motion';
-
+import Rick from '../assets/86a7e2c8-d1b6-49ab-a52d-75ca3fe21a18.jpg';
+import Whisper from '../assets/77ac9663ba-8aa4-44bf-867d-6b87c92ce12b.jpg';
+import Bank from '../assets/cd726ca8-0c61-45d2-a204-a40675fea986.jpg';
 // Mock Data Store
 const mockData = {
   projects: [
@@ -13,7 +15,7 @@ const mockData = {
       title: 'Rick and Morty Website',
       description: 'Full-stack website that displays data from the Rick and Morty API',
       tech: ['React', 'Node.js', 'MongoDB', 'API Integration'],
-      image: 'https://images.unsplash.com/photo-1579547945413-497e1b99dac0?w=800',
+      image: Rick,
       github: 'https://github.com/Adamsomondi/Rick-and-Morty',
       demo: 'https://mortymultiverse.netlify.app/',
       featured: true
@@ -23,7 +25,7 @@ const mockData = {
       title: 'Whisper AI',
       description: 'Implementation of OpenAI\'s Whisper model for speech-to-text transcription',
       tech: ['Python', 'Machine Learning', 'OpenAI', 'Flask'],
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
+      image: Whisper,
       github: 'https://github.com/Adamsomondi/Whisper-Model',
       demo: '',
       featured: false
@@ -33,42 +35,12 @@ const mockData = {
       title: 'Bank-Churn-Prediction',
       description: 'Predicting customer churn for a bank using machine learning techniques',
       tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Analysis'],
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800',
+      image: Bank,
       github: 'https://github.com/Adamsomondi/Bank-Churn-Prediction',
       demo: '',
       featured: true
     }
   ],
-  blogPosts: [
-    {
-      id: '1',
-      title: 'Getting Started with React Router v6',
-      excerpt: 'Learn the fundamentals of React Router v6 and modern routing patterns',
-      content: 'React Router v6 introduces many powerful features that make routing in React applications more intuitive and powerful...',
-      author: 'John Doe',
-      date: '2024-01-15',
-      readTime: '5 min read',
-      tags: ['React', 'Routing', 'JavaScript']
-    },
-    {
-      id: '2',
-      title: 'Building Modern UIs with Headless Components',
-      excerpt: 'Explore the power of headless UI components for flexible design systems',
-      content: 'Headless UI components provide the logic and accessibility features while giving you complete control over styling...',
-      author: 'John Doe', 
-      date: '2024-01-10',
-      readTime: '7 min read',
-      tags: ['UI/UX', 'Components', 'Design Systems']
-    }
-  ],
-  profile: {
-    name: 'John Doe',
-    title: 'Full Stack Developer',
-    bio: 'Passionate developer with 5+ years of experience building modern web applications',
-    skills: ['React', 'Node.js', 'TypeScript', 'Python', 'AWS', 'MongoDB'],
-    experience: '5+ years',
-    location: 'San Francisco, CA'
-  }
 };
 
 
