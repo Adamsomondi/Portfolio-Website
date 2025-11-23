@@ -222,16 +222,8 @@ const HomePage = () => {
                 </motion.div>
               </div>
             </div>
-
-            {/* Image Container - Right side */}
-            <div className="flex-1 relative">
-              <img 
-                src={backgroundImage}
-                alt="Background"
-                className="absolute inset-0 w-full h-full object-cover opacity-80"
-              />
-            </div>
           </div>
+          
 
           {/* Philosophy Content */}
           <div className="backdrop-blur-md bg-white/20 py-6 border-t border-white/30">
@@ -267,9 +259,11 @@ const HomePage = () => {
         </div>
 
         {/* Mobile Layout */}
-        <div className="lg:hidden relative min-h-screen flex flex-col">
-          {/* Background Image */}
-          <div className="absolute inset-0 overflow-hidden overflow-x-hidden">
+        <div className="lg:hidden relative min-h-screen flex flex-col pt-1">
+
+          {/* Background Image
+          
+         <div className="absolute inset-0 overflow-hidden overflow-x-hidden">
             <img 
               src={backgroundImage}
               alt="Background"
@@ -277,9 +271,10 @@ const HomePage = () => {
               style={{ minHeight: '5vh' }}
             />
           </div>
+           */}
           
           {/* Main Content */}
-          <div className="relative z-10 flex-grow flex items-center justify-center pt-12">
+          <div className="relative z-10 flex-grow flex items-center justify-center pt-1">
             <div className="w-full px-6">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -287,7 +282,7 @@ const HomePage = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center space-y-6"
               >
-                <h2 className="text-2xl text-gray-800 font-bold drop-shadow-lg pt-24">
+                <h2 className="text-5xl text-gray-800 font-bold drop-shadow-lg pt-1">
                   {typedText}
                   <span className="animate-pulse">|</span>
                 </h2>
