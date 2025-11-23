@@ -200,7 +200,7 @@ const HomePage = () => {
                   transition={{ duration: 0.6 }}
                   className="text-left"
                 >
-                  <p className="text-4xl font-bold text-gray-800 mb-8 py-3">
+                  <p className="text-6xl font-bold text-gray-800 mb-8 py-3">
                     {typedText}
                     <span className="animate-pulse">|</span>
                   </p>
