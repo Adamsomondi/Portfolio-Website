@@ -166,7 +166,7 @@ const HomePage = () => {
 
 //Typed Text
   const [typedText, setTypedText] = useState('');
-  const fullText = "Building Scalable Software Systems & ETL Data Pipelines";
+  const fullText = "Software Engineering • Automation • Data Science & Visualization";
   
   useEffect(() => {
     let index = 0;
@@ -235,21 +235,21 @@ const HomePage = () => {
                 className="text-center space-y-3"
               >
                 <blockquote className="text-base font-bold text-gray-800 italic">
-                  "Talk is cheap. Show me the code."
+                  "The future belongs to those who can think in systems, not just products."
                 </blockquote>
-                <cite className="text-sm text-gray-700 font-medium block">— Linus Torvalds</cite>
+                <cite className="text-sm text-gray-700 font-medium block">— Iddris Sandu</cite>
                 
                 <div className="flex justify-center gap-8 pt-2">
                   <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800">8+</div>
+                    <div className="text-xl font-bold text-gray-800">3+</div>
                     <div className="text-xs text-gray-700">Years Of Experience</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800">15+</div>
+                    <div className="text-xl font-bold text-gray-800">10+</div>
                     <div className="text-xs text-gray-700">Projects</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800">13+</div>
+                    <div className="text-xl font-bold text-gray-800">8+</div>
                     <div className="text-xs text-gray-700">Technologies</div>
                   </div>
                 </div>
@@ -282,12 +282,12 @@ const HomePage = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center space-y-6"
               >
-                <h2 className="text-5xl text-gray-800 font-bold drop-shadow-lg pt-1">
+                <h2 className="text-4xl text-gray-800 font-bold drop-shadow-lg pt-1">
                   {typedText}
                   <span className="animate-pulse">|</span>
                 </h2>
                 
-                <div className="flex flex-col gap-4 pt-0">
+                <div className="flex flex-col gap-4 pt-16">
                   <button
                     onClick={() => navigate('/projects')}
                     className="backdrop-blur-sm bg-white/30 border-2 border-white/50 text-gray-800 px-8 py-3 rounded-lg font-bold transition-all duration-300 hover:bg-white/50 hover:shadow-xl"
@@ -315,21 +315,21 @@ const HomePage = () => {
                 className="text-center space-y-3"
               >
                 <blockquote className="text-base font-bold text-gray-800 italic">
-                  "Talk is cheap. Show me the code."
+                  "The future belongs to those who can think in systems, not just products."
                 </blockquote>
-                <cite className="text-sm text-gray-700 font-medium block">— Linus Torvalds</cite>
+                <cite className="text-sm text-gray-700 font-medium block">— Iddris Sandu</cite>
                 
                 <div className="flex justify-center gap-8 pt-2">
                   <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800">8+</div>
+                    <div className="text-xl font-bold text-gray-800">3+</div>
                     <div className="text-xs text-gray-700">Years Of Experience</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800">15+</div>
+                    <div className="text-xl font-bold text-gray-800">10+</div>
                     <div className="text-xs text-gray-700">Projects</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl font-bold text-gray-800">13+</div>
+                    <div className="text-xl font-bold text-gray-800">8+</div>
                     <div className="text-xs text-gray-700">Technologies</div>
                   </div>
                 </div>

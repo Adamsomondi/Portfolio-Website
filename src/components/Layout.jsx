@@ -61,7 +61,7 @@ const Layout = () => {
                   : 'bg-gradient-to-r from-green-50/80 to-emerald-50/80 before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
               }`}>
                 <span className={`text-2xl font-serif font-bold group-hover:-translate-y-0.5 transition-transform duration-300 ${
-                  isDark ? 'text-blue-100' : 'text-green-900'
+                  isDark ? 'text-purple-300' : 'text-green-900'
                 }`}>My Portfolio</span>
               </Link>
             </div>
@@ -240,14 +240,14 @@ const Layout = () => {
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-30">
           <div className={`absolute top-10 left-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-purple-600' : 'bg-blue-400'
+            isDark ? 'bg-purple-600' : 'bg-green-900'
           }`}></div>
           <div className={`absolute top-20 right-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-blue-600' : 'bg-purple-400'
-          }`} style={{ animationDelay: '1s' }}></div>
+            isDark ? 'bg-pink-600' : 'bg-purple-900'
+          }`} style={{ animationDelay: '0.1s' }}></div>
           <div className={`absolute bottom-20 left-1/2 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-pink-600' : 'bg-pink-400'
-          }`} style={{ animationDelay: '2s' }}></div>
+            isDark ? 'bg-pink-600' : 'bg-purple-600'
+          }`} style={{ animationDelay: '0.1s' }}></div>
         </div>
 
         {/* Glassmorphic Content Container */}
