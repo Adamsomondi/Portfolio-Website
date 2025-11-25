@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { 
   Link, 
   NavLink, 
@@ -20,13 +20,23 @@ import {
   SunIcon,
   MoonIcon,
 } from '@heroicons/react/24/outline';
-import { FaGithub, FaLinkedin, FaXTwitter} from 'react-icons/fa6';
+import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
 
 const Layout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
   const [isDark, setIsDark] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigation = useNavigation();
   const location = useLocation();
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navigationItems = [
     { name: 'Home', to: '/', icon: HomeIcon },
@@ -47,47 +57,134 @@ const Layout = () => {
         : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
     }`}>
       {/* Navigation */}
-      <nav className={`shadow-sm border-b transition-colors duration-500 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 shadow-sm transition-all duration-700 ease-out ${
         isDark 
-          ? 'bg-black/80 backdrop-blur-xl border-gray-800' 
-          : 'bg-white/80 backdrop-blur-xl border-gray-200'
+          ? 'bg-black/80 backdrop-blur-xl' 
+          : 'bg-white/80 backdrop-blur-xl'
+      } ${isScrolled ? 'py-2' : 'py-0'} ${
+        isDark ? 'border-gray-800' : 'border-gray-500'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Link to="/" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-500 ${
+          <div className="flex justify-between h-16 items-center">
+            <motion.div 
+              className="flex items-center overflow-hidden"
+              animate={{
+                width: isScrolled ? 0 : 'auto',
+                opacity: isScrolled ? 0 : 1,
+              }}
+              transition={{
+                duration: 0.1,
+                ease: [0.4, 0, 0.2, 1]
+              }}
+            >
+              <Link to="/" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-700 ${
                 isDark
                   ? 'bg-black text-black border-gray-800 hover:border-gray-700 hover:shadow-lg'
                   : 'bg-gradient-to-r from-green-50/80 to-emerald-50/80 border-transparent hover:shadow-2xl before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
               } hover:scale-105`}>
-                <span className={`text-2xl font-serif font-bold transition-all duration-300 ${
+                <span className={`text-2xl font-serif font-bold transition-all duration-300 whitespace-nowrap ${
                   isDark ? 'text-white' : 'text-green-900'
                 }`}>My Portfolio</span>
               </Link>
-            </div>
+            </motion.div>
             
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Fluid Icons */}
             <div className="hidden sm:flex sm:items-center sm:space-x-6">
-              {navigationItems.map((item) => (
-                <NavLink
-                  key={item.name}
-                  to={item.to}
-                  className={({ isActive }) =>
-                    `inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-all duration-300 ${
-                      isActive
-                        ? isDark 
-                          ? 'border-white text-white'
-                          : 'border-blue-500 text-green-900'
-                        : isDark
-                          ? 'border-transparent text-white hover:text-gray-300 hover:border-gray-700'
-                          : 'border-transparent text-gray-500 hover:text-green-700 hover:border-gray-300'
-                    }`
-                  }
-                >
-                  <item.icon className="w-4 h-4 mr-2" />
-                  {item.name}
-                </NavLink>
-              ))}
+              <motion.div 
+                className={`flex items-center rounded-full px-4 py-2 transition-all duration-700 ${
+                  isScrolled 
+                    ? isDark 
+                      ? 'bg-gray-900/50 backdrop-blur-sm space-x-2'
+                      : 'bg-white/50 backdrop-blur-sm space-x-2'
+                    : 'space-x-6'
+                }`}
+                animate={{
+                  gap: isScrolled ? '0.5rem' : '1.5rem',
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30
+                }}
+              >
+                {navigationItems.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.to}
+                    className={({ isActive }) =>
+                      `relative inline-flex items-center transition-all duration-700 ease-out group ${
+                        isScrolled ? 'px-2 py-2' : 'px-1 pt-1'
+                      } ${
+                        isActive
+                          ? isDark 
+                            ? 'text-white'
+                            : 'text-green-900'
+                          : isDark
+                            ? 'text-white hover:text-gray-300'
+                            : 'text-gray-500 hover:text-green-700'
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <motion.div
+                          className={`flex items-center justify-center transition-all duration-700 ${
+                            isScrolled 
+                              ? 'w-9 h-9 rounded-xl' 
+                              : 'w-4 h-4'
+                          } ${
+                            isActive && isScrolled
+                              ? isDark
+                                ? 'bg-white/10'
+                                : 'bg-green-100'
+                              : ''
+                          }`}
+                          animate={{
+                            scale: isScrolled ? 1.2 : 1,
+                          }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 25
+                          }}
+                        >
+                          <item.icon className={`transition-all duration-700 ${
+                            isScrolled ? 'w-5 h-5' : 'w-4 h-4 mr-2'
+                          }`} />
+                        </motion.div>
+                        
+                        <motion.span
+                          className="text-sm font-medium overflow-hidden whitespace-nowrap"
+                          animate={{
+                            width: isScrolled ? 0 : 'auto',
+                            opacity: isScrolled ? 0 : 1,
+                            marginLeft: isScrolled ? 0 : '0.5rem',
+                          }}
+                          transition={{
+                            duration: 0.1,
+                            ease: [0.4, 0, 0.2, 1]
+                          }}
+                        >
+                          {item.name}
+                        </motion.span>
+                        
+                        {!isScrolled && (
+                          <motion.div
+                            className={`absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300 ${
+                              isActive
+                                ? isDark 
+                                  ? 'bg-white'
+                                  : 'bg-blue-500'
+                                : 'bg-transparent'
+                            }`}
+                            layoutId={isActive ? 'activeTab' : undefined}
+                          />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                ))}
+              </motion.div>
               
               {/* Theme Toggle Button */}
               <button
@@ -223,7 +320,7 @@ const Layout = () => {
 
       {/* Loading Bar */}
       {navigation.state === 'loading' && (
-        <div className={`w-full h-1 ${isDark ? 'bg-gray-900' : 'bg-gray-200'}`}>
+        <div className={`fixed top-16 left-0 right-0 w-full h-1 z-40 ${isDark ? 'bg-gray-900' : 'bg-gray-200'}`}>
           <motion.div 
             className={`h-1 ${isDark ? 'bg-white' : 'bg-blue-600'}`}
             initial={{ width: '0%' }}
@@ -234,7 +331,7 @@ const Layout = () => {
       )}
 
       {/* Main Content with Glassmorphic Design */}
-      <main className="flex-1 relative overflow-hidden">
+      <main className="flex-1 relative overflow-hidden pt-16">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-30">
           <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
