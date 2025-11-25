@@ -1,12 +1,12 @@
-
+//This is the Contact Page with Dark Mode Support using Outlet Context
 import { 
   useActionData, 
   useNavigation, 
-  Form
+  Form,
+  useOutletContext
 } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
-
 
 // Simulate API delays
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -31,9 +31,8 @@ export const contactAction = async ({ request }) => {
   return { success: 'Message sent successfully!' };
 };
 
-
-
 const ContactPage = () => {
+  const { isDark } = useOutletContext();
   const navigation = useNavigation();
   const actionData = useActionData();
   const isSubmitting = navigation.state === 'submitting';
@@ -42,11 +41,17 @@ const ContactPage = () => {
     <div className="py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h1>
-          <p className="text-xl text-gray-600">
+          <h1 className={`text-4xl font-bold mb-4 ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}>
+            Get In Touch
+          </h1>
+          <p className={`text-xl ${
+            isDark ? 'text-white' : 'text-gray-600'
+          }`}>
             If you want to know more about me or my work,
-             or if you would just like to say hello, send me a message.
-             I'd love to hear from you.
+            or if you would just like to say hello, send me a message.
+            I'd love to hear from you.
           </p>
         </div>
 
@@ -57,34 +62,96 @@ const ContactPage = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-2xl font-semibold mb-6">Let's Connect</h2>
+            <h2 className={`text-2xl font-semibold mb-6 ${
+              isDark ? 'text-white' : 'text-gray-900'
+            }`}>
+              Let's Connect
+            </h2>
             <div className="space-y-6">
               <div>
-                <h3 className="font-medium text-gray-900 mb-2">Email</h3>
-                <p className="text-gray-600">Adamsnogo025@gmail.com</p>
+                <h3 className={`font-medium mb-2 ${
+                  isDark ? 'text-white' : 'text-gray-900'
+                }`}>
+                  Email
+                </h3>
+                <p className={`${
+                  isDark ? 'text-white' : 'text-gray-600'
+                }`}>
+                  Adamsnogo025@gmail.com
+                </p>
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 mb-2">Phone</h3>
-                <p className="text-gray-600">+254715485763</p>
+                <h3 className={`font-medium mb-2 ${
+                  isDark ? 'text-white' : 'text-gray-900'
+                }`}>
+                  Phone
+                </h3>
+                <p className={`${
+                  isDark ? 'text-white' : 'text-gray-600'
+                }`}>
+                  +254715485763
+                </p>
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 mb-2">Location</h3>
-                <p className="text-gray-600">Nairobi, Kenya</p>
+                <h3 className={`font-medium mb-2 ${
+                  isDark ? 'text-white' : 'text-gray-900'
+                }`}>
+                  Location
+                </h3>
+                <p className={`${
+                  isDark ? 'text-white' : 'text-gray-600'
+                }`}>
+                  Nairobi, Kenya
+                </p>
               </div>
             </div>
             
             <div className="mt-8">
-              <h3 className="font-medium text-gray-900 mb-4">Follow Me</h3>
+              <h3 className={`font-medium mb-4 ${
+                isDark ? 'text-white' : 'text-gray-900'
+              }`}>
+                Follow Me
+              </h3>
               <div className="flex space-x-4">
-                <a href="https://github.com/Adamsomondi" target="_blank"
-  rel="noopener noreferrer"className="text-blue-600 hover:text-blue-800"> <FaGithub className="w-5 h-5" />
-    <span>GitHub</span></a>
-                <a href="https://www.linkedin.com/in/adams-omondi-338b94304?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"target="_blank"
-  rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800"> <FaLinkedin className="w-5 h-5" />
-    <span>LinkedIn</span></a>
-                <a href="https://x.com/deepneuralmess?t=KSiZQak-6eJCGLcEC6O4fA&s=08"target="_blank"
-  rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800"><FaXTwitter className="w-5 h-5" />
-    <span>Twitter</span></a>
+                <a 
+                  href="https://github.com/Adamsomondi" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex items-center space-x-2 ${
+                    isDark 
+                      ? 'text-blue-400 hover:text-blue-300' 
+                      : 'text-blue-600 hover:text-blue-800'
+                  }`}
+                >
+                  <FaGithub className="w-5 h-5" />
+                  <span>GitHub</span>
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/adams-omondi-338b94304?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className={`flex items-center space-x-2 ${
+                    isDark 
+                      ? 'text-blue-400 hover:text-blue-300' 
+                      : 'text-blue-600 hover:text-blue-800'
+                  }`}
+                >
+                  <FaLinkedin className="w-5 h-5" />
+                  <span>LinkedIn</span>
+                </a>
+                <a 
+                  href="https://x.com/deepneuralmess?t=KSiZQak-6eJCGLcEC6O4fA&s=08"
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className={`flex items-center space-x-2 ${
+                    isDark 
+                      ? 'text-blue-400 hover:text-blue-300' 
+                      : 'text-blue-600 hover:text-blue-800'
+                  }`}
+                >
+                  <FaXTwitter className="w-5 h-5" />
+                  <span>Twitter</span>
+                </a>
               </div>
             </div>
           </motion.div>
@@ -109,7 +176,12 @@ const ContactPage = () => {
               )}
 
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label 
+                  htmlFor="name" 
+                  className={`block text-sm font-medium mb-2 ${
+                    isDark ? 'text-white' : 'text-gray-700'
+                  }`}
+                >
                   Name
                 </label>
                 <input
@@ -117,13 +189,18 @@ const ContactPage = () => {
                   id="name"
                   name="name"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Your full name"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label 
+                  htmlFor="email" 
+                  className={`block text-sm font-medium mb-2 ${
+                    isDark ? 'text-white' : 'text-gray-700'
+                  }`}
+                >
                   Email
                 </label>
                 <input
@@ -131,13 +208,18 @@ const ContactPage = () => {
                   id="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="your.email@example.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                <label 
+                  htmlFor="message" 
+                  className={`block text-sm font-medium mb-2 ${
+                    isDark ? 'text-white' : 'text-gray-700'
+                  }`}
+                >
                   Message
                 </label>
                 <textarea
@@ -145,7 +227,7 @@ const ContactPage = () => {
                   name="message"
                   rows={6}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-white text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Tell me about your project or just say hello..."
                 />
               </div>
@@ -171,4 +253,5 @@ const ContactPage = () => {
     </div>
   );
 };
+
 export default ContactPage;

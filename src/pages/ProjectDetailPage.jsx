@@ -1,12 +1,14 @@
-
+//This is the Project Detail Page with Dark Mode Support using Outlet Context
 import { 
   useNavigate, 
-  useLoaderData
+  useLoaderData,
+  useOutletContext
 } from 'react-router-dom';
-import { motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import Rick from '../assets/86a7e2c8-d1b6-49ab-a52d-75ca3fe21a18.jpg';
 import Whisper from '../assets/77ac9663ba-8aa4-44bf-867d-6b87c92ce12b.jpg';
 import Bank from '../assets/cd726ca8-0c61-45d2-a204-a40675fea986.jpg';
+
 // Mock Data Store
 const mockData = {
   projects: [
@@ -43,7 +45,6 @@ const mockData = {
   ],
 };
 
-
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const projectDetailLoader = async ({ params }) => {
@@ -56,6 +57,7 @@ export const projectDetailLoader = async ({ params }) => {
 };
 
 const ProjectDetailPage = () => {
+  const { isDark } = useOutletContext();
   const { project } = useLoaderData();
   const navigate = useNavigate();
 
@@ -69,7 +71,11 @@ const ProjectDetailPage = () => {
         >
           <button
             onClick={() => navigate('/projects')}
-            className="flex items-center text-blue-600 hover:text-blue-800 mb-8"
+            className={`flex items-center mb-8 font-medium ${
+              isDark 
+                ? 'text-blue-400 hover:text-blue-300' 
+                : 'text-blue-600 hover:text-blue-800'
+            }`}
           >
             ← Back to Projects
           </button>
@@ -83,10 +89,16 @@ const ProjectDetailPage = () => {
           </div>
 
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className={`text-4xl font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-900'
+            }`}>
               {project.title}
             </h1>
-            <p className="text-xl text-gray-600 mb-6">{project.description}</p>
+            <p className={`text-xl mb-6 ${
+              isDark ? 'text-white' : 'text-gray-600'
+            }`}>
+              {project.description}
+            </p>
             
             <div className="flex flex-wrap gap-2 mb-6">
               {project.tech.map((tech) => (
@@ -102,37 +114,65 @@ const ProjectDetailPage = () => {
             <div className="flex space-x-4">
               <a
                 href={project.github}
-                className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`px-6 py-3 rounded-lg transition-colors font-medium ${
+                  isDark
+                    ? 'bg-white text-black hover:bg-gray-200'
+                    : 'bg-gray-900 text-white hover:bg-gray-800'
+                }`}
               >
                 View Code
               </a>
-              <a
-                href={project.demo}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Live Demo
-              </a>
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                  Live Demo
+                </a>
+              )}
             </div>
           </div>
 
           <div className="prose max-w-none">
-            <h2>Project Overview</h2>
-            <p>
+            <h2 className={`text-2xl font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-900'
+            }`}>
+              Project Overview
+            </h2>
+            <p className={`mb-6 ${
+              isDark ? 'text-white' : 'text-gray-600'
+            }`}>
               This project demonstrates modern web development practices using 
               React and related technologies. It showcases responsive design, 
               state management, and user-friendly interfaces.
             </p>
             
-            <h2>Key Features</h2>
-            <ul>
+            <h2 className={`text-2xl font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-900'
+            }`}>
+              Key Features
+            </h2>
+            <ul className={`list-disc list-inside mb-6 space-y-2 ${
+              isDark ? 'text-white' : 'text-gray-600'
+            }`}>
               <li>Responsive design that works on all devices</li>
               <li>Modern UI with smooth animations</li>
               <li>Optimized performance and accessibility</li>
               <li>Clean, maintainable code structure</li>
             </ul>
 
-            <h2>Technical Details</h2>
-            <p>
+            <h2 className={`text-2xl font-bold mb-4 ${
+              isDark ? 'text-white' : 'text-gray-900'
+            }`}>
+              Technical Details
+            </h2>
+            <p className={`${
+              isDark ? 'text-white' : 'text-gray-600'
+            }`}>
               Built with {project.tech.join(', ')}, this project follows 
               industry best practices for scalability and maintainability.
             </p>

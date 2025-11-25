@@ -43,25 +43,25 @@ const Layout = () => {
   return (
     <div className={`min-h-screen transition-colors duration-500 ${
       isDark 
-        ? 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900' 
+        ? 'bg-black dark' 
         : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
     }`}>
       {/* Navigation */}
       <nav className={`shadow-sm border-b transition-colors duration-500 ${
         isDark 
-          ? 'bg-slate-900/80 backdrop-blur-xl border-slate-700' 
+          ? 'bg-black/80 backdrop-blur-xl border-gray-800' 
           : 'bg-white/80 backdrop-blur-xl border-gray-200'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link to="/" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border-2 border-transparent bg-clip-padding hover:shadow-2xl hover:scale-110 hover:-translate-y-1 transition-all duration-500 relative before:absolute before:inset-0 before:rounded-full before:p-[2px] before:-z-10 ${
+              <Link to="/" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-500 ${
                 isDark
-                  ? 'bg-gradient-to-r from-purple-900/80 to-blue-900/80 before:bg-gradient-to-r before:from-purple-500 before:via-blue-500 before:to-purple-600'
-                  : 'bg-gradient-to-r from-green-50/80 to-emerald-50/80 before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
-              }`}>
-                <span className={`text-2xl font-serif font-bold group-hover:-translate-y-0.5 transition-transform duration-300 ${
-                  isDark ? 'text-purple-300' : 'text-green-900'
+                  ? 'bg-black text-black border-gray-800 hover:border-gray-700 hover:shadow-lg'
+                  : 'bg-gradient-to-r from-green-50/80 to-emerald-50/80 border-transparent hover:shadow-2xl before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
+              } hover:scale-105`}>
+                <span className={`text-2xl font-serif font-bold transition-all duration-300 ${
+                  isDark ? 'text-white' : 'text-green-900'
                 }`}>My Portfolio</span>
               </Link>
             </div>
@@ -76,10 +76,10 @@ const Layout = () => {
                     `inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-all duration-300 ${
                       isActive
                         ? isDark 
-                          ? 'border-purple-400 text-purple-300'
+                          ? 'border-white text-white'
                           : 'border-blue-500 text-green-900'
                         : isDark
-                          ? 'border-transparent text-slate-300 hover:text-purple-300 hover:border-slate-600'
+                          ? 'border-transparent text-white hover:text-gray-300 hover:border-gray-700'
                           : 'border-transparent text-gray-500 hover:text-green-700 hover:border-gray-300'
                     }`
                   }
@@ -94,14 +94,14 @@ const Layout = () => {
                 onClick={toggleTheme}
                 className={`relative inline-flex items-center justify-center w-14 h-8 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg hover:shadow-xl hover:scale-105 ${
                   isDark
-                    ? 'bg-gradient-to-r from-slate-700 to-slate-800 focus:ring-purple-500'
+                    ? 'bg-gray-800 focus:ring-gray-600 hover:bg-gray-700'
                     : 'bg-gradient-to-r from-amber-400 to-orange-400 focus:ring-blue-500'
                 }`}
                 aria-label="Toggle theme"
               >
                 <motion.div
                   className={`absolute w-6 h-6 rounded-full shadow-md flex items-center justify-center ${
-                    isDark ? 'bg-slate-900' : 'bg-white'
+                    isDark ? 'bg-white' : 'bg-white'
                   }`}
                   animate={{
                     x: isDark ? 22 : -22,
@@ -121,7 +121,7 @@ const Layout = () => {
                       transition={{ duration: 0.3 }}
                     >
                       {isDark ? (
-                        <MoonIcon className="w-4 h-4 text-purple-400" />
+                        <MoonIcon className="w-4 h-4 text-gray-800" />
                       ) : (
                         <SunIcon className="w-4 h-4 text-amber-500" />
                       )}
@@ -138,15 +138,13 @@ const Layout = () => {
                 onClick={toggleTheme}
                 className={`relative inline-flex items-center justify-center w-12 h-7 rounded-full transition-all duration-500 focus:outline-none shadow-lg ${
                   isDark
-                    ? 'bg-gradient-to-r from-slate-700 to-slate-800'
+                    ? 'bg-gray-800 hover:bg-gray-700'
                     : 'bg-gradient-to-r from-amber-400 to-orange-400'
                 }`}
                 aria-label="Toggle theme"
               >
                 <motion.div
-                  className={`absolute w-5 h-5 rounded-full shadow-md flex items-center justify-center ${
-                    isDark ? 'bg-slate-900' : 'bg-white'
-                  }`}
+                  className={`absolute w-5 h-5 rounded-full shadow-md flex items-center justify-center bg-white`}
                   animate={{
                     x: isDark ? 18 : -18,
                   }}
@@ -157,7 +155,7 @@ const Layout = () => {
                   }}
                 >
                   {isDark ? (
-                    <MoonIcon className="w-3 h-3 text-purple-400" />
+                    <MoonIcon className="w-3 h-3 text-gray-800" />
                   ) : (
                     <SunIcon className="w-3 h-3 text-amber-500" />
                   )}
@@ -168,7 +166,7 @@ const Layout = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`inline-flex items-center justify-center p-2 rounded-md transition-colors duration-300 ${
                   isDark 
-                    ? 'text-slate-300 hover:text-purple-300 hover:bg-slate-800'
+                    ? 'text-white hover:text-gray-300 hover:bg-gray-900'
                     : 'text-green-900 hover:text-gray-500 hover:bg-gray-100'
                 }`}
               >
@@ -204,10 +202,10 @@ const Layout = () => {
                     `block pl-3 pr-4 py-2 text-base font-medium transition-colors duration-300 ${
                       isActive
                         ? isDark
-                          ? 'bg-purple-900/50 border-r-4 border-purple-400 text-purple-300'
+                          ? 'bg-gray-900 border-r-4 border-white text-white'
                           : 'bg-blue-50 border-r-4 border-blue-500 text-blue-700'
                         : isDark
-                          ? 'text-slate-300 hover:text-purple-300 hover:bg-slate-800'
+                          ? 'text-white hover:text-gray-300 hover:bg-gray-900'
                           : 'text-green-900 hover:text-gray-700 hover:bg-gray-50'
                     }`
                   }
@@ -225,9 +223,9 @@ const Layout = () => {
 
       {/* Loading Bar */}
       {navigation.state === 'loading' && (
-        <div className={`w-full h-1 ${isDark ? 'bg-slate-800' : 'bg-gray-200'}`}>
+        <div className={`w-full h-1 ${isDark ? 'bg-gray-900' : 'bg-gray-200'}`}>
           <motion.div 
-            className={`h-1 ${isDark ? 'bg-purple-500' : 'bg-blue-600'}`}
+            className={`h-1 ${isDark ? 'bg-white' : 'bg-blue-600'}`}
             initial={{ width: '0%' }}
             animate={{ width: '100%' }}
             transition={{ duration: 0.5 }}
@@ -239,23 +237,23 @@ const Layout = () => {
       <main className="flex-1 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-30">
-          <div className={`absolute top-10 left-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-purple-600' : 'bg-green-900'
+          <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+            isDark ? 'bg-white mix-blend-lighten' : 'bg-green-900 mix-blend-multiply'
           }`}></div>
-          <div className={`absolute top-20 right-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-pink-600' : 'bg-purple-900'
-          }`} style={{ animationDelay: '0.1s' }}></div>
-          <div className={`absolute bottom-20 left-1/2 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-pink-600' : 'bg-purple-600'
-          }`} style={{ animationDelay: '0.1s' }}></div>
+          <div className={`absolute top-20 right-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+            isDark ? 'bg-blue-800 mix-blend-lighten' : 'bg-purple-900 mix-blend-multiply'
+          }`} style={{ animationDelay: '1s' }}></div>
+          <div className={`absolute bottom-20 left-1/2 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+            isDark ? 'bg-pink-600 mix-blend-lighten' : 'bg-purple-600 mix-blend-multiply'
+          }`} style={{ animationDelay: '2s' }}></div>
         </div>
 
         {/* Glassmorphic Content Container */}
         <div className="relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
           <div className={`backdrop-blur-md rounded-3xl shadow-2xl border p-6 md:p-8 lg:p-12 min-h-[calc(100vh-20rem)] transition-all duration-500 ${
             isDark
-              ? 'bg-slate-900/40 border-slate-700/50'
-              : 'bg-white/40 border-white/50'
+              ? 'bg-white/95 border-gray-800 text-black'
+              : 'bg-white/40 border-white/50 text-gray-900'
           }`}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -265,7 +263,7 @@ const Layout = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                <Outlet />
+                <Outlet context={{ isDark }} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -275,36 +273,33 @@ const Layout = () => {
       {/* Footer */}
       <footer className={`relative overflow-hidden transition-colors duration-500 ${
         isDark
-          ? 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900'
+          ? 'bg-black'
           : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
       }`}>
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-30">
-          <div className={`absolute top-10 left-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-purple-600' : 'bg-blue-400'
+          <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+            isDark ? 'bg-purple-600 mix-blend-lighten' : 'bg-blue-400 mix-blend-multiply'
           }`}></div>
-          <div className={`absolute top-20 right-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-blue-600' : 'bg-purple-400'
+          <div className={`absolute top-20 right-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+            isDark ? 'bg-blue-600 mix-blend-lighten' : 'bg-purple-400 mix-blend-multiply'
           }`} style={{ animationDelay: '1s' }}></div>
-          <div className={`absolute -bottom-8 left-1/2 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-pulse ${
-            isDark ? 'bg-pink-600' : 'bg-pink-400'
+          <div className={`absolute -bottom-8 left-1/2 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+            isDark ? 'bg-pink-600 mix-blend-lighten' : 'bg-pink-400 mix-blend-multiply'
           }`} style={{ animationDelay: '2s' }}></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
           <div className={`backdrop-blur-md rounded-3xl shadow-2xl border p-8 md:p-12 transition-all duration-500 ${
             isDark
-              ? 'bg-slate-900/40 border-slate-700/50'
-              : 'bg-white/40 border-white/50'
+              ? 'bg-white/95 border-gray-800 text-black'
+              : 'bg-white/40 border-white/50 text-gray-900'
           }`}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
               {/* Brand Section */}
               <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                
-                </div>
-                <p className={`leading-relaxed text-sm transition-colors duration-500 ${
-                  isDark ? 'text-slate-300' : 'text-gray-700'
+                <p className={`leading-relaxed text-lg transition-colors duration-500 ${
+                  isDark ? 'text-white' : 'text-gray-700'
                 }`}>
                   I'm currently focused on expanding my experience designing 
                   and developing high performing systems.
@@ -314,7 +309,7 @@ const Layout = () => {
               {/* Quick Links */}
               <div>
                 <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
-                  isDark ? 'text-slate-100' : 'text-gray-900'
+                  isDark ? 'text-white' : 'text-gray-900'
                 }`}>Quick Links</h3>
                 <div className="space-y-3">
                   {navigationItems.map((item) => (
@@ -323,8 +318,8 @@ const Layout = () => {
                       href={item.to}
                       className={`block transition-all duration-300 hover:translate-x-2 font-medium ${
                         isDark 
-                          ? 'text-slate-300 hover:text-purple-300'
-                          : 'text-gray-700 hover:text-purple-600'
+                          ? 'text-white hover:text-blue-600'
+                          : 'text-gray-700 hover:text-blue-600'
                       }`}
                     >
                       {item.name}
@@ -336,7 +331,7 @@ const Layout = () => {
               {/* Connect Section */}
               <div>
                 <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
-                  isDark ? 'text-slate-100' : 'text-gray-900'
+                  isDark ? 'text-white' : 'text-gray-900'
                 }`}>Connect</h3>
                 <div className="space-y-4">
                   <a 
@@ -345,14 +340,14 @@ const Layout = () => {
                     rel="noopener noreferrer" 
                     className={`flex items-center space-x-3 transition-all duration-300 group ${
                       isDark 
-                        ? 'text-slate-300 hover:text-slate-100'
-                        : 'text-gray-700 hover:text-gray-900'
+                        ? 'text-gray-700 hover:text-blue-600'
+                        : 'text-gray-700 hover:text-blue-600'
                     }`}
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md ${
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
                       isDark
-                        ? 'bg-slate-800/60 group-hover:bg-purple-900/60'
-                        : 'bg-white/60 group-hover:bg-purple-100'
+                        ? 'bg-gray-50 border-gray-200 group-hover:bg-gray-100 group-hover:border-gray-300'
+                        : 'bg-white/60 border-gray-200 group-hover:bg-purple-100'
                     }`}>
                       <FaGithub className="w-5 h-5" />
                     </div>
@@ -364,14 +359,14 @@ const Layout = () => {
                     rel="noopener noreferrer" 
                     className={`flex items-center space-x-3 transition-all duration-300 group ${
                       isDark 
-                        ? 'text-slate-300 hover:text-blue-400'
+                        ? 'text-gray-700 hover:text-blue-600'
                         : 'text-gray-700 hover:text-blue-600'
                     }`}
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md ${
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
                       isDark
-                        ? 'bg-slate-800/60 group-hover:bg-blue-900/60'
-                        : 'bg-white/60 group-hover:bg-blue-100'
+                        ? 'bg-gray-50 border-gray-200 group-hover:bg-blue-50 group-hover:border-blue-200'
+                        : 'bg-white/60 border-gray-200 group-hover:bg-blue-100'
                     }`}>
                       <FaLinkedin className="w-5 h-5" />
                     </div>
@@ -383,14 +378,14 @@ const Layout = () => {
                     rel="noopener noreferrer" 
                     className={`flex items-center space-x-3 transition-all duration-300 group ${
                       isDark 
-                        ? 'text-slate-300 hover:text-slate-100'
-                        : 'text-gray-700 hover:text-gray-900'
+                        ? 'text-gray-700 hover:text-blue-600'
+                        : 'text-gray-700 hover:text-blue-600'
                     }`}
                   >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-md ${
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
                       isDark
-                        ? 'bg-slate-800/60 group-hover:bg-slate-700/60'
-                        : 'bg-white/60 group-hover:bg-gray-100'
+                        ? 'bg-gray-50 border-gray-200 group-hover:bg-gray-100 group-hover:border-gray-300'
+                        : 'bg-white/60 border-gray-200 group-hover:bg-gray-100'
                     }`}>
                       <FaXTwitter className="w-5 h-5" />
                     </div>
@@ -401,13 +396,13 @@ const Layout = () => {
             </div>
 
             <div className={`mt-12 pt-8 border-t transition-colors duration-500 text-center ${
-              isDark ? 'border-slate-700/40' : 'border-white/40'
+              isDark ? 'border-gray-200' : 'border-white/40'
             }`}>
               <p className={`font-medium mb-2 transition-colors duration-500 ${
-                isDark ? 'text-slate-300' : 'text-gray-700'
+                isDark ? 'text-white' : 'text-gray-700'
               }`}>Made with ❤️ by Adams.</p>
               <p className={`text-sm transition-colors duration-500 ${
-                isDark ? 'text-slate-400' : 'text-gray-600'
+                isDark ? 'text-white' : 'text-gray-600'
               }`}>&copy; 2025 Adams. All rights reserved.</p>
             </div>
           </div>

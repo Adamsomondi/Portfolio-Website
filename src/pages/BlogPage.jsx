@@ -1,7 +1,8 @@
-
+//This is the Blog Page with Dark Mode Support using Outlet Context
 import {  
   useNavigate, 
-  useLoaderData
+  useLoaderData,
+  useOutletContext
 } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -83,12 +84,13 @@ MongoDB's architecture embraces horizontal scaling as a first-class citizen, pro
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
- export const blogLoader = async () => {
+export const blogLoader = async () => {
   await delay(500);
   return { posts: mockData.blogPosts };
 };
 
 const BlogPage = () => {
+  const { isDark } = useOutletContext();
   const { posts } = useLoaderData();
   const navigate = useNavigate();
 
@@ -96,8 +98,14 @@ const BlogPage = () => {
     <div className="py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Blog</h1>
-          <p className="text-xl text-gray-600">
+          <h1 className={`text-4xl font-bold mb-4 ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}>
+            Blog
+          </h1>
+          <p className={`text-xl ${
+            isDark ? 'text-white' : 'text-gray-600'
+          }`}>
             Thoughts on development, design, and technology
           </p>
         </div>
@@ -109,7 +117,7 @@ const BlogPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow cursor-pointer"
+              className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow cursor-pointer"
               onClick={() => navigate(`/blog/${post.id}`)}
             >
               <div className="flex items-center justify-between mb-4">
@@ -122,7 +130,7 @@ const BlogPage = () => {
                 </div>
               </div>
               
-              <h2 className="text-2xl font-bold text-gray-900 mb-4 hover:text-blue-600 transition-colors">
+              <h2 className="text-2xl font-bold text-black mb-4 hover:text-blue-600 transition-colors">
                 {post.title}
               </h2>
               
@@ -147,4 +155,5 @@ const BlogPage = () => {
     </div>
   );
 };
+
 export default BlogPage;
