@@ -40,7 +40,7 @@ const Layout = () => {
   }, []);
 
   const navigationItems = [
-    { name: 'Home', to: '/', icon: HomeIcon },
+    { name: 'Home', to: '/home', icon: HomeIcon },
     { name: 'About', to: '/about', icon: UserIcon },
     { name: 'Projects', to: '/projects', icon: BriefcaseIcon },
     { name: 'Blog', to: '/blog', icon: DocumentTextIcon },
@@ -78,14 +78,14 @@ const Layout = () => {
                 ease: [0.4, 0, 0.2, 1]
               }}
             >
-              <Link to="/" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-700 ${
+              <Link to="/home" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-700 ${
                 isDark
                   ? 'bg-black text-black border-gray-800 hover:border-gray-700 hover:shadow-lg'
                   : 'bg-gradient-to-r from-green-50/80 to-emerald-50/80 border-transparent hover:shadow-2xl before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
               } hover:scale-105`}>
                 <span className={`text-2xl font-serif font-bold transition-all duration-300 whitespace-nowrap ${
                   isDark ? 'text-white' : 'text-green-900'
-                }`}>ams.space</span>
+                }`}>an.space</span>
               </Link>
             </motion.div>
             
@@ -412,7 +412,7 @@ const Layout = () => {
                 }`}>Quick Links</h3>
                 <div className="space-y-3">
                   {navigationItems.map((item) => (
-                    <a
+                    <Link
                       key={item.name}
                       href={item.to}
                       className={`block transition-all duration-300 hover:translate-x-2 font-medium ${
@@ -422,7 +422,7 @@ const Layout = () => {
                       }`}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
