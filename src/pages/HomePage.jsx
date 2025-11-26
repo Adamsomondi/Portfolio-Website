@@ -13,7 +13,6 @@ import {
 import Rick from '../assets/tumblr_ea2ff7fad956387edb2c0a923c083692_ec1981e2_540.gif';
 import Bank from '../assets/tumblr_067e8938c05051db6164caca9e552952_6afccc6b_540.gif';
 
-
 // Mock Data Store - To simulate API data.
 const mockData = {
   projects: [

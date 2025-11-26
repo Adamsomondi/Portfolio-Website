@@ -21,6 +21,7 @@ import {
   MoonIcon,
 } from '@heroicons/react/24/outline';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
+import SpatialMouseEffect from './SpatialMouseEffect.jsx';
 
 const Layout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
@@ -84,7 +85,7 @@ const Layout = () => {
               } hover:scale-105`}>
                 <span className={`text-2xl font-serif font-bold transition-all duration-300 whitespace-nowrap ${
                   isDark ? 'text-white' : 'text-green-900'
-                }`}>My Portfolio</span>
+                }`}>ams.space</span>
               </Link>
             </motion.div>
             
@@ -361,6 +362,7 @@ const Layout = () => {
                 transition={{ duration: 0.3 }}
               >
                 <Outlet context={{ isDark }} />
+               <SpatialMouseEffect isDark={isDark} />
               </motion.div>
             </AnimatePresence>
           </div>
