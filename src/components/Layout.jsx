@@ -80,12 +80,12 @@ const Layout = () => {
             >
               <Link to="/home" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-700 ${
                 isDark
-                  ? 'bg-black text-black border-gray-800 hover:border-gray-700 hover:shadow-lg'
-                  : 'bg-gradient-to-r from-green-50/80 to-emerald-50/80 border-transparent hover:shadow-2xl before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
+                  ? 'text-black border-gray-800 hover:border-gray-700 hover:shadow-lg'
+                  : 'hover:before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
               } hover:scale-105`}>
-                <span className={`text-2xl font-serif font-bold transition-all duration-300 whitespace-nowrap ${
+                <span className={`text-1xl font-serif font-bold transition-all duration-300 ${
                   isDark ? 'text-white' : 'text-green-900'
-                }`}>a.space</span>
+                }`}>Adams</span>
               </Link>
             </motion.div>
             
