@@ -8,12 +8,8 @@ const LandingPage = () => {
 
   // All available quotes
   const allQuotes = [
-    "We live at the intersection of what we build and what we touch — the threshold where imagination meets the digital world.",
-    "Design is not just what it looks like and feels like. Design is how it works.",
     "Simplicity is the ultimate sophistication.",
-    "The best way to understand something is to try to change it.",
     "Make it work, make it right, make it fast.",
-    "Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away.",
     "Good design is obvious. Great design is transparent."
   ];
 
@@ -55,7 +51,7 @@ const LandingPage = () => {
             fadeToWhite ? 'bg-white/70 backdrop-blur-xl border border-gray-200' : ''
           }`}>
             <img 
-              src="/src/assets/22725e60-cecb-4a2f-95a2-591ff0c03517.jpg" 
+              src="/src/assets/0af43d12-f141-41bd-a2b5-1fa69b7d53a9.jpg" 
               alt="Welcome" 
               className="w-full aspect-square object-cover md:aspect-auto md:h-80 lg:h-96" 
             />

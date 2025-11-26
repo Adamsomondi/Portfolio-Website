@@ -85,7 +85,7 @@ const Layout = () => {
               } hover:scale-105`}>
                 <span className={`text-2xl font-serif font-bold transition-all duration-300 whitespace-nowrap ${
                   isDark ? 'text-white' : 'text-green-900'
-                }`}>an.space</span>
+                }`}>a.space</span>
               </Link>
             </motion.div>
             
