@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import Rick from '../assets/0af43d12-f141-41bd-a2b5-1fa69b7d53a9.jpg'
 
 const LandingPage = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -49,7 +50,7 @@ const LandingPage = () => {
             fadeToWhite ? 'bg-black backdrop-blur-xl' : ''
           }`}>
             <img 
-              src="/src/assets/0af43d12-f141-41bd-a2b5-1fa69b7d53a9.jpg" 
+              src={Rick}
               alt="Welcome" 
               className="w-full aspect-square object-cover md:aspect-auto md:h-80 lg:h-96" 
             />
