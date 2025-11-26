@@ -22,12 +22,12 @@ const LandingPage = () => {
     // Start fading to white after 1.5 seconds
     const fadeTimer = setTimeout(() => {
       setFadeToWhite(true);
-    }, 500);
+    }, 1000);
 
     // Navigate immediately after 3 seconds (no fade out delay)
     const hideTimer = setTimeout(() => {
       navigate('/home');
-    }, 1000);
+    }, 2000);
 
     return () => {
       clearTimeout(fadeTimer);
