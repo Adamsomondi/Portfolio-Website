@@ -178,7 +178,7 @@ const BlogPostPage = () => {
                 {post.title}
               </h1>
               <div className={`flex items-center space-x-4 mb-6 ${
-                isDark ? 'text-gray-300' : 'text-white'
+                isDark ? 'text-gray-300' : 'text-gray-600'
               }`}>
                 <span>{post.author}</span>
                 <span>•</span>
