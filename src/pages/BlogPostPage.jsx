@@ -1,9 +1,8 @@
 //This is the Blog Post Detail Page with Dark Mode Support using Outlet Context
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import {  
   useNavigate, 
-  useLoaderData, 
-  Await,
+  useLoaderData,
   useOutletContext,
 } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -86,6 +85,7 @@ MongoDB's architecture embraces horizontal scaling as a first-class citizen, pro
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+// Simple loader - just return the post
 export const blogPostLoader = async ({ params }) => {
   await delay(300);
   const post = mockData.blogPosts.find(p => p.id === params.id);
@@ -93,16 +93,7 @@ export const blogPostLoader = async ({ params }) => {
     throw new Response('Post not found', { status: 404 });
   }
   
-  // Simulate deferred loading for comments
-  const commentsPromise = delay(2000).then(() => [
-    { id: 1, author: 'Alice', content: 'Great post!', date: '2024-01-16' },
-    { id: 2, author: 'Bob', content: 'Very helpful, thanks!', date: '2024-01-17' }
-  ]);
-  
-  return defer({
-    post,
-    comments: commentsPromise
-  });
+  return { post };
 };
 
 // Comments Section Component
@@ -112,13 +103,27 @@ const CommentsSection = ({ comments, isDark }) => {
       {comments.map((comment) => (
         <div 
           key={comment.id} 
-          className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
+          className={`p-4 rounded-lg shadow-sm border ${
+            isDark 
+              ? 'bg-gray-800 border-gray-700' 
+              : 'bg-white border-gray-200'
+          }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="font-medium text-gray-900">{comment.author}</span>
-            <span className="text-sm text-gray-500">{comment.date}</span>
+            <span className={`font-medium ${
+              isDark ? 'text-white' : 'text-gray-900'
+            }`}>
+              {comment.author}
+            </span>
+            <span className={`text-sm ${
+              isDark ? 'text-gray-400' : 'text-gray-500'
+            }`}>
+              {comment.date}
+            </span>
           </div>
-          <p className="text-gray-700">{comment.content}</p>
+          <p className={isDark ? 'text-gray-300' : 'text-gray-700'}>
+            {comment.content}
+          </p>
         </div>
       ))}
     </div>
@@ -127,8 +132,24 @@ const CommentsSection = ({ comments, isDark }) => {
 
 const BlogPostPage = () => {
   const { isDark } = useOutletContext();
-  const { post, comments } = useLoaderData();
+  const { post } = useLoaderData();
   const navigate = useNavigate();
+  const [comments, setComments] = useState(null);
+  const [loadingComments, setLoadingComments] = useState(true);
+
+  // Load comments after component mounts (simulating deferred loading)
+  useEffect(() => {
+    const loadComments = async () => {
+      await delay(2000);
+      setComments([
+        { id: 1, author: 'James Mwangi', content: 'Great post!', date: '2024-01-16' },
+        { id: 2, author: 'Kevin Omachi', content: 'Very helpful, thanks!', date: '2024-01-17' }
+      ]);
+      setLoadingComments(false);
+    };
+    
+    loadComments();
+  }, []);
 
   return (
     <div className="py-16">
@@ -157,7 +178,7 @@ const BlogPostPage = () => {
                 {post.title}
               </h1>
               <div className={`flex items-center space-x-4 mb-6 ${
-                isDark ? 'text-gray-300' : 'text-gray-500'
+                isDark ? 'text-gray-300' : 'text-white'
               }`}>
                 <span>{post.author}</span>
                 <span>•</span>
@@ -169,7 +190,11 @@ const BlogPostPage = () => {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                    className={`px-3 py-1 text-sm rounded-full ${
+                      isDark
+                        ? 'bg-blue-900 text-blue-200'
+                        : 'bg-blue-100 text-blue-800'
+                    }`}
                   >
                     {tag}
                   </span>
@@ -179,19 +204,19 @@ const BlogPostPage = () => {
 
             <div className="prose max-w-none">
               <p className={`text-xl mb-8 ${
-                isDark ? 'text-white' : 'text-gray-600'
+                isDark ? 'text-gray-300' : 'text-gray-600'
               }`}>
                 {post.excerpt}
               </p>
               <div className={`leading-relaxed whitespace-pre-line ${
-                isDark ? 'text-white' : 'text-gray-800'
+                isDark ? 'text-gray-300' : 'text-gray-800'
               }`}>
                 {post.content}
               </div>
             </div>
           </article>
 
-          {/* Comments Section with Deferred Loading */}
+          {/* Comments Section with Loading State */}
           <section className={`border-t pt-8 ${
             isDark ? 'border-gray-700' : 'border-gray-200'
           }`}>
@@ -200,22 +225,19 @@ const BlogPostPage = () => {
             }`}>
               Comments
             </h2>
-            <Suspense fallback={
+            
+            {loadingComments ? (
               <div className="flex items-center justify-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                 <span className={`ml-3 ${
-                  isDark ? 'text-white' : 'text-gray-600'
+                  isDark ? 'text-gray-300' : 'text-gray-600'
                 }`}>
                   Loading comments...
                 </span>
               </div>
-            }>
-              <Await resolve={comments}>
-                {(resolvedComments) => (
-                  <CommentsSection comments={resolvedComments} isDark={isDark} />
-                )}
-              </Await>
-            </Suspense>
+            ) : (
+              <CommentsSection comments={comments} isDark={isDark} />
+            )}
           </section>
         </motion.div>
       </div>
