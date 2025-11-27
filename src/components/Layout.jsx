@@ -39,6 +39,10 @@ const Layout = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  React.useEffect(() => {
+  window.scrollTo(0, 0);
+}, [location.pathname]);
+
   const navigationItems = [
     { name: 'Home', to: '/home', icon: HomeIcon },
     { name: 'About', to: '/about', icon: UserIcon },
