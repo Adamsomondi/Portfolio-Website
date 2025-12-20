@@ -19,7 +19,6 @@ import {
   XMarkIcon,
   SunIcon,
   MoonIcon,
-  BuildingOffice2Icon
 } from '@heroicons/react/24/outline';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
 //import SpatialMouseEffect from './SpatialMouseEffect.jsx';
@@ -52,7 +51,6 @@ const Layout = () => {
     { name: 'Projects', to: '/projects', icon: BriefcaseIcon },
     { name: 'Blogs', to: '/blog', icon: DocumentTextIcon },
     { name: 'Contact', to: '/contact', icon: EnvelopeIcon },
-    { name: 'Investors', to: '/investors', icon: BuildingOffice2Icon }
   ];
 
   const toggleTheme = () => {
