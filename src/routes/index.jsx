@@ -19,7 +19,7 @@ import Layout from '../components/Layout';
 import ErrorPage from '../pages/ErrorPage';
 import LoadingSpinner from '../components/loadingSpinner';
 
-// Lazy
+// Lazy loaded components
 const LazyAbout = lazy(() => Promise.resolve({ default: AboutPage }));
 const LazyProjects = lazy(() => Promise.resolve({ default: ProjectsPage }));
 const LazyProjectDetail = lazy(() => Promise.resolve({ default: ProjectDetailPage }));

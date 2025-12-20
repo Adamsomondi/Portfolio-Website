@@ -19,9 +19,12 @@ import {
   XMarkIcon,
   SunIcon,
   MoonIcon,
+  BuildingOffice2Icon
 } from '@heroicons/react/24/outline';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
-import SpatialMouseEffect from './SpatialMouseEffect.jsx';
+//import SpatialMouseEffect from './SpatialMouseEffect.jsx';
+//import GrainEffect from './GrainEffect.jsx';
+//<SpatialMouseEffect isDark={isDark} /> use this to add spatial Effects
 
 const Layout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
@@ -47,8 +50,9 @@ const Layout = () => {
     { name: 'Home', to: '/home', icon: HomeIcon },
     { name: 'About', to: '/about', icon: UserIcon },
     { name: 'Projects', to: '/projects', icon: BriefcaseIcon },
-    { name: 'Blog', to: '/blog', icon: DocumentTextIcon },
-    { name: 'Contact', to: '/contact', icon: EnvelopeIcon }
+    { name: 'Blogs', to: '/blog', icon: DocumentTextIcon },
+    { name: 'Contact', to: '/contact', icon: EnvelopeIcon },
+    { name: 'Investors', to: '/investors', icon: BuildingOffice2Icon }
   ];
 
   const toggleTheme = () => {
@@ -366,7 +370,7 @@ const Layout = () => {
                 transition={{ duration: 0.3 }}
               >
                 <Outlet context={{ isDark }} />
-               <SpatialMouseEffect isDark={isDark} />
+              
               </motion.div>
             </AnimatePresence>
           </div>
