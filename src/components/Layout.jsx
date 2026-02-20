@@ -1,3 +1,4 @@
+//Glassmorphic Layout with Animated Background and Responsive Navigation
 import React, { useState } from 'react';
 import { 
   Link, 
@@ -19,11 +20,10 @@ import {
   XMarkIcon,
   SunIcon,
   MoonIcon,
+  SignalIcon
 } from '@heroicons/react/24/outline';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
-//import SpatialMouseEffect from './SpatialMouseEffect.jsx';
-//import GrainEffect from './GrainEffect.jsx';
-//<SpatialMouseEffect isDark={isDark} /> use this to add spatial Effects
+
 
 const Layout = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
@@ -42,8 +42,8 @@ const Layout = () => {
   }, []);
 
   React.useEffect(() => {
-  window.scrollTo(0, 0);
-}, [location.pathname]);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const navigationItems = [
     { name: 'Home', to: '/home', icon: HomeIcon },
@@ -51,6 +51,7 @@ const Layout = () => {
     { name: 'Projects', to: '/projects', icon: BriefcaseIcon },
     { name: 'Blogs', to: '/blog', icon: DocumentTextIcon },
     { name: 'Contact', to: '/contact', icon: EnvelopeIcon },
+    { name: 'Bluetooth', to: '/bluetooth', icon: SignalIcon },
   ];
 
   const toggleTheme = () => {
@@ -337,10 +338,10 @@ const Layout = () => {
         </div>
       )}
 
-      {/* Main Content with Glassmorphic Design */}
+      {/* Main Content - No nested box */}
       <main className="flex-1 relative overflow-hidden pt-16">
         {/* Animated background elements */}
-        <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
             isDark ? 'bg-white mix-blend-lighten' : 'bg-green-900 mix-blend-multiply'
           }`}></div>
@@ -352,37 +353,32 @@ const Layout = () => {
           }`} style={{ animationDelay: '2s' }}></div>
         </div>
 
-        {/* Glassmorphic Content Container */}
-        <div className="relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-          <div className={`backdrop-blur-md rounded-3xl shadow-2xl border p-6 md:p-8 lg:p-12 min-h-[calc(100vh-20rem)] transition-all duration-500 ${
-            isDark
-              ? 'bg-white/95 border-gray-800 text-black'
-              : 'bg-white/40 border-white/50 text-gray-900'
-          }`}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={location.pathname}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Outlet context={{ isDark }} />
-              
-              </motion.div>
-            </AnimatePresence>
-          </div>
+        {/* Content Container - Edge to edge */}
+        <div className={`relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-20rem)] ${
+          isDark ? 'text-white' : 'text-gray-900'
+        }`}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Outlet context={{ isDark }} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </main>
 
-      {/* Footer */}
+      {/* Footer - No nested box */}
       <footer className={`relative overflow-hidden transition-colors duration-500 ${
         isDark
           ? 'bg-black'
           : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
       }`}>
         {/* Animated background elements */}
-        <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
             isDark ? 'bg-purple-600 mix-blend-lighten' : 'bg-blue-400 mix-blend-multiply'
           }`}></div>
@@ -395,121 +391,115 @@ const Layout = () => {
         </div>
 
         <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-          <div className={`backdrop-blur-md rounded-3xl shadow-2xl border p-8 md:p-12 transition-all duration-500 ${
-            isDark
-              ? 'bg-white/95 border-gray-800 text-black'
-              : 'bg-white/40 border-white/50 text-gray-900'
-          }`}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-              {/* Brand Section */}
-              <div className="space-y-4">
-                <p className={`leading-relaxed text-lg transition-colors duration-500 ${
-                  isDark ? 'text-white' : 'text-gray-700'
-                }`}>
-                  I'm currently focused on expanding my experience designing 
-                  and developing high performing systems.
-                </p>
-              </div>
-
-              {/* Quick Links */}
-              <div>
-                <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
-                  isDark ? 'text-white' : 'text-gray-900'
-                }`}>Quick Links</h3>
-                <div className="space-y-3">
-                  {navigationItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.to}
-                      className={`block transition-all duration-300 hover:translate-x-2 font-medium ${
-                        isDark 
-                          ? 'text-white hover:text-blue-600'
-                          : 'text-gray-700 hover:text-blue-600'
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Connect Section */}
-              <div>
-                <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
-                  isDark ? 'text-white' : 'text-gray-900'
-                }`}>Connect</h3>
-                <div className="space-y-4">
-                  <a 
-                    href="https://github.com/Adamsomondi" 
-                    target="_blank"
-                    rel="noopener noreferrer" 
-                    className={`flex items-center space-x-3 transition-all duration-300 group ${
-                      isDark 
-                        ? 'text-gray-700 hover:text-blue-600'
-                        : 'text-gray-700 hover:text-blue-600'
-                    }`}
-                  >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                      isDark
-                        ? 'bg-gray-50 border-gray-200 group-hover:bg-gray-100 group-hover:border-gray-300'
-                        : 'bg-white/60 border-gray-200 group-hover:bg-purple-100'
-                    }`}>
-                      <FaGithub className="w-5 h-5" />
-                    </div>
-                    <span className="font-medium">GitHub</span>
-                  </a>
-                  <a 
-                    href="https://www.linkedin.com/in/adams-omondi-338b94304" 
-                    target="_blank"
-                    rel="noopener noreferrer" 
-                    className={`flex items-center space-x-3 transition-all duration-300 group ${
-                      isDark 
-                        ? 'text-gray-700 hover:text-blue-600'
-                        : 'text-gray-700 hover:text-blue-600'
-                    }`}
-                  >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                      isDark
-                        ? 'bg-gray-50 border-gray-200 group-hover:bg-blue-50 group-hover:border-blue-200'
-                        : 'bg-white/60 border-gray-200 group-hover:bg-blue-100'
-                    }`}>
-                      <FaLinkedin className="w-5 h-5" />
-                    </div>
-                    <span className="font-medium">LinkedIn</span>
-                  </a>
-                  <a 
-                    href="https://x.com/deepneuralmess" 
-                    target="_blank"
-                    rel="noopener noreferrer" 
-                    className={`flex items-center space-x-3 transition-all duration-300 group ${
-                      isDark 
-                        ? 'text-gray-700 hover:text-blue-600'
-                        : 'text-gray-700 hover:text-blue-600'
-                    }`}
-                  >
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                      isDark
-                        ? 'bg-gray-50 border-gray-200 group-hover:bg-gray-100 group-hover:border-gray-300'
-                        : 'bg-white/60 border-gray-200 group-hover:bg-gray-100'
-                    }`}>
-                      <FaXTwitter className="w-5 h-5" />
-                    </div>
-                    <span className="font-medium">Twitter</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className={`mt-12 pt-8 border-t transition-colors duration-500 text-center ${
-              isDark ? 'border-gray-200' : 'border-white/40'
-            }`}>
-              <p className={`font-medium mb-2 transition-colors duration-500 ${
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {/* Brand Section */}
+            <div className="space-y-4">
+              <p className={`leading-relaxed text-lg transition-colors duration-500 ${
                 isDark ? 'text-white' : 'text-gray-700'
-              }`}>Made with ❤️ by Adams.</p>
-              <p className={`text-sm transition-colors duration-500 ${
-                isDark ? 'text-white' : 'text-gray-600'
-              }`}>&copy; 2025 Adams. All rights reserved.</p>
+              }`}>
+                I'm currently focused on expanding my experience designing 
+                and developing high performing systems.
+              </p>
             </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
+                isDark ? 'text-white' : 'text-gray-900'
+              }`}>Quick Links</h3>
+              <div className="space-y-3">
+                {navigationItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.to}
+                    className={`block transition-all duration-300 hover:translate-x-2 font-medium ${
+                      isDark 
+                        ? 'text-white hover:text-blue-400'
+                        : 'text-gray-700 hover:text-blue-600'
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Connect Section */}
+            <div>
+              <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
+                isDark ? 'text-white' : 'text-gray-900'
+              }`}>Connect</h3>
+              <div className="space-y-4">
+                <a 
+                  href="https://github.com/Adamsomondi" 
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className={`flex items-center space-x-3 transition-all duration-300 group ${
+                    isDark 
+                      ? 'text-white hover:text-blue-400'
+                      : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
+                    isDark
+                      ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
+                      : 'bg-white/60 border-gray-200 group-hover:bg-purple-100'
+                  }`}>
+                    <FaGithub className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium">GitHub</span>
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/adams-omondi-338b94304" 
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className={`flex items-center space-x-3 transition-all duration-300 group ${
+                    isDark 
+                      ? 'text-white hover:text-blue-400'
+                      : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
+                    isDark
+                      ? 'bg-gray-800 border-gray-700 group-hover:bg-blue-900/50 group-hover:border-blue-700'
+                      : 'bg-white/60 border-gray-200 group-hover:bg-blue-100'
+                  }`}>
+                    <FaLinkedin className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium">LinkedIn</span>
+                </a>
+                <a 
+                  href="https://x.com/deepneuralmess" 
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className={`flex items-center space-x-3 transition-all duration-300 group ${
+                    isDark 
+                      ? 'text-white hover:text-blue-400'
+                      : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
+                    isDark
+                      ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
+                      : 'bg-white/60 border-gray-200 group-hover:bg-gray-100'
+                  }`}>
+                    <FaXTwitter className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium">Twitter</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className={`mt-12 pt-8 border-t transition-colors duration-500 text-center ${
+            isDark ? 'border-gray-800' : 'border-gray-200/50'
+          }`}>
+            <p className={`font-medium mb-2 transition-colors duration-500 ${
+              isDark ? 'text-white' : 'text-gray-700'
+            }`}>Made with ❤️ by Adams.</p>
+            <p className={`text-sm transition-colors duration-500 ${
+              isDark ? 'text-gray-400' : 'text-gray-600'
+            }`}>&copy; 2025 Adams. All rights reserved.</p>
           </div>
         </div>
       </footer>

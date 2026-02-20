@@ -1,3 +1,4 @@
+// src/router/index.jsx
 import React, { Suspense, lazy } from 'react';
 import {  
   createBrowserRouter, 
@@ -14,6 +15,12 @@ import ContactPage, { contactAction } from '../pages/ContactPage';
 import BlogPostPage, { blogPostLoader } from '../pages/BlogPostPage';
 import LandingPage from '../pages/LandingPage';
 
+// Components
+import BluetoothExplorer from '../components/BluetoothExplorer';
+import MediaExplorer from '../components/MediaExplorer';
+import DeviceExplorer from '../components/DeviceExplorer';
+import SpeechExplorer from '../components/SpeechExplorer';
+
 // Shared
 import Layout from '../components/Layout';
 import ErrorPage from '../pages/ErrorPage';
@@ -26,9 +33,12 @@ const LazyProjectDetail = lazy(() => Promise.resolve({ default: ProjectDetailPag
 const LazyBlog = lazy(() => Promise.resolve({ default: BlogPage }));
 const LazyBlogPost = lazy(() => Promise.resolve({ default: BlogPostPage }));
 const LazyContact = lazy(() => Promise.resolve({ default: ContactPage }));
+const LazyBluetooth = lazy(() => Promise.resolve({ default: BluetoothExplorer }));
+const LazyMedia = lazy(() => Promise.resolve({ default: MediaExplorer }));
+const LazyDevice = lazy(() => Promise.resolve({ default: DeviceExplorer }));
 
 const router = createBrowserRouter([
-  // Landing page route - ALWAYS shows when visiting root
+  // Landing page route
   {
     path: '/',
     element: <LandingPage />,
@@ -130,10 +140,68 @@ const router = createBrowserRouter([
       }
     ]
   },
+
+  {
+  path: '/speech',
+  element: <Layout />,
+  children: [{ index: true, element: <SpeechExplorer /> }]
+},
+  
+  // Bluetooth Explorer route
+  {
+    path: '/bluetooth',
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <LazyBluetooth />
+          </Suspense>
+        )
+      }
+    ]
+  },
+   // Device Explorer route
+{
+  path: '/device',
+  element: <Layout />,
+  errorElement: <ErrorPage />,
+  children: [
+    {
+      index: true,
+      element: (
+        <Suspense fallback={<LoadingSpinner />}>
+          <LazyDevice />
+        </Suspense>
+      )
+    }
+  ]
+},
+
+  // Media Explorer route
+  {
+    path: '/media',
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <LazyMedia />
+          </Suspense>
+        )
+      }
+    ]
+  },
+  
   {
     path: '/redirect-demo',
     element: <Navigate to="/projects" replace />
   },
+  
   // Catch-all route for 404
   {
     path: '*',
