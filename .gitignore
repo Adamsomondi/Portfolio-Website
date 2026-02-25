@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Testing
+coverage
+*.lcov
+
+#API keys and env files
+.env
+.env.local  
+.env.*.local
+
+    
