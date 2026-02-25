@@ -37,6 +37,9 @@ const LazyBluetooth = lazy(() => Promise.resolve({ default: BluetoothExplorer })
 const LazyMedia = lazy(() => Promise.resolve({ default: MediaExplorer }));
 const LazyDevice = lazy(() => Promise.resolve({ default: DeviceExplorer }));
 
+// Lazy load AI Face page
+const LazyAiFace = lazy(() => import('../pages/AiFacePage'));
+
 const router = createBrowserRouter([
   // Landing page route
   {
@@ -142,10 +145,27 @@ const router = createBrowserRouter([
   },
 
   {
-  path: '/speech',
-  element: <Layout />,
-  children: [{ index: true, element: <SpeechExplorer /> }]
-},
+    path: '/speech',
+    element: <Layout />,
+    children: [{ index: true, element: <SpeechExplorer /> }]
+  },
+
+  // AI Assistant Face route
+  {
+    path: '/assistant',
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <LazyAiFace />
+          </Suspense>
+        )
+      }
+    ]
+  },
   
   // Bluetooth Explorer route
   {
@@ -163,22 +183,23 @@ const router = createBrowserRouter([
       }
     ]
   },
-   // Device Explorer route
-{
-  path: '/device',
-  element: <Layout />,
-  errorElement: <ErrorPage />,
-  children: [
-    {
-      index: true,
-      element: (
-        <Suspense fallback={<LoadingSpinner />}>
-          <LazyDevice />
-        </Suspense>
-      )
-    }
-  ]
-},
+
+  // Device Explorer route
+  {
+    path: '/device',
+    element: <Layout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <LazyDevice />
+          </Suspense>
+        )
+      }
+    ]
+  },
 
   // Media Explorer route
   {

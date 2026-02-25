@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent MUI CssBaseline from overriding your backgrounds */
+/*body {
+  background-color: transparent !important;
+}
+
+/* Ensure MUI components blend with glassmorphic design 
+.MuiPaper-root {
+  background-image: none !important;
+}
+  */

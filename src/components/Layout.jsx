@@ -1,4 +1,3 @@
-//Glassmorphic Layout with Animated Background and Responsive Navigation
 import React, { useState } from 'react';
 import { 
   Link, 
@@ -32,6 +31,9 @@ const Layout = () => {
   const navigation = useNavigation();
   const location = useLocation();
 
+  // Detect fullscreen routes — hide nav, footer, bg
+  const isFullscreen = location.pathname === '/assistant';
+
   React.useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -58,6 +60,16 @@ const Layout = () => {
     setIsDark(!isDark);
   };
 
+  // ─── Fullscreen route — just render Outlet, nothing else ────
+  if (isFullscreen) {
+    return (
+      <div className={`min-h-screen ${isDark ? 'bg-black' : 'bg-black'}`}>
+        <Outlet context={{ isDark, setIsDark }} />
+      </div>
+    );
+  }
+
+  // ─── Normal layout ──────────────────────────────────────────
   return (
     <div className={`min-h-screen transition-colors duration-500 ${
       isDark 
@@ -96,7 +108,7 @@ const Layout = () => {
               </Link>
             </motion.div>
             
-            {/* Desktop Navigation - Fluid Icons */}
+            {/* Desktop Navigation */}
             <div className="hidden sm:flex sm:items-center sm:space-x-6">
               <motion.div 
                 className={`flex items-center rounded-full px-4 py-2 transition-all duration-700 ${
@@ -194,7 +206,6 @@ const Layout = () => {
                 ))}
               </motion.div>
               
-              {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 className={`relative inline-flex items-center justify-center w-14 h-8 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg hover:shadow-xl hover:scale-105 ${
@@ -205,17 +216,9 @@ const Layout = () => {
                 aria-label="Toggle theme"
               >
                 <motion.div
-                  className={`absolute w-6 h-6 rounded-full shadow-md flex items-center justify-center ${
-                    isDark ? 'bg-white' : 'bg-white'
-                  }`}
-                  animate={{
-                    x: isDark ? 22 : -22,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 30
-                  }}
+                  className="absolute w-6 h-6 rounded-full shadow-md flex items-center justify-center bg-white"
+                  animate={{ x: isDark ? 22 : -22 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 >
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -238,7 +241,6 @@ const Layout = () => {
 
             {/* Mobile menu button */}
             <div className="sm:hidden flex items-center space-x-2">
-              {/* Mobile Theme Toggle */}
               <button
                 onClick={toggleTheme}
                 className={`relative inline-flex items-center justify-center w-12 h-7 rounded-full transition-all duration-500 focus:outline-none shadow-lg ${
@@ -249,15 +251,9 @@ const Layout = () => {
                 aria-label="Toggle theme"
               >
                 <motion.div
-                  className={`absolute w-5 h-5 rounded-full shadow-md flex items-center justify-center bg-white`}
-                  animate={{
-                    x: isDark ? 18 : -18,
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 30
-                  }}
+                  className="absolute w-5 h-5 rounded-full shadow-md flex items-center justify-center bg-white"
+                  animate={{ x: isDark ? 18 : -18 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 >
                   {isDark ? (
                     <MoonIcon className="w-3 h-3 text-gray-800" />
@@ -338,9 +334,8 @@ const Layout = () => {
         </div>
       )}
 
-      {/* Main Content - No nested box */}
+      {/* Main Content */}
       <main className="flex-1 relative overflow-hidden pt-16">
-        {/* Animated background elements */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
             isDark ? 'bg-white mix-blend-lighten' : 'bg-green-900 mix-blend-multiply'
@@ -353,7 +348,6 @@ const Layout = () => {
           }`} style={{ animationDelay: '2s' }}></div>
         </div>
 
-        {/* Content Container - Edge to edge */}
         <div className={`relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-20rem)] ${
           isDark ? 'text-white' : 'text-gray-900'
         }`}>
@@ -365,19 +359,18 @@ const Layout = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Outlet context={{ isDark }} />
+              <Outlet context={{ isDark, setIsDark }} />
             </motion.div>
           </AnimatePresence>
         </div>
       </main>
 
-      {/* Footer - No nested box */}
+      {/* Footer */}
       <footer className={`relative overflow-hidden transition-colors duration-500 ${
         isDark
           ? 'bg-black'
           : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
       }`}>
-        {/* Animated background elements */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
             isDark ? 'bg-purple-600 mix-blend-lighten' : 'bg-blue-400 mix-blend-multiply'
@@ -392,7 +385,6 @@ const Layout = () => {
 
         <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {/* Brand Section */}
             <div className="space-y-4">
               <p className={`leading-relaxed text-lg transition-colors duration-500 ${
                 isDark ? 'text-white' : 'text-gray-700'
@@ -401,8 +393,6 @@ const Layout = () => {
                 and developing high performing systems.
               </p>
             </div>
-
-            {/* Quick Links */}
             <div>
               <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
                 isDark ? 'text-white' : 'text-gray-900'
@@ -423,74 +413,44 @@ const Layout = () => {
                 ))}
               </div>
             </div>
-
-            {/* Connect Section */}
             <div>
               <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
                 isDark ? 'text-white' : 'text-gray-900'
               }`}>Connect</h3>
               <div className="space-y-4">
-                <a 
-                  href="https://github.com/Adamsomondi" 
-                  target="_blank"
-                  rel="noopener noreferrer" 
+                <a href="https://github.com/Adamsomondi" target="_blank" rel="noopener noreferrer" 
                   className={`flex items-center space-x-3 transition-all duration-300 group ${
-                    isDark 
-                      ? 'text-white hover:text-blue-400'
-                      : 'text-gray-700 hover:text-blue-600'
-                  }`}
-                >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                    isDark
-                      ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
-                      : 'bg-white/60 border-gray-200 group-hover:bg-purple-100'
+                    isDark ? 'text-white hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
                   }`}>
-                    <FaGithub className="w-5 h-5" />
-                  </div>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
+                    isDark ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
+                      : 'bg-white/60 border-gray-200 group-hover:bg-purple-100'
+                  }`}><FaGithub className="w-5 h-5" /></div>
                   <span className="font-medium">GitHub</span>
                 </a>
-                <a 
-                  href="https://www.linkedin.com/in/adams-omondi-338b94304" 
-                  target="_blank"
-                  rel="noopener noreferrer" 
+                <a href="https://www.linkedin.com/in/adams-omondi-338b94304" target="_blank" rel="noopener noreferrer"
                   className={`flex items-center space-x-3 transition-all duration-300 group ${
-                    isDark 
-                      ? 'text-white hover:text-blue-400'
-                      : 'text-gray-700 hover:text-blue-600'
-                  }`}
-                >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                    isDark
-                      ? 'bg-gray-800 border-gray-700 group-hover:bg-blue-900/50 group-hover:border-blue-700'
-                      : 'bg-white/60 border-gray-200 group-hover:bg-blue-100'
+                    isDark ? 'text-white hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
                   }`}>
-                    <FaLinkedin className="w-5 h-5" />
-                  </div>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
+                    isDark ? 'bg-gray-800 border-gray-700 group-hover:bg-blue-900/50 group-hover:border-blue-700'
+                      : 'bg-white/60 border-gray-200 group-hover:bg-blue-100'
+                  }`}><FaLinkedin className="w-5 h-5" /></div>
                   <span className="font-medium">LinkedIn</span>
                 </a>
-                <a 
-                  href="https://x.com/deepneuralmess" 
-                  target="_blank"
-                  rel="noopener noreferrer" 
+                <a href="https://x.com/deepneuralmess" target="_blank" rel="noopener noreferrer"
                   className={`flex items-center space-x-3 transition-all duration-300 group ${
-                    isDark 
-                      ? 'text-white hover:text-blue-400'
-                      : 'text-gray-700 hover:text-blue-600'
-                  }`}
-                >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                    isDark
-                      ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
-                      : 'bg-white/60 border-gray-200 group-hover:bg-gray-100'
+                    isDark ? 'text-white hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
                   }`}>
-                    <FaXTwitter className="w-5 h-5" />
-                  </div>
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
+                    isDark ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
+                      : 'bg-white/60 border-gray-200 group-hover:bg-gray-100'
+                  }`}><FaXTwitter className="w-5 h-5" /></div>
                   <span className="font-medium">Twitter</span>
                 </a>
               </div>
             </div>
           </div>
-
           <div className={`mt-12 pt-8 border-t transition-colors duration-500 text-center ${
             isDark ? 'border-gray-800' : 'border-gray-200/50'
           }`}>
@@ -499,7 +459,7 @@ const Layout = () => {
             }`}>Made with ❤️ by Adams.</p>
             <p className={`text-sm transition-colors duration-500 ${
               isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}>&copy; 2025 Adams. All rights reserved.</p>
+            }`}>&copy; 2026 Adams. All rights reserved.</p>
           </div>
         </div>
       </footer>
