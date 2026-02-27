@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export type ConversationState = 'idle' | 'listening' | 'thinking' | 'speaking';
-export type Emotion = 'neutral' | 'happy' | 'sad' | 'surprised' | 'angry' | 'thinking' | 'listening';
+export type Emotion = 'neutral' | 'happy' | 'sad' | 'surprised' | 'thinking' | 'talking' | 'listening' | 'angry';
 
 interface FaceState {
   emotion: Emotion;

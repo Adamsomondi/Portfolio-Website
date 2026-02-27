@@ -15,6 +15,8 @@ export const EMOTIONS: Record<Emotion, EmotionData> = {
   angry:     { browInnerUp: -0.5, eyeWide: 0.3, mouthSmile: -0.3, mouthOpen: 0.1 },
   thinking:  { browInnerUp: 0.4,  eyeWide: 0.1, mouthSmile: 0,   mouthOpen: 0   },
   listening: { browInnerUp: 0.2,  eyeWide: 0.1, mouthSmile: 0.2, mouthOpen: 0.1 },
+  talking:   { browInnerUp: 0.1,  eyeWide: 0.2, mouthSmile: 0.3, mouthOpen: 0.5 },
+  
 };
 
 export const FACE_POSITIONS = {

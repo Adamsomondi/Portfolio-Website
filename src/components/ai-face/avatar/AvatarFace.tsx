@@ -56,6 +56,7 @@ export const AvatarFace = () => {
   const { leftEye, rightEye, mouth } = FACE_POSITIONS;
 
   return (
+
     <group ref={groupRef}>
       <Head />
 
@@ -69,6 +70,7 @@ export const AvatarFace = () => {
       />
 
       <Mouth ref={mouthRef} position={[mouth.x, mouth.y, mouth.z]} />
+      
     </group>
   );
 };

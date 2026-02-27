@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFaceStore } from '../../../stores/faceStore';
 import { useConversation } from '../../../hooks/ai-face/useConversation';
-//import { TranscriptPanel } from './TranscriptPanel';
-import { MicButton } from './MicButton';
+ import { MicButton } from './MicButton';
 
 interface FaceControlsProps {
   isDark: boolean;
@@ -78,14 +77,17 @@ export const FaceControls = ({ isDark }: FaceControlsProps) => {
             </svg>
           )}
         </motion.button>
+          
+       
+       
+       <MicButton
+  isDark={isDark}
+  onTranscript={(text) => console.log('User said:', text)}
+  onResponse={(text) => console.log('AI responded:', text)}
+/> 
 
-        <MicButton
-          isListening={isListening}
-          isSpeaking={isSpeaking}
-          isDark={isDark}
-          onClick={handleMicClick}
-        />
-      </div>
+      </div> 
+      
 
       <AnimatePresence>
         {conversationState === 'idle' && (

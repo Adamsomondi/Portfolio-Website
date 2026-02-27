@@ -36,4 +36,3 @@ export const Eye = forwardRef<THREE.Group, EyeProps>(({ position }, ref) => {
 });
 
 Eye.displayName = 'Eye';
-
