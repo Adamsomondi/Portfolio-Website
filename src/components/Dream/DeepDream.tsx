@@ -18,6 +18,7 @@ vec3 mod289(vec3 x){ return x - floor(x*(1.0/289.0))*289.0; }
 vec2 mod289(vec2 x){ return x - floor(x*(1.0/289.0))*289.0; }
 vec3 permute(vec3 x){ return mod289(((x*34.0)+1.0)*x); }
 
+
 float snoise(vec2 v){
   const vec4 C = vec4(0.211324865405187,0.366025403784439,
                      -0.577350269189626,0.024390243902439);
@@ -42,6 +43,7 @@ float snoise(vec2 v){
   g.yz = a0.yz*x12.xz + h.yz*x12.yw;
   return 130.0*dot(m, g);
 }
+  
 
 float fbm(vec2 p){
   float v = 0.0, a = 0.5, f = 1.0;
@@ -302,11 +304,11 @@ export const DeepDream = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.3}
+          size={0.0}
           vertexColors
           sizeAttenuation
           transparent
-          opacity={0.00}
+          opacity={0.0}
           toneMapped={false}
         />
       </points>
@@ -324,11 +326,11 @@ export const DeepDream = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.3}
+          size={0.0}
           vertexColors
           sizeAttenuation
           transparent
-          opacity={0.18}
+          opacity={0.0}
           toneMapped={false}
         />
       </points>
@@ -346,7 +348,7 @@ export const DeepDream = () => {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.18}
+          size={0.10}
           vertexColors
           sizeAttenuation
           transparent

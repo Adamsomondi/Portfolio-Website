@@ -1,5 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMusicStore }  from '../../stores/musicStore';
+import { useMusicStore } from '../../stores/musicStore';
+
+// Helper function for media query checks, though CSS media queries are often preferred
+// for styling, this is useful for conditional inline styles or logic.
+const useIsMobile = (breakpoint = 768) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < breakpoint);
+    };
+    checkMobile(); // Check on mount
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, [breakpoint]);
+
+  return isMobile;
+};
 
 function fmt(s: number): string {
   const m = Math.floor(s / 60);
@@ -27,6 +44,7 @@ export const MusicPlayer = () => {
   const progressRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
   const [artLoaded, setArtLoaded] = useState(false);
+  const isMobile = useIsMobile(); // Check if we're on a mobile viewport
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -57,30 +75,21 @@ export const MusicPlayer = () => {
   const hasPrev = currentIdx > 0;
   const hasNext = currentIdx < queue.length - 1;
 
+  // Dynamic positioning based on mobile state
+const playerPositionStyles = isMobile
+    ? { top: 20, left: 20, right: 20, bottom: 'auto' }
+    : { bottom: 20, right: 20, left: 'auto', top: 'auto', width: 400 };
+
   return (
     <div
       style={{
         position: 'fixed',
-        bottom: 20,
-        right: 20,
         zIndex: 99999,
         fontFamily: "'Inter', 'Segoe UI', sans-serif",
+        ...playerPositionStyles, // Apply dynamic position
       }}
     >
-      {/* Nebula ambient glow */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: -16,
-          borderRadius: 30,
-          background: isPlaying
-            ? 'radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.1) 0%, rgba(236,72,153,0.06) 30%, rgba(6,182,212,0.06) 60%, transparent 80%)'
-            : 'none',
-          filter: 'blur(24px)',
-          pointerEvents: 'none',
-          transition: 'all 0.8s ease',
-        }}
-      />
+      {/* Removed the nebula ambient glow for a truly colorless, transparent look */}
 
       <div
         onMouseEnter={() => setHovered(true)}
@@ -90,22 +99,25 @@ export const MusicPlayer = () => {
           display: 'flex',
           alignItems: 'center',
           gap: 14,
-          width: 400,
-          maxWidth: 'calc(100vw - 40px)',
+          maxWidth: isMobile ? 'calc(100vw - 40px)' : '400px', // Responsive max-width
           padding: '10px 16px 10px 10px',
           borderRadius: 18,
-          background:
-            'linear-gradient(135deg, rgba(10,8,28,0.93) 0%, rgba(24,12,48,0.9) 40%, rgba(12,20,40,0.92) 100%)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
+          // Fluid, colorless background
+          background: 'rgba(255, 255, 255, 0.08)', // Very light, low-opacity white
+          backdropFilter: 'blur(30px)', // Increased blur for more fluid effect
+          WebkitBackdropFilter: 'blur(30px)',
+          // Subtle, almost invisible border
           border: `1px solid ${
-            hovered ? 'rgba(167,139,250,0.35)' : 'rgba(124,58,237,0.18)'
+            hovered ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)'
           }`,
+          // Soft, neutral shadow
           boxShadow: hovered
-            ? '0 0 24px rgba(124,58,237,0.1), 0 0 12px rgba(236,72,153,0.06), 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)'
-            : '0 0 16px rgba(124,58,237,0.05), 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03)',
+            ? '0 0 24px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)'
+            : '0 0 16px rgba(255,255,255,0.02), 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.02)',
           transition: 'all 0.35s ease',
           overflow: 'hidden',
+          // Adjust width for mobile to span the space
+          width: isMobile ? 'auto' : '100%',
         }}
       >
         {/* Progress bar */}
@@ -118,7 +130,7 @@ export const MusicPlayer = () => {
             left: 0,
             right: 0,
             height: 3,
-            background: 'rgba(255,255,255,0.04)',
+            background: 'rgba(255,255,255,0.05)', // Subtle background
             cursor: 'pointer',
             zIndex: 2,
           }}
@@ -127,7 +139,8 @@ export const MusicPlayer = () => {
             style={{
               height: '100%',
               width: `${progress}%`,
-              background: 'linear-gradient(90deg, #a855f7, #ec4899, #06b6d4)',
+              // Subtle white gradient for progress
+              background: 'linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0.6))',
               borderRadius: '0 2px 2px 0',
               transition: 'width 0.3s linear',
               position: 'relative',
@@ -142,8 +155,8 @@ export const MusicPlayer = () => {
                 width: 6,
                 height: 6,
                 borderRadius: '50%',
-                background: '#e879f9',
-                boxShadow: '0 0 8px rgba(232,121,249,0.6)',
+                background: 'rgba(255,255,255,0.8)', // White thumb
+                boxShadow: '0 0 8px rgba(255,255,255,0.4)', // Soft glow
                 opacity: hovered ? 1 : 0,
                 transition: 'opacity 0.2s',
               }}
@@ -158,8 +171,9 @@ export const MusicPlayer = () => {
               position: 'absolute',
               inset: -3,
               borderRadius: '50%',
+              // Colorless conic gradient for the ring
               background: isPlaying
-                ? 'conic-gradient(from 0deg, transparent 0%, rgba(168,85,247,0.35) 15%, transparent 30%, rgba(236,72,153,0.3) 50%, transparent 65%, rgba(6,182,212,0.35) 80%, transparent 100%)'
+                ? 'conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,0.1) 15%, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 65%, rgba(255,255,255,0.1) 80%, transparent 100%)'
                 : 'none',
               animation: isPlaying ? 'spin-ring 3s linear infinite' : 'none',
               WebkitMask: 'radial-gradient(transparent 58%, black 60%)',
@@ -175,7 +189,7 @@ export const MusicPlayer = () => {
               height: 52,
               borderRadius: '50%',
               objectFit: 'cover',
-              border: '2px solid rgba(167,139,250,0.3)',
+              border: '2px solid rgba(255,255,255,0.15)', // Subtle white border
               animation: isPlaying ? 'spin-vinyl 6s linear infinite' : 'none',
               opacity: artLoaded ? 1 : 0.3,
               transition: 'opacity 0.3s',
@@ -190,8 +204,8 @@ export const MusicPlayer = () => {
               width: 8,
               height: 8,
               borderRadius: '50%',
-              background: 'rgba(10,8,28,0.9)',
-              border: '1px solid rgba(167,139,250,0.2)',
+              background: 'rgba(255,255,255,0.08)', // Translucent white center
+              border: '1px solid rgba(255,255,255,0.1)', // Subtle border
             }}
           />
         </div>
@@ -200,13 +214,13 @@ export const MusicPlayer = () => {
         <div style={{ flex: 1, minWidth: 0, padding: '2px 0' }}>
           <div
             style={{
-              color: '#f0e6ff',
+              color: 'rgba(255,255,255,0.9)', // Bright white for readability
               fontSize: 13,
               fontWeight: 600,
               letterSpacing: '0.01em',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap' as const,
+              whiteSpace: 'nowrap',
               lineHeight: 1.3,
             }}
           >
@@ -214,15 +228,13 @@ export const MusicPlayer = () => {
           </div>
           <div
             style={{
-              background: 'linear-gradient(90deg, #c084fc, #f472b6)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
+              // Subtle transparent white for artist name
+              color: 'rgba(255,255,255,0.6)',
               fontSize: 11,
               fontWeight: 500,
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap' as const,
+              whiteSpace: 'nowrap',
               lineHeight: 1.3,
               marginTop: 2,
             }}
@@ -232,13 +244,13 @@ export const MusicPlayer = () => {
           {hasNext && (
             <div
               style={{
-                color: 'rgba(167,139,250,0.3)',
+                color: 'rgba(255,255,255,0.3)', // Very subtle for next track
                 fontSize: 9,
                 marginTop: 3,
                 letterSpacing: '0.03em',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap' as const,
+                whiteSpace: 'nowrap',
               }}
             >
               Next · {queue[currentIdx + 1]?.name}
@@ -255,9 +267,9 @@ export const MusicPlayer = () => {
               width: 30,
               height: 30,
               borderRadius: '50%',
-              border: `1px solid ${hasPrev ? 'rgba(167,139,250,0.2)' : 'rgba(255,255,255,0.05)'}`,
-              background: hasPrev ? 'rgba(167,139,250,0.06)' : 'rgba(255,255,255,0.02)',
-              color: hasPrev ? 'rgba(196,132,252,0.8)' : 'rgba(255,255,255,0.15)',
+              border: `1px solid ${hasPrev ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)'}`,
+              background: hasPrev ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)',
+              color: hasPrev ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.15)',
               fontSize: 11,
               cursor: hasPrev ? 'pointer' : 'default',
               display: 'flex',
@@ -276,11 +288,11 @@ export const MusicPlayer = () => {
               width: 40,
               height: 40,
               borderRadius: '50%',
-              border: '1.5px solid rgba(168,85,247,0.3)',
+              border: '1.5px solid rgba(255,255,255,0.2)',
               background: isPlaying
-                ? 'radial-gradient(circle at center, rgba(168,85,247,0.15) 0%, rgba(236,72,153,0.08) 60%, rgba(6,182,212,0.05) 100%)'
+                ? 'radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.05) 100%)'
                 : 'rgba(255,255,255,0.04)',
-              color: '#e879f9',
+              color: 'rgba(255,255,255,0.9)', // White play/pause icon
               fontSize: 14,
               cursor: 'pointer',
               display: 'flex',
@@ -288,7 +300,7 @@ export const MusicPlayer = () => {
               justifyContent: 'center',
               transition: 'all 0.25s ease',
               boxShadow: isPlaying
-                ? '0 0 16px rgba(168,85,247,0.12), 0 0 8px rgba(236,72,153,0.08)'
+                ? '0 0 16px rgba(255,255,255,0.08), 0 0 8px rgba(255,255,255,0.04)' // Soft white glow
                 : 'none',
               position: 'relative',
               outline: 'none',
@@ -300,7 +312,7 @@ export const MusicPlayer = () => {
                   position: 'absolute',
                   inset: -4,
                   borderRadius: '50%',
-                  border: '1px solid rgba(168,85,247,0.15)',
+                  border: '1px solid rgba(255,255,255,0.1)', // Subtle white pulse ring
                   animation: 'pulse-ring 2s ease-out infinite',
                 }}
               />
@@ -317,9 +329,9 @@ export const MusicPlayer = () => {
               width: 30,
               height: 30,
               borderRadius: '50%',
-              border: `1px solid ${hasNext ? 'rgba(6,182,212,0.2)' : 'rgba(255,255,255,0.05)'}`,
-              background: hasNext ? 'rgba(6,182,212,0.06)' : 'rgba(255,255,255,0.02)',
-              color: hasNext ? 'rgba(34,211,238,0.8)' : 'rgba(255,255,255,0.15)',
+              border: `1px solid ${hasNext ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.05)'}`,
+              background: hasNext ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)',
+              color: hasNext ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.15)',
               fontSize: 11,
               cursor: hasNext ? 'pointer' : 'default',
               display: 'flex',
@@ -362,7 +374,7 @@ export const MusicPlayer = () => {
             bottom: 3,
             right: 16,
             fontSize: 9,
-            color: 'rgba(167,139,250,0.3)',
+            color: 'rgba(255,255,255,0.4)', // Subtle white for time
             letterSpacing: '0.03em',
             fontVariantNumeric: 'tabular-nums',
           }}

@@ -1,7 +1,7 @@
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { useFaceStore, ConversationState } from '../../../stores/faceStore';
+import { useFaceStore, ConversationState } from '../../stores/faceStore';
 
 // ═══════════════════════════════════════════════════════════════
 // PANTONE COTY LIGHTING — tinted, not saturated

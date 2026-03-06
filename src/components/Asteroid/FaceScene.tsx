@@ -3,9 +3,8 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 
 import { AvatarFace } from './avatar/AvatarFace';
-import { DreamEnvironment } from './environment/DreamEnvironment';
-// Update the import path below to the correct file where DreamLighting is exported
-import { DreamLighting } from './environment/DreamLighting';
+import { Lighting } from './environment/Lighting';
+import { SpaceEnvironment } from './environment/SpaceEnvironment';
 
 interface FaceSceneProps {
   isDark: boolean;
@@ -24,12 +23,12 @@ export const FaceScene = ({ isDark }: FaceSceneProps) => {
         style={{
           width: '100%',
           height: '100%',
-          background: isDark ? '#05020e' : '#6b4a9e',
+          background: isDark ? '#070710' : '#4a2c8a',
         }}
       >
         <Suspense fallback={null}>
-          <DreamEnvironment isDark={isDark} />
-          <DreamLighting isDark={isDark} />
+          <SpaceEnvironment isDark={isDark} />
+          <Lighting isDark={isDark} />
           <AvatarFace />
           <OrbitControls
             enableZoom={false}
