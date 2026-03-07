@@ -53,7 +53,7 @@ const Layout = () => {
     { name: 'Projects', to: '/projects', icon: BriefcaseIcon },
     { name: 'Blogs', to: '/blog', icon: DocumentTextIcon },
     { name: 'Contact', to: '/contact', icon: EnvelopeIcon },
-    { name: 'Bluetooth', to: '/bluetooth', icon: SignalIcon },
+   // { name: 'Bluetooth', to: '/bluetooth', icon: SignalIcon },
   ];
 
   const toggleTheme = () => {

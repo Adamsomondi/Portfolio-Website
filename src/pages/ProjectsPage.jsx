@@ -1,57 +1,18 @@
-//This is the Projects Page with Dark Mode Support using Outlet Context
+// This is the Projects Page with Dark Mode Support using Outlet Context
 import React, { useState } from 'react';
-import {  
-  useNavigate, 
+import {
+  useNavigate,
   useLoaderData,
   useOutletContext
 } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tab } from '@headlessui/react';
-import Rick from '../assets/86a7e2c8-d1b6-49ab-a52d-75ca3fe21a18.jpg';
-import Whisper from '../assets/77ac9663ba-8aa4-44bf-867d-6b87c92ce12b.jpg';
-import Bank from '../assets/cd726ca8-0c61-45d2-a204-a40675fea986.jpg';
+import { api } from '../lib/api';
 
-// Mock Data Store
-const mockData = {
-  projects: [
-    {
-      id: '1',
-      title: 'Rick and Morty Website',
-      description: 'Full-stack website that displays data from the Rick and Morty API',
-      tech: ['React', 'Node.js', 'MongoDB'],
-      image: Rick,
-      github: 'https://github.com/Adamsomondi/Rick-and-Morty',
-      demo: 'https://mortymultiverse.netlify.app/',
-      featured: true
-    },
-    {
-      id: '2', 
-      title: 'Whisper AI',
-      description: 'Implementation of OpenAI\'s Whisper model for speech-to-text transcription',
-      tech: ['Python', 'OpenAI'],
-      image: Whisper,
-      github: 'https://github.com/Adamsomondi/Whisper-Model',
-      demo: '',
-      featured: false
-    },
-    {
-      id: '3',
-      title: 'Bank-Churn-Prediction',
-      description: 'Predicting customer churn for a bank using machine learning techniques',
-      tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Analysis'],
-      image: Bank,
-      github: 'https://github.com/Adamsomondi/Bank-Churn-Prediction',
-      demo: '',
-      featured: true
-    }
-  ],
-};
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
+// ── Loader ────────────────────────────────────────────────────────────────────
 export const projectsLoader = async () => {
-  await delay(600);
-  return { projects: mockData.projects };
+  const projects = await api.getProjects();
+  return { projects };
 };
 
 const ProjectsPage = () => {
@@ -77,7 +38,7 @@ const ProjectsPage = () => {
           <p className={`text-xl ${
             isDark ? 'text-white' : 'text-gray-600'
           }`}>
-            A collection of my work and hobby side projects
+            A collection of my professional work
           </p>
         </div>
 

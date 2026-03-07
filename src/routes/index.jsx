@@ -144,6 +144,9 @@ const router = createBrowserRouter([
     ]
   },
 
+
+  /*
+
   {
     path: '/speech',
     element: <Layout />,
@@ -223,6 +226,8 @@ const router = createBrowserRouter([
     element: <Navigate to="/projects" replace />
   },
   
+  */
+ 
   // Catch-all route for 404
   {
     path: '*',

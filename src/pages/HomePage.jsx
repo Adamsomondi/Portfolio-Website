@@ -1,80 +1,24 @@
-//This is the Home Page with Dark Mode Support using Outlet Context
+// This is the Home Page with Dark Mode Support using Outlet Context
 import React, { useState, useEffect } from 'react';
-import { 
-  Link, 
-  useNavigate,  
+import {
+  Link,
+  useNavigate,
   useLoaderData,
   useOutletContext
 } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  ArrowRightIcon,
-} from '@heroicons/react/24/outline';
-import Rick from '../assets/tumblr_ea2ff7fad956387edb2c0a923c083692_ec1981e2_540.gif';
-import Bank from '../assets/tumblr_067e8938c05051db6164caca9e552952_6afccc6b_540.gif';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { api } from '../lib/api';
 
-// Mock Data Store - To simulate API data.
-const mockData = {
-  projects: [
-    {
-      id: '1',
-      title: 'Rick and Morty Website',
-      description: 'Full-stack rick and morty website solution with React and Node.js',
-      tech: ['React', 'Node.js', 'MongoDB', 'API Integration'],
-      image: Rick,
-      github: 'https://github.com/Adamsomondi/Rick-and-Morty.git',
-      demo: 'https://mortymultiverse.netlify.app/',
-      featured: true
-    },
-    {
-      id: '3',
-      title: 'Bank-Churn-Prediction',
-      description: 'Predicting customer churn for a bank using machine learning techniques',
-      tech: ['Python', 'Scikit-Learn', 'Pandas', 'Data Analysis'],
-      image: Bank,
-      github: 'https://github.com/Adamsomondi/Bank-Churn-Prediction',
-      demo: '',
-      featured: true
-    }
-  ],
-  blogPosts: [
-    {
-      id: '1',
-      title: 'The Why Behind Relational Database Design: Normalization Explained',
-      excerpt: 'Understanding data anomalies, redundancy, and the normalization process that ensures reliable and efficient relational databases',
-      author: 'Adams',
-      date: '2024-12-15',
-      readTime: '8 min read',
-      tags: ['Databases', 'SQL', 'RDBMS', 'Normalization', 'Data Architecture']
-    },
-    {
-      id: '2',
-      title: 'MongoDB Architecture: Embracing Denormalization for Performance',
-      excerpt: 'Exploring MongoDB\'s approach to data modeling, where duplication and denormalization become strategic advantages',
-      author: 'Adams',
-      date: '2024-12-10',
-      readTime: '10 min read',
-      tags: ['MongoDB', 'NoSQL', 'Databases', 'Sharding', 'Replication', 'Scalability']
-    }
-  ],
-  profile: {
-    name: 'Adams Omondi ',
-    title: 'Data Engineer & Data Analyst',
-    bio: 'Passionate developer with 5+ years of experience building modern web applications',
-    skills: ['React', 'Node.js', 'TypeScript', 'Python', 'AWS', 'MongoDB'],
-    experience: '3+ years',
-    location: 'Nairobi, Kenya'
-  }
-};
-
-// Simulate API delays
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
+// ── Loader ────────────────────────────────────────────────────────────────────
 export const homeLoader = async () => {
-  await delay(800);
+  const [featuredProjects, allPosts] = await Promise.all([
+    api.getFeaturedProjects(),
+    api.getBlogPosts()
+  ]);
   return {
-    featuredProjects: mockData.projects.filter(p => p.featured),
-    recentPosts: mockData.blogPosts.slice(0, 2)
+    featuredProjects,
+    recentPosts: allPosts.slice(0, 2)
   };
 };
 
@@ -166,15 +110,6 @@ const HomePage = () => {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="text-center space-y-3"
               >
-                <blockquote className={`text-base font-bold italic ${
-                  isDark ? 'text-white' : 'text-gray-800'
-                }`}>
-                  "The future belongs to those who can think in systems, not just products."
-                </blockquote>
-                <cite className={`text-sm font-medium block ${
-                  isDark ? 'text-white' : 'text-gray-700'
-                }`}>— Iddris Sandu</cite>
-                
                 <div className="flex justify-center gap-8 pt-2">
                   <div className="text-center">
                     <div className={`text-xl font-bold ${
@@ -263,14 +198,6 @@ const HomePage = () => {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="text-center space-y-3"
               >
-                <blockquote className={`text-base font-bold italic ${
-                  isDark ? 'text-white' : 'text-gray-800'
-                }`}>
-                  "The future belongs to those who can think in systems, not just products."
-                </blockquote>
-                <cite className={`text-sm font-medium block ${
-                  isDark ? 'text-white' : 'text-gray-700'
-                }`}>— Iddris Sandu</cite>
                 
                 <div className="flex justify-center gap-8 pt-2">
                   <div className="text-center">
@@ -284,7 +211,7 @@ const HomePage = () => {
                   <div className="text-center">
                     <div className={`text-xl font-bold ${
                       isDark ? 'text-white' : 'text-gray-800'
-                    }`}>10+</div>
+                    }`}>30+</div>
                     <div className={`text-xs ${
                       isDark ? 'text-white' : 'text-gray-700'
                     }`}>Projects</div>
@@ -316,7 +243,7 @@ const HomePage = () => {
             <p className={`text-lg ${
               isDark ? 'text-white' : 'text-green-900'
             }`}>
-              Some of my best work.
+         
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
