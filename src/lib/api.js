@@ -1,4 +1,4 @@
-// Reads VITE_API_URL in production, falls back to Vite proxy in dev
+// src/lib/api.js
 const BASE = import.meta.env.VITE_API_URL || '/api';
 
 async function get(path) {
@@ -11,7 +11,7 @@ async function post(path, body) {
   const res = await fetch(`${BASE}${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
   return res.json();
 }
@@ -23,5 +23,5 @@ export const api = {
   getBlogPosts:        () => get('/blog'),
   getBlogPost:      (id) => get(`/blog/${id}`),
   getProfile:          () => get('/profile'),
-  sendContact:      (data) => post('/contact', data),   // ← add this
+  sendContact:    (data) => post('/contact', data),
 };

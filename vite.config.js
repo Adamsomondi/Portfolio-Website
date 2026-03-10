@@ -5,7 +5,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api':    'https://portfolio-website-k93t.onrender.com/api/$1',
-    }
-  }
+      '/api': {
+        target: 'https://portfolio-website-k93t.onrender.com',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 });

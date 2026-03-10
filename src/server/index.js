@@ -22,12 +22,11 @@ const allowedOrigins = [
   'https://portfolioxwebsite.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000',
-  /^https:\/\/portfoliowebsite.*\.vercel\.app$/,
+  /^https:\/\/portfolioxwebsite.*\.vercel\.app$/,
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
-    // allow server-to-server or curl requests with no origin
     if (!origin) return callback(null, true);
 
     const allowed = allowedOrigins.some(o =>
@@ -45,6 +44,20 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// ── Root route so Render doesn't show "Cannot GET /" ──
+app.get('/', (_req, res) => {
+  res.json({
+    message: 'Portfolio API is running',
+    endpoints: [
+      '/api/projects',
+      '/api/blog',
+      '/api/profile',
+      '/api/contact',
+      '/api/health',
+    ],
+  });
+});
 
 app.use('/api/projects', projectsRouter);
 app.use('/api/blog',     blogRouter);
