@@ -1,19 +1,14 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useOutletContext, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeftIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { FaceScene } from '../components/Desert/FaceScene';
 import { FaceControls } from '../components/ai-face/controls/FaceControls';
 import { MusicPlayer } from '../components/music/MusicPlayer';
 
-interface LayoutContext {
-  isDark: boolean;
-  setIsDark: (v: boolean) => void;
-}
-
 const DesertFacePage = () => {
-  const { isDark, setIsDark } = useOutletContext<LayoutContext>();
   const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(false); // local state, no outlet needed
 
   const [transcript, setTranscript] = useState<string>('');
   const [response, setResponse] = useState<string>('');
@@ -101,7 +96,7 @@ const DesertFacePage = () => {
           transition={{ delay: 0.8, duration: 0.6, ease: 'easeOut' }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/home')}
+          onClick={() => navigate(-1)}
           className={`pointer-events-auto flex items-center space-x-2 px-4 py-2 rounded-full backdrop-blur-xl transition-all duration-300 ${overlayBtn}`}
         >
           <ArrowLeftIcon className="w-4 h-4" />

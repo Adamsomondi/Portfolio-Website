@@ -1,19 +1,14 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useOutletContext, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { OceanScene } from '../components/ocean/OceanScene';
 import { FaceControls } from '../components/ai-face/controls/FaceControls';
 import { MusicPlayer } from '../components/music/MusicPlayer';
 
-interface LayoutContext {
-  isDark: boolean;
-  setIsDark: (v: boolean) => void;
-}
-
 const OceanFacePage = () => {
-  const { isDark } = useOutletContext<LayoutContext>();
   const navigate = useNavigate();
+  const isDark = false; // ocean has its own palette
 
   const [transcript, setTranscript] = useState<string>('');
   const [response, setResponse] = useState<string>('');
@@ -89,7 +84,7 @@ const OceanFacePage = () => {
           transition={{ delay: 0.8, duration: 0.6, ease: 'easeOut' }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => navigate('/home')}
+          onClick={() => navigate(-1)}
           className="pointer-events-auto flex items-center space-x-2 px-4 py-2 rounded-full backdrop-blur-xl bg-white/50 hover:bg-white/70 text-cyan-900 border border-white/40 shadow-lg shadow-cyan-900/10 transition-all duration-300"
         >
           <ArrowLeftIcon className="w-4 h-4" />
