@@ -37,7 +37,7 @@ export const projects = [
     longDescription:
       'The desert environment demonstrates real-time procedural sky generation using custom GLSL fragment shaders — simplex noise, fractional Brownian motion, and triple domain warping generate every pixel on the GPU at sixty frames per second with zero textures and zero image files. A day/night toggle swaps the entire shader pipeline, particle palette, and tone mapping strategy, bypassing default ACES filmic compression to preserve color saturation. State management flows through Zustand, driving a seven-light cinematographic rig that lerps between Pantone Color of the Year palettes in real time. Everything executes client-side — the server delivers a static JavaScript bundle once, then the user\'s GPU handles the rest.',
     tech: ['React', 'Three.js', 'React Three Fiber', 'GLSL Shaders', 'Zustand', 'TypeScript', 'Framer Motion', 'Tailwind CSS'],
-    image: '/images/projects/mavin.png',
+    image: '/images/projects/omoty.png',
     github: '',
     demo: '/demo/desert',
     internal: true,
