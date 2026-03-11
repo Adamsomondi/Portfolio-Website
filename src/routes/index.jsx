@@ -57,7 +57,6 @@ const router = createBrowserRouter([
 
   // ── Fullscreen demos — no Layout ──
   { id: 'demo-desert', path: '/demo/desert', element: wrap(DesertFacePage), errorElement: <ErrorPage /> },
-  { id: 'demo-ocean',  path: '/demo/ocean',  element: wrap(OceanFacePage),  errorElement: <ErrorPage /> },
   { id: 'demo-forest', path: '/demo/forest', element: wrap(ForestFacePage), errorElement: <ErrorPage /> },
 
   { path: '*', element: <ErrorPage /> },
