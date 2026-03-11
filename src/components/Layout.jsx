@@ -1,133 +1,116 @@
-import React, { useState } from 'react';
-import { 
-  Link, 
-  NavLink, 
-  useLocation, 
-  useNavigation, 
-  Outlet
+import React, { useState, useEffect } from 'react';
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigation,
+  Outlet,
 } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Fragment } from 'react';
 import { Transition } from '@headlessui/react';
-import { 
-  HomeIcon, 
-  UserIcon, 
-  BriefcaseIcon, 
-  EnvelopeIcon, 
+import {
+  HomeIcon,
+  UserIcon,
+  BriefcaseIcon,
+  EnvelopeIcon,
   DocumentTextIcon,
   Bars3Icon,
   XMarkIcon,
   SunIcon,
   MoonIcon,
-  SignalIcon
 } from '@heroicons/react/24/outline';
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6';
 
+const NAV_ITEMS = [
+  { name: 'Home',     to: '/home',     icon: HomeIcon },
+  { name: 'About',    to: '/about',    icon: UserIcon },
+  { name: 'Projects', to: '/projects', icon: BriefcaseIcon },
+  { name: 'Blogs',    to: '/blog',     icon: DocumentTextIcon },
+  { name: 'Contact',  to: '/contact',  icon: EnvelopeIcon },
+];
+
+const SOCIALS = [
+  { name: 'GitHub',   href: 'https://github.com/Adamsomondi',                          icon: FaGithub },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/adams-omondi-338b94304',      icon: FaLinkedin },
+  { name: 'Twitter',  href: 'https://x.com/deepneuralmess',                            icon: FaXTwitter },
+];
 
 const Layout = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigation = useNavigation();
   const location = useLocation();
 
-  // Detect fullscreen routes — hide nav, footer, bg
-  const isFullscreen = location.pathname === '/assistant';
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const navigationItems = [
-    { name: 'Home', to: '/home', icon: HomeIcon },
-    { name: 'About', to: '/about', icon: UserIcon },
-    { name: 'Projects', to: '/projects', icon: BriefcaseIcon },
-    { name: 'Blogs', to: '/blog', icon: DocumentTextIcon },
-    { name: 'Contact', to: '/contact', icon: EnvelopeIcon },
-   // { name: 'Bluetooth', to: '/bluetooth', icon: SignalIcon },
-  ];
+  const toggleTheme = () => setIsDark((d) => !d);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
-
-  // ─── Fullscreen route — just render Outlet, nothing else ────
-  if (isFullscreen) {
-    return (
-      <div className={`min-h-screen ${isDark ? 'bg-black' : 'bg-black'}`}>
-        <Outlet context={{ isDark, setIsDark }} />
-      </div>
-    );
-  }
-
-  // ─── Normal layout ──────────────────────────────────────────
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${
-      isDark 
-        ? 'bg-black dark' 
-        : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
-    }`}>
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 shadow-sm transition-all duration-700 ease-out ${
-        isDark 
-          ? 'bg-black/80 backdrop-blur-xl' 
-          : 'bg-white/80 backdrop-blur-xl'
-      } ${isScrolled ? 'py-2' : 'py-0'} ${
-        isDark ? 'border-gray-800' : 'border-gray-500'
-      }`}>
+    <div
+      className={`min-h-screen transition-colors duration-500 ${
+        isDark
+          ? 'bg-black dark'
+          : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
+      }`}
+    >
+      {/* ─── Navbar ─────────────────────────────────────────── */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 shadow-sm transition-all duration-700 ease-out ${
+          isDark ? 'bg-black/80 backdrop-blur-xl' : 'bg-white/80 backdrop-blur-xl'
+        } ${isScrolled ? 'py-2' : 'py-0'} ${
+          isDark ? 'border-gray-800' : 'border-gray-500'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <motion.div 
+            {/* Logo */}
+            <motion.div
               className="flex items-center overflow-hidden"
-              animate={{
-                width: isScrolled ? 0 : 'auto',
-                opacity: isScrolled ? 0 : 1,
-              }}
-              transition={{
-                duration: 0.1,
-                ease: [0.4, 0, 0.2, 1]
-              }}
+              animate={{ width: isScrolled ? 0 : 'auto', opacity: isScrolled ? 0 : 1 }}
+              transition={{ duration: 0.1, ease: [0.4, 0, 0.2, 1] }}
             >
-              <Link to="/home" className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-700 ${
-                isDark
-                  ? 'text-black border-gray-800 hover:border-gray-700 hover:shadow-lg'
-                  : 'hover:before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
-              } hover:scale-105`}>
-                <span className={`text-1xl font-serif font-bold transition-all duration-300 ${
-                  isDark ? 'text-white' : 'text-green-900'
-                }`}>Adams</span>
+              <Link
+                to="/home"
+                className={`group flex items-center space-x-3 px-8 py-3 rounded-full border transition-all duration-700 hover:scale-105 ${
+                  isDark
+                    ? 'text-black border-gray-800 hover:border-gray-700 hover:shadow-lg'
+                    : 'hover:before:bg-gradient-to-r before:from-green-400 before:via-emerald-500 before:to-green-600'
+                }`}
+              >
+                <span
+                  className={`text-1xl font-serif font-bold transition-all duration-300 ${
+                    isDark ? 'text-white' : 'text-green-900'
+                  }`}
+                >
+                  Adams
+                </span>
               </Link>
             </motion.div>
-            
-            {/* Desktop Navigation */}
+
+            {/* ─── Desktop Nav ─── */}
             <div className="hidden sm:flex sm:items-center sm:space-x-6">
-              <motion.div 
+              <motion.div
                 className={`flex items-center rounded-full px-4 py-2 transition-all duration-700 ${
-                  isScrolled 
-                    ? isDark 
-                      ? 'bg-gray-900/50 backdrop-blur-sm space-x-2'
-                      : 'bg-white/50 backdrop-blur-sm space-x-2'
-                    : 'space-x-6'
+                  isScrolled
+                    ? isDark
+                      ? 'bg-gray-900/50 backdrop-blur-sm'
+                      : 'bg-white/50 backdrop-blur-sm'
+                    : ''
                 }`}
-                animate={{
-                  gap: isScrolled ? '0.5rem' : '1.5rem',
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 30
-                }}
+                animate={{ gap: isScrolled ? '0.5rem' : '1.5rem' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
-                {navigationItems.map((item) => (
+                {NAV_ITEMS.map((item) => (
                   <NavLink
                     key={item.name}
                     to={item.to}
@@ -136,12 +119,12 @@ const Layout = () => {
                         isScrolled ? 'px-2 py-2' : 'px-1 pt-1'
                       } ${
                         isActive
-                          ? isDark 
+                          ? isDark
                             ? 'text-white'
                             : 'text-green-900'
                           : isDark
-                            ? 'text-white hover:text-gray-300'
-                            : 'text-gray-500 hover:text-green-700'
+                          ? 'text-white hover:text-gray-300'
+                          : 'text-gray-500 hover:text-green-700'
                       }`
                     }
                   >
@@ -149,9 +132,7 @@ const Layout = () => {
                       <>
                         <motion.div
                           className={`flex items-center justify-center transition-all duration-700 ${
-                            isScrolled 
-                              ? 'w-9 h-9 rounded-xl' 
-                              : 'w-4 h-4'
+                            isScrolled ? 'w-9 h-9 rounded-xl' : 'w-4 h-4'
                           } ${
                             isActive && isScrolled
                               ? isDark
@@ -159,20 +140,16 @@ const Layout = () => {
                                 : 'bg-green-100'
                               : ''
                           }`}
-                          animate={{
-                            scale: isScrolled ? 1.2 : 1,
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 400,
-                            damping: 25
-                          }}
+                          animate={{ scale: isScrolled ? 1.2 : 1 }}
+                          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                         >
-                          <item.icon className={`transition-all duration-700 ${
-                            isScrolled ? 'w-5 h-5' : 'w-4 h-4 mr-2'
-                          }`} />
+                          <item.icon
+                            className={`transition-all duration-700 ${
+                              isScrolled ? 'w-5 h-5' : 'w-4 h-4 mr-2'
+                            }`}
+                          />
                         </motion.div>
-                        
+
                         <motion.span
                           className="text-sm font-medium overflow-hidden whitespace-nowrap"
                           animate={{
@@ -180,24 +157,18 @@ const Layout = () => {
                             opacity: isScrolled ? 0 : 1,
                             marginLeft: isScrolled ? 0 : '0.5rem',
                           }}
-                          transition={{
-                            duration: 0.1,
-                            ease: [0.4, 0, 0.2, 1]
-                          }}
+                          transition={{ duration: 0.1, ease: [0.4, 0, 0.2, 1] }}
                         >
                           {item.name}
                         </motion.span>
-                        
-                        {!isScrolled && (
+
+                        {/* Active underline — only when NOT scrolled */}
+                        {!isScrolled && isActive && (
                           <motion.div
-                            className={`absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-300 ${
-                              isActive
-                                ? isDark 
-                                  ? 'bg-white'
-                                  : 'bg-blue-500'
-                                : 'bg-transparent'
+                            className={`absolute bottom-0 left-0 right-0 h-0.5 ${
+                              isDark ? 'bg-white' : 'bg-blue-500'
                             }`}
-                            layoutId={isActive ? 'activeTab' : undefined}
+                            layoutId="desktop-active-tab"
                           />
                         )}
                       </>
@@ -205,7 +176,8 @@ const Layout = () => {
                   </NavLink>
                 ))}
               </motion.div>
-              
+
+              {/* Theme toggle */}
               <button
                 onClick={toggleTheme}
                 className={`relative inline-flex items-center justify-center w-14 h-8 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg hover:shadow-xl hover:scale-105 ${
@@ -217,8 +189,8 @@ const Layout = () => {
               >
                 <motion.div
                   className="absolute w-6 h-6 rounded-full shadow-md flex items-center justify-center bg-white"
-                  animate={{ x: isDark ? 22 : -22 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  animate={{ x: isDark ? 12 : -12 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 >
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -239,7 +211,7 @@ const Layout = () => {
               </button>
             </div>
 
-            {/* Mobile menu button */}
+            {/* ─── Mobile controls ─── */}
             <div className="sm:hidden flex items-center space-x-2">
               <button
                 onClick={toggleTheme}
@@ -252,8 +224,8 @@ const Layout = () => {
               >
                 <motion.div
                   className="absolute w-5 h-5 rounded-full shadow-md flex items-center justify-center bg-white"
-                  animate={{ x: isDark ? 18 : -18 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  animate={{ x: isDark ? 10 : -10 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                 >
                   {isDark ? (
                     <MoonIcon className="w-3 h-3 text-gray-800" />
@@ -262,11 +234,11 @@ const Layout = () => {
                   )}
                 </motion.div>
               </button>
-              
+
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                onClick={() => setMobileMenuOpen((o) => !o)}
                 className={`inline-flex items-center justify-center p-2 rounded-md transition-colors duration-300 ${
-                  isDark 
+                  isDark
                     ? 'text-white hover:text-gray-300 hover:bg-gray-900'
                     : 'text-green-900 hover:text-gray-500 hover:bg-gray-100'
                 }`}
@@ -281,7 +253,7 @@ const Layout = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* ─── Mobile menu ─── */}
         <Transition
           show={mobileMenuOpen}
           as={Fragment}
@@ -294,7 +266,7 @@ const Layout = () => {
         >
           <div className="sm:hidden">
             <div className="pt-2 pb-3 space-y-1">
-              {navigationItems.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.to}
@@ -306,8 +278,8 @@ const Layout = () => {
                           ? 'bg-gray-900 border-r-4 border-white text-white'
                           : 'bg-blue-50 border-r-4 border-blue-500 text-blue-700'
                         : isDark
-                          ? 'text-white hover:text-gray-300 hover:bg-gray-900'
-                          : 'text-green-900 hover:text-gray-700 hover:bg-gray-50'
+                        ? 'text-white hover:text-gray-300 hover:bg-gray-900'
+                        : 'text-green-900 hover:text-gray-700 hover:bg-gray-50'
                     }`
                   }
                 >
@@ -322,10 +294,10 @@ const Layout = () => {
         </Transition>
       </nav>
 
-      {/* Loading Bar */}
+      {/* ─── Loading bar ─── */}
       {navigation.state === 'loading' && (
         <div className={`fixed top-16 left-0 right-0 w-full h-1 z-40 ${isDark ? 'bg-gray-900' : 'bg-gray-200'}`}>
-          <motion.div 
+          <motion.div
             className={`h-1 ${isDark ? 'bg-white' : 'bg-blue-600'}`}
             initial={{ width: '0%' }}
             animate={{ width: '100%' }}
@@ -334,23 +306,33 @@ const Layout = () => {
         </div>
       )}
 
-      {/* Main Content */}
+      {/* ─── Main content ─── */}
       <main className="flex-1 relative overflow-hidden pt-16">
         <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
-            isDark ? 'bg-white mix-blend-lighten' : 'bg-green-900 mix-blend-multiply'
-          }`}></div>
-          <div className={`absolute top-20 right-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
-            isDark ? 'bg-blue-800 mix-blend-lighten' : 'bg-purple-900 mix-blend-multiply'
-          }`} style={{ animationDelay: '1s' }}></div>
-          <div className={`absolute bottom-20 left-1/2 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
-            isDark ? 'bg-pink-600 mix-blend-lighten' : 'bg-purple-600 mix-blend-multiply'
-          }`} style={{ animationDelay: '2s' }}></div>
+          <div
+            className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+              isDark ? 'bg-white mix-blend-lighten' : 'bg-green-900 mix-blend-multiply'
+            }`}
+          />
+          <div
+            className={`absolute top-20 right-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+              isDark ? 'bg-blue-800 mix-blend-lighten' : 'bg-purple-900 mix-blend-multiply'
+            }`}
+            style={{ animationDelay: '1s' }}
+          />
+          <div
+            className={`absolute bottom-20 left-1/2 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+              isDark ? 'bg-pink-600 mix-blend-lighten' : 'bg-purple-600 mix-blend-multiply'
+            }`}
+            style={{ animationDelay: '2s' }}
+          />
         </div>
 
-        <div className={`relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-20rem)] ${
-          isDark ? 'text-white' : 'text-gray-900'
-        }`}>
+        <div
+          className={`relative max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 min-h-[calc(100vh-20rem)] ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
@@ -365,45 +347,64 @@ const Layout = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className={`relative overflow-hidden transition-colors duration-500 ${
-        isDark
-          ? 'bg-black'
-          : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
-      }`}>
+      {/* ─── Footer ─── */}
+      <footer
+        className={`relative overflow-hidden transition-colors duration-500 ${
+          isDark
+            ? 'bg-black'
+            : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'
+        }`}
+      >
         <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <div className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
-            isDark ? 'bg-purple-600 mix-blend-lighten' : 'bg-blue-400 mix-blend-multiply'
-          }`}></div>
-          <div className={`absolute top-20 right-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
-            isDark ? 'bg-blue-600 mix-blend-lighten' : 'bg-purple-400 mix-blend-multiply'
-          }`} style={{ animationDelay: '1s' }}></div>
-          <div className={`absolute -bottom-8 left-1/2 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
-            isDark ? 'bg-pink-600 mix-blend-lighten' : 'bg-pink-400 mix-blend-multiply'
-          }`} style={{ animationDelay: '2s' }}></div>
+          <div
+            className={`absolute top-10 left-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+              isDark ? 'bg-purple-600 mix-blend-lighten' : 'bg-blue-400 mix-blend-multiply'
+            }`}
+          />
+          <div
+            className={`absolute top-20 right-10 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+              isDark ? 'bg-blue-600 mix-blend-lighten' : 'bg-purple-400 mix-blend-multiply'
+            }`}
+            style={{ animationDelay: '1s' }}
+          />
+          <div
+            className={`absolute -bottom-8 left-1/2 w-72 h-72 rounded-full filter blur-xl animate-pulse ${
+              isDark ? 'bg-pink-600 mix-blend-lighten' : 'bg-pink-400 mix-blend-multiply'
+            }`}
+            style={{ animationDelay: '2s' }}
+          />
         </div>
 
         <div className="relative max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {/* Bio */}
             <div className="space-y-4">
-              <p className={`leading-relaxed text-lg transition-colors duration-500 ${
-                isDark ? 'text-white' : 'text-gray-700'
-              }`}>
-                I'm currently focused on expanding my experience designing 
-                and developing high performing systems.
+              <p
+                className={`leading-relaxed text-lg transition-colors duration-500 ${
+                  isDark ? 'text-white' : 'text-gray-700'
+                }`}
+              >
+                I'm currently focused on expanding my experience designing and developing
+                high performing systems.
               </p>
             </div>
+
+            {/* Quick links */}
             <div>
-              <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
-                isDark ? 'text-white' : 'text-gray-900'
-              }`}>Quick Links</h3>
+              <h3
+                className={`text-lg font-bold mb-6 transition-colors duration-500 ${
+                  isDark ? 'text-white' : 'text-gray-900'
+                }`}
+              >
+                Quick Links
+              </h3>
               <div className="space-y-3">
-                {navigationItems.map((item) => (
+                {NAV_ITEMS.map((item) => (
                   <Link
-                    key={item.name}
+                    key={`footer-${item.name}`}
                     to={item.to}
                     className={`block transition-all duration-300 hover:translate-x-2 font-medium ${
-                      isDark 
+                      isDark
                         ? 'text-white hover:text-blue-400'
                         : 'text-gray-700 hover:text-blue-600'
                     }`}
@@ -413,53 +414,64 @@ const Layout = () => {
                 ))}
               </div>
             </div>
+
+            {/* Socials */}
             <div>
-              <h3 className={`text-lg font-bold mb-6 transition-colors duration-500 ${
-                isDark ? 'text-white' : 'text-gray-900'
-              }`}>Connect</h3>
+              <h3
+                className={`text-lg font-bold mb-6 transition-colors duration-500 ${
+                  isDark ? 'text-white' : 'text-gray-900'
+                }`}
+              >
+                Connect
+              </h3>
               <div className="space-y-4">
-                <a href="https://github.com/Adamsomondi" target="_blank" rel="noopener noreferrer" 
-                  className={`flex items-center space-x-3 transition-all duration-300 group ${
-                    isDark ? 'text-white hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
-                  }`}>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                    isDark ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
-                      : 'bg-white/60 border-gray-200 group-hover:bg-purple-100'
-                  }`}><FaGithub className="w-5 h-5" /></div>
-                  <span className="font-medium">GitHub</span>
-                </a>
-                <a href="https://www.linkedin.com/in/adams-omondi-338b94304" target="_blank" rel="noopener noreferrer"
-                  className={`flex items-center space-x-3 transition-all duration-300 group ${
-                    isDark ? 'text-white hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
-                  }`}>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                    isDark ? 'bg-gray-800 border-gray-700 group-hover:bg-blue-900/50 group-hover:border-blue-700'
-                      : 'bg-white/60 border-gray-200 group-hover:bg-blue-100'
-                  }`}><FaLinkedin className="w-5 h-5" /></div>
-                  <span className="font-medium">LinkedIn</span>
-                </a>
-                <a href="https://x.com/deepneuralmess" target="_blank" rel="noopener noreferrer"
-                  className={`flex items-center space-x-3 transition-all duration-300 group ${
-                    isDark ? 'text-white hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'
-                  }`}>
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
-                    isDark ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
-                      : 'bg-white/60 border-gray-200 group-hover:bg-gray-100'
-                  }`}><FaXTwitter className="w-5 h-5" /></div>
-                  <span className="font-medium">Twitter</span>
-                </a>
+                {SOCIALS.map((s) => (
+                  <a
+                    key={s.name}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center space-x-3 transition-all duration-300 group ${
+                      isDark
+                        ? 'text-white hover:text-blue-400'
+                        : 'text-gray-700 hover:text-blue-600'
+                    }`}
+                  >
+                    <div
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border ${
+                        isDark
+                          ? 'bg-gray-800 border-gray-700 group-hover:bg-gray-700 group-hover:border-gray-600'
+                          : 'bg-white/60 border-gray-200 group-hover:bg-purple-100'
+                      }`}
+                    >
+                      <s.icon className="w-5 h-5" />
+                    </div>
+                    <span className="font-medium">{s.name}</span>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
-          <div className={`mt-12 pt-8 border-t transition-colors duration-500 text-center ${
-            isDark ? 'border-gray-800' : 'border-gray-200/50'
-          }`}>
-            <p className={`font-medium mb-2 transition-colors duration-500 ${
-              isDark ? 'text-white' : 'text-gray-700'
-            }`}>Made with ❤️ by Adams.</p>
-            <p className={`text-sm transition-colors duration-500 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}>&copy; 2026 Adams. All rights reserved.</p>
+
+          <div
+            className={`mt-12 pt-8 border-t transition-colors duration-500 text-center ${
+              isDark ? 'border-gray-800' : 'border-gray-200/50'
+            }`}
+          >
+            <p
+              className={`font-medium mb-2 transition-colors duration-500 ${
+                isDark ? 'text-white' : 'text-gray-700'
+              }`}
+            >
+              Made with ❤️ by Adams.
+            </p>
+            <p
+              className={`text-sm transition-colors duration-500 ${
+                isDark ? 'text-gray-400' : 'text-gray-600'
+              }`}
+            >
+              &copy; 2026 Adams. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

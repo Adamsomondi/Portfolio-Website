@@ -1,30 +1,21 @@
-// server/data.js — Single source of truth for all portfolio data
+// src/server/data.js — Single source of truth for all portfolio data
 
-// ============================================
-// PROJECTS
-// ============================================
 export const projects = [
   {
-    id: '1',
+    id: 'buildafrique',
     title: 'Buildafrique Group — Investor & Land Banking Database',
     description:
       'Enterprise internal database system for Buildafrique Group with role-based access, investor tracking, land banking, and an analytics dashboard.',
     longDescription:
       'A full-stack internal platform built for Buildafrique Group, a real estate investment firm. The system manages a global investor database filtered by asset class, region, and country, alongside a Kenyan land banking module with property listings, document uploads, and price filtering. Authentication is handled via JWT with four distinct roles: Admin, Full Viewer, Investor Viewer, and Property Viewer — each seeing only what they are permitted to access. The backend runs on Express and PostgreSQL hosted on Neon, deployed to Render. The frontend is deployed on Vercel.',
     tech: [
-      'React',
-      'Node.js',
-      'Express',
-      'PostgreSQL',
-      'Neon',
-      'JWT Auth',
-      'Render',
-      'Vercel',
-      'Tailwind CSS'
+      'React', 'Node.js', 'Express', 'PostgreSQL', 'Neon',
+      'JWT Auth', 'Render', 'Vercel', 'Tailwind CSS'
     ],
     image: '/images/projects/adams.png',
-    github: '', // private client repo — leave empty
+    github: '',
     demo: 'https://buildafrique-b-6k8j2n9x1.vercel.app/investors',
+    internal: false,
     featured: true,
     highlights: [
       'Role-based access control — Admin, Full Viewer, Investor Viewer, Property Viewer',
@@ -39,38 +30,7 @@ export const projects = [
   },
 
   {
-    id: '2',
-    title: 'Chip — AI Desktop Assistant',
-    description:
-      'An interactive AI assistant with a Ghibli-inspired 3D face, real-time speech recognition, and multiple immersive environments (desert, ocean, forest).',
-    longDescription:
-      'Chip is a browser-based AI desktop assistant built directly into this portfolio. It features a stylized 3D animated face rendered with Three.js, voice interaction via the Web Speech API, and multiple selectable environments — desert, ocean, and forest — each with day/night themes. The interface supports fullscreen mode and a built-in music player for ambient background audio.',
-    tech: [
-      'React',
-      'TypeScript',
-      'Three.js',
-      'Framer Motion',
-      'Web Speech API',
-      'Tailwind CSS'
-    ],
-    image: '/images/projects/chip.png',
-    github: '',
-    demo: '/assistant',     // internal route — not an external URL
-    internal: true,          // flag so the frontend knows to use navigate()
-    featured: true,
-    highlights: [
-      'Stylized 3D animated face rendered with Three.js / React Three Fiber',
-      'Voice input via Web Speech API with real-time transcript display',
-      'Multiple immersive environments: desert, ocean, forest',
-      'Day/night theme toggle that updates the 3D scene in real time',
-      'Fullscreen mode with keyboard (ESC) and button support',
-      'Built-in ambient music player',
-      'Framer Motion page transitions and UI animations'
-    ]
-  },
-  // ── Desert Environment ──
-  {
-    id: '2',
+    id: 'demo-desert',
     title: 'Chip — Desert Environment',
     description:
       'A procedural desert landscape with day/night cycle, driven entirely by GLSL fragment shaders with simplex noise and fractional Brownian motion. Zero textures, zero external assets.',
@@ -94,9 +54,8 @@ export const projects = [
     ]
   },
 
-  // ── Ocean Environment ──
   {
-    id: '3',
+    id: 'demo-ocean',
     title: 'Chip — Ocean Environment',
     description:
       'A bioluminescent ocean scene with vertex-displaced wave geometry, underwater caustics, and volumetric particle systems — all procedural, all real-time.',
@@ -120,9 +79,8 @@ export const projects = [
     ]
   },
 
-  // ── Forest / Ghibli Environment ──
   {
-    id: '4',
+    id: 'demo-forest',
     title: 'Chip — Forest Environment',
     description:
       'A Ghibli-inspired painterly forest with procedural foliage, ambient particle drift, and a warm hand-painted aesthetic — all generated in real-time GLSL.',
@@ -145,16 +103,11 @@ export const projects = [
       'Zero texture dependencies — pure procedural GPU rendering'
     ]
   }
-
-  // More projects go here — Rick and Morty, Whisper AI, Bank Churn etc.
 ];
 
-// ============================================
-// BLOG POSTS
-// ============================================
 export const blogPosts = [
   {
-    id: '1',
+    id: 'blog-normalization',
     title: 'The Why Behind Relational Database Design: Normalization Explained',
     excerpt:
       'Understanding data anomalies, redundancy, and the normalization process that ensures reliable and efficient relational databases',
@@ -187,7 +140,7 @@ Understanding these normalization forms provides the foundation for designing ro
     tags: ['Databases', 'SQL', 'RDBMS', 'Normalization', 'Data Architecture']
   },
   {
-    id: '2',
+    id: 'blog-mongodb',
     title: 'MongoDB Architecture: Embracing Denormalization for Performance',
     excerpt:
       "Exploring MongoDB's approach to data modeling, where duplication and denormalization become strategic advantages",
@@ -227,9 +180,6 @@ MongoDB's architecture embraces horizontal scaling as a first-class citizen, pro
   }
 ];
 
-// ============================================
-// PROFILE
-// ============================================
 export const profile = {
   name: 'Adams Omondi',
   title: 'Software Engineer',

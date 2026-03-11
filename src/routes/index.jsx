@@ -1,165 +1,67 @@
 import React, { Suspense, lazy } from 'react';
-import {
-  createBrowserRouter,
-  Navigate
-} from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-// Pages
-import HomePage, { homeLoader } from '../pages/HomePage';
-import AboutPage, { aboutLoader } from '../pages/AboutPage';
-import ProjectsPage, { projectsLoader } from '../pages/ProjectsPage';
-import ProjectDetailPage, { projectDetailLoader } from '../pages/ProjectDetailPage';
-import BlogPage, { blogLoader } from '../pages/BlogPage';
-import ContactPage, { contactAction } from '../pages/ContactPage';
-import BlogPostPage, { blogPostLoader } from '../pages/BlogPostPage';
-import LandingPage from '../pages/LandingPage';
-
-// Shared
 import Layout from '../components/Layout';
 import ErrorPage from '../pages/ErrorPage';
 import LoadingSpinner from '../components/loadingSpinner';
 
-// Lazy loaded pages
-const LazyAbout = lazy(() => Promise.resolve({ default: AboutPage }));
-const LazyProjects = lazy(() => Promise.resolve({ default: ProjectsPage }));
-const LazyProjectDetail = lazy(() => Promise.resolve({ default: ProjectDetailPage }));
-const LazyBlog = lazy(() => Promise.resolve({ default: BlogPage }));
-const LazyBlogPost = lazy(() => Promise.resolve({ default: BlogPostPage }));
-const LazyContact = lazy(() => Promise.resolve({ default: ContactPage }));
+// ── Eager imports for loaders / actions only ──
+import { homeLoader }          from '../pages/HomePage';
+import { aboutLoader }         from '../pages/AboutPage';
+import { projectsLoader }     from '../pages/ProjectsPage';
+import { projectDetailLoader } from '../pages/ProjectDetailPage';
+import { blogLoader }          from '../pages/BlogPage';
+import { blogPostLoader }      from '../pages/BlogPostPage';
+import { contactAction }       from '../pages/ContactPage';
 
-// Lazy load environment pages
-const LazyDesertFace = lazy(() => import('../pages/DesertFacePage'));
-const LazyOceanFace = lazy(() => import('../pages/OceanFacePage'));
-const LazyForestFace = lazy(() => import('../pages/ForestFacePage'));
+// ── Lazy page components ──
+const LandingPage     = lazy(() => import('../pages/LandingPage'));
+const HomePage        = lazy(() => import('../pages/HomePage'));
+const AboutPage       = lazy(() => import('../pages/AboutPage'));
+const ProjectsPage    = lazy(() => import('../pages/ProjectsPage'));
+const ProjectDetail   = lazy(() => import('../pages/ProjectDetailPage'));
+const BlogPage        = lazy(() => import('../pages/BlogPage'));
+const BlogPostPage    = lazy(() => import('../pages/BlogPostPage'));
+const ContactPage     = lazy(() => import('../pages/ContactPage'));
+const DesertFacePage  = lazy(() => import('../pages/DesertFacePage'));
+const OceanFacePage   = lazy(() => import('../pages/OceanFacePage'));
+const ForestFacePage  = lazy(() => import('../pages/ForestFacePage'));
+
+const wrap = (Component) => (
+  <Suspense fallback={<LoadingSpinner />}>
+    <Component />
+  </Suspense>
+);
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <LandingPage />,
-    errorElement: <ErrorPage />
+    element: wrap(LandingPage),
+    errorElement: <ErrorPage />,
   },
 
+  // ── Single Layout wrapper — state persists across pages ──
   {
-    path: '/home',
+    id: 'layout',
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage />, loader: homeLoader }
-    ]
-  },
-  {
-    path: '/about',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyAbout />
-          </Suspense>
-        ),
-        loader: aboutLoader
-      }
-    ]
-  },
-  {
-    path: '/projects',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyProjects />
-          </Suspense>
-        ),
-        loader: projectsLoader
-      },
-      {
-        path: ':id',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyProjectDetail />
-          </Suspense>
-        ),
-        loader: projectDetailLoader
-      }
-    ]
-  },
-  {
-    path: '/blog',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyBlog />
-          </Suspense>
-        ),
-        loader: blogLoader
-      },
-      {
-        path: ':id',
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyBlogPost />
-          </Suspense>
-        ),
-        loader: blogPostLoader
-      }
-    ]
-  },
-  {
-    path: '/contact',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyContact />
-          </Suspense>
-        ),
-        action: contactAction
-      }
-    ]
+      { id: 'home',           path: '/home',          element: wrap(HomePage),      loader: homeLoader },
+      { id: 'about',          path: '/about',         element: wrap(AboutPage),     loader: aboutLoader },
+      { id: 'projects',       path: '/projects',      element: wrap(ProjectsPage),  loader: projectsLoader },
+      { id: 'project-detail', path: '/projects/:id',  element: wrap(ProjectDetail), loader: projectDetailLoader },
+      { id: 'blog',           path: '/blog',          element: wrap(BlogPage),      loader: blogLoader },
+      { id: 'blog-post',      path: '/blog/:id',      element: wrap(BlogPostPage),  loader: blogPostLoader },
+      { id: 'contact',        path: '/contact',       element: wrap(ContactPage),   action: contactAction },
+    ],
   },
 
-  // ── Environment demos (fullscreen, no Layout wrapper) ──
-  {
-    path: '/demo/desert',
-    element: (
-      <Suspense fallback={<LoadingSpinner />}>
-        <LazyDesertFace />
-      </Suspense>
-    ),
-    errorElement: <ErrorPage />
-  },
-  {
-    path: '/demo/ocean',
-    element: (
-      <Suspense fallback={<LoadingSpinner />}>
-        <LazyOceanFace />
-      </Suspense>
-    ),
-    errorElement: <ErrorPage />
-  },
-  {
-    path: '/demo/forest',
-    element: (
-      <Suspense fallback={<LoadingSpinner />}>
-        <LazyForestFace />
-      </Suspense>
-    ),
-    errorElement: <ErrorPage />
-  },
+  // ── Fullscreen demos — no Layout ──
+  { id: 'demo-desert', path: '/demo/desert', element: wrap(DesertFacePage), errorElement: <ErrorPage /> },
+  { id: 'demo-ocean',  path: '/demo/ocean',  element: wrap(OceanFacePage),  errorElement: <ErrorPage /> },
+  { id: 'demo-forest', path: '/demo/forest', element: wrap(ForestFacePage), errorElement: <ErrorPage /> },
 
-  { path: '*', element: <ErrorPage /> }
+  { path: '*', element: <ErrorPage /> },
 ]);
 
 export default router;
