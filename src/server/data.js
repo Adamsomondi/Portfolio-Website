@@ -36,6 +36,114 @@ export const projects = [
       'Viewed-item tracking per session so analysts know what they have already reviewed',
       'Deployed across Neon (database), Render (API), and Vercel (frontend)'
     ]
+  },
+
+  {
+    id: '2',
+    title: 'Chip — AI Desktop Assistant',
+    description:
+      'An interactive AI assistant with a Ghibli-inspired 3D face, real-time speech recognition, and multiple immersive environments (desert, ocean, forest).',
+    longDescription:
+      'Chip is a browser-based AI desktop assistant built directly into this portfolio. It features a stylized 3D animated face rendered with Three.js, voice interaction via the Web Speech API, and multiple selectable environments — desert, ocean, and forest — each with day/night themes. The interface supports fullscreen mode and a built-in music player for ambient background audio.',
+    tech: [
+      'React',
+      'TypeScript',
+      'Three.js',
+      'Framer Motion',
+      'Web Speech API',
+      'Tailwind CSS'
+    ],
+    image: '/images/projects/chip.png',
+    github: '',
+    demo: '/assistant',     // internal route — not an external URL
+    internal: true,          // flag so the frontend knows to use navigate()
+    featured: true,
+    highlights: [
+      'Stylized 3D animated face rendered with Three.js / React Three Fiber',
+      'Voice input via Web Speech API with real-time transcript display',
+      'Multiple immersive environments: desert, ocean, forest',
+      'Day/night theme toggle that updates the 3D scene in real time',
+      'Fullscreen mode with keyboard (ESC) and button support',
+      'Built-in ambient music player',
+      'Framer Motion page transitions and UI animations'
+    ]
+  },
+  // ── Desert Environment ──
+  {
+    id: '2',
+    title: 'Chip — Desert Environment',
+    description:
+      'A procedural desert landscape with day/night cycle, driven entirely by GLSL fragment shaders with simplex noise and fractional Brownian motion. Zero textures, zero external assets.',
+    longDescription:
+      'The desert environment demonstrates real-time procedural sky generation using custom GLSL fragment shaders — simplex noise, fractional Brownian motion, and triple domain warping generate every pixel on the GPU at sixty frames per second with zero textures and zero image files. A day/night toggle swaps the entire shader pipeline, particle palette, and tone mapping strategy, bypassing default ACES filmic compression to preserve color saturation. State management flows through Zustand, driving a seven-light cinematographic rig that lerps between Pantone Color of the Year palettes in real time. Everything executes client-side — the server delivers a static JavaScript bundle once, then the user\'s GPU handles the rest.',
+    tech: ['React', 'Three.js', 'React Three Fiber', 'GLSL Shaders', 'Zustand', 'TypeScript', 'Framer Motion', 'Tailwind CSS'],
+    image: '/images/projects/desert.png',
+    github: '',
+    demo: '/demo/desert',
+    internal: true,
+    featured: true,
+    highlights: [
+      'Procedural sky rendered entirely in GLSL — simplex noise, fBm, triple domain warping',
+      'Zero textures, zero image files, zero external assets — every pixel generated on GPU',
+      'Day/night cycle swaps shader pipeline, particle palette, and tone mapping strategy',
+      'Seven-light cinematographic rig driven by Zustand state management',
+      'Pantone Color of the Year palette lerping in real time',
+      'Custom tone mapping bypassing ACES filmic compression for color saturation',
+      'Particle systems on raw buffer geometries with per-element velocity fields',
+      'Runs at 60fps client-side — no downloads, no installs, just a URL and a browser'
+    ]
+  },
+
+  // ── Ocean Environment ──
+  {
+    id: '3',
+    title: 'Chip — Ocean Environment',
+    description:
+      'A bioluminescent ocean scene with vertex-displaced wave geometry, underwater caustics, and volumetric particle systems — all procedural, all real-time.',
+    longDescription:
+      'The ocean environment showcases vertex shader displacement for wave simulation, procedural caustic patterns, and volumetric particle systems built on raw buffer geometries with per-element velocity fields and vertex coloring. Frame-by-frame position updates run through the React Three Fiber render loop. The underwater atmosphere uses custom fragment shaders for depth fog and light scattering. The entire scene is composed as declarative JSX through React Three Fiber, with TypeScript enforcing type safety across every component, state record, and uniform passed into the shader pipeline.',
+    tech: ['React', 'Three.js', 'React Three Fiber', 'GLSL Shaders', 'TypeScript', 'Web Audio API', 'Framer Motion', 'Tailwind CSS'],
+    image: '/images/projects/ocean.png',
+    github: '',
+    demo: '/demo/ocean',
+    internal: true,
+    featured: true,
+    highlights: [
+      'Vertex shader displacement for real-time wave geometry simulation',
+      'Procedural underwater caustic patterns via fragment shaders',
+      'Volumetric particle systems with per-element velocity fields and vertex coloring',
+      'Custom depth fog and light scattering atmosphere',
+      'Web Audio API integration for audio-reactive visual feedback',
+      'Declarative 3D scene composition through React Three Fiber JSX',
+      'Full TypeScript type safety across all shader uniforms and state',
+      'Client-side rendering — no server compute, no streaming, pure GPU'
+    ]
+  },
+
+  // ── Forest / Ghibli Environment ──
+  {
+    id: '4',
+    title: 'Chip — Forest Environment',
+    description:
+      'A Ghibli-inspired painterly forest with procedural foliage, ambient particle drift, and a warm hand-painted aesthetic — all generated in real-time GLSL.',
+    longDescription:
+      'The forest environment draws from Studio Ghibli\'s painterly visual language, recreating a warm hand-painted aesthetic entirely through procedural GLSL shaders. Foliage layers use layered noise functions with soft color ramps, while ambient particles drift through the scene with organic motion curves. The lighting rig uses warm directional light with soft ambient fill to simulate the diffused sunlight seen in hand-painted animation backgrounds. The 3D scene architecture runs on React Three Fiber, with Zustand managing environment state and Framer Motion handling all UI transitions. Like all environments, the forest runs entirely on the client GPU with no external texture dependencies.',
+    tech: ['React', 'Three.js', 'React Three Fiber', 'GLSL Shaders', 'Zustand', 'TypeScript', 'Framer Motion', 'Tailwind CSS'],
+    image: '/images/projects/forest.png',
+    github: '',
+    demo: '/demo/forest',
+    internal: true,
+    featured: false,
+    highlights: [
+      'Ghibli-inspired painterly aesthetic generated entirely in procedural GLSL',
+      'Layered noise functions with soft color ramps for foliage rendering',
+      'Ambient particle drift with organic motion curves',
+      'Warm cinematographic lighting — directional key with soft ambient fill',
+      'Zustand-driven environment state management',
+      'React Three Fiber declarative scene composition',
+      'Full TypeScript enforcement across shader uniforms and component props',
+      'Zero texture dependencies — pure procedural GPU rendering'
+    ]
   }
 
   // More projects go here — Rick and Morty, Whisper AI, Bank Churn etc.

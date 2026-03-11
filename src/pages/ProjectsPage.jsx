@@ -108,21 +108,35 @@ const ProjectsPage = () => {
                     ))}
                   </div>
                   <div className="flex space-x-4">
-                    <a
-                      href={project.github}
-                      className="text-blue-600 hover:text-blue-800 font-medium"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      GitHub
-                    </a>
-                    {project.demo && (
+                    {project.github && (
                       <a
-                        href={project.demo}
+                        href={project.github}
                         className="text-blue-600 hover:text-blue-800 font-medium"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        Live Demo
+                        GitHub
                       </a>
+                    )}
+                    {project.demo && (
+                      project.internal ? (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(project.demo);
+                          }}
+                          className="text-blue-600 hover:text-blue-800 font-medium"
+                        >
+                          Launch Demo
+                        </button>
+                      ) : (
+                        <a
+                          href={project.demo}
+                          className="text-blue-600 hover:text-blue-800 font-medium"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Live Demo
+                        </a>
+                      )
                     )}
                   </div>
                 </div>

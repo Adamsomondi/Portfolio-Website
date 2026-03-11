@@ -88,14 +88,23 @@ const ProjectDetailPage = () => {
               )}
 
               {project.demo && (
-                <a
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                >
-                  Live Demo
-                </a>
+                project.internal ? (
+                  <button
+                    onClick={() => navigate(project.demo)}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  >
+                    Launch Demo
+                  </button>
+                ) : (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  >
+                    Live Demo
+                  </a>
+                )
               )}
             </div>
           </div>

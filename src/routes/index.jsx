@@ -1,7 +1,6 @@
-// src/router/index.jsx
 import React, { Suspense, lazy } from 'react';
-import {  
-  createBrowserRouter, 
+import {
+  createBrowserRouter,
   Navigate
 } from 'react-router-dom';
 
@@ -15,50 +14,37 @@ import ContactPage, { contactAction } from '../pages/ContactPage';
 import BlogPostPage, { blogPostLoader } from '../pages/BlogPostPage';
 import LandingPage from '../pages/LandingPage';
 
-// Components
-import BluetoothExplorer from '../components/BluetoothExplorer';
-import MediaExplorer from '../components/MediaExplorer';
-import DeviceExplorer from '../components/DeviceExplorer';
-import SpeechExplorer from '../components/SpeechExplorer';
-
 // Shared
 import Layout from '../components/Layout';
 import ErrorPage from '../pages/ErrorPage';
 import LoadingSpinner from '../components/loadingSpinner';
 
-// Lazy loaded components
+// Lazy loaded pages
 const LazyAbout = lazy(() => Promise.resolve({ default: AboutPage }));
 const LazyProjects = lazy(() => Promise.resolve({ default: ProjectsPage }));
 const LazyProjectDetail = lazy(() => Promise.resolve({ default: ProjectDetailPage }));
 const LazyBlog = lazy(() => Promise.resolve({ default: BlogPage }));
 const LazyBlogPost = lazy(() => Promise.resolve({ default: BlogPostPage }));
 const LazyContact = lazy(() => Promise.resolve({ default: ContactPage }));
-const LazyBluetooth = lazy(() => Promise.resolve({ default: BluetoothExplorer }));
-const LazyMedia = lazy(() => Promise.resolve({ default: MediaExplorer }));
-const LazyDevice = lazy(() => Promise.resolve({ default: DeviceExplorer }));
 
-// Lazy load AI Face page
-const LazyAiFace = lazy(() => import('../pages/AiFacePage'));
+// Lazy load environment pages
+const LazyDesertFace = lazy(() => import('../pages/DesertFacePage'));
+const LazyOceanFace = lazy(() => import('../pages/OceanFacePage'));
+const LazyForestFace = lazy(() => import('../pages/ForestFacePage'));
 
 const router = createBrowserRouter([
-  // Landing page route
   {
     path: '/',
     element: <LandingPage />,
     errorElement: <ErrorPage />
   },
-  
-  // Main app routes (with layout)
+
   {
     path: '/home',
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <HomePage />,
-        loader: homeLoader
-      }
+      { index: true, element: <HomePage />, loader: homeLoader }
     ]
   },
   {
@@ -144,95 +130,36 @@ const router = createBrowserRouter([
     ]
   },
 
-
-  /*
-
+  // ── Environment demos (fullscreen, no Layout wrapper) ──
   {
-    path: '/speech',
-    element: <Layout />,
-    children: [{ index: true, element: <SpeechExplorer /> }]
+    path: '/demo/desert',
+    element: (
+      <Suspense fallback={<LoadingSpinner />}>
+        <LazyDesertFace />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/demo/ocean',
+    element: (
+      <Suspense fallback={<LoadingSpinner />}>
+        <LazyOceanFace />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/demo/forest',
+    element: (
+      <Suspense fallback={<LoadingSpinner />}>
+        <LazyForestFace />
+      </Suspense>
+    ),
+    errorElement: <ErrorPage />
   },
 
-  // AI Assistant Face route
-  {
-    path: '/assistant',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyAiFace />
-          </Suspense>
-        )
-      }
-    ]
-  },
-  
-  // Bluetooth Explorer route
-  {
-    path: '/bluetooth',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyBluetooth />
-          </Suspense>
-        )
-      }
-    ]
-  },
-
-  // Device Explorer route
-  {
-    path: '/device',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyDevice />
-          </Suspense>
-        )
-      }
-    ]
-  },
-
-  // Media Explorer route
-  {
-    path: '/media',
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyMedia />
-          </Suspense>
-        )
-      }
-    ]
-  },
-  
-  {
-    path: '/redirect-demo',
-    element: <Navigate to="/projects" replace />
-  },
-  
-  */
- 
-  // Catch-all route for 404
-  {
-    path: '*',
-    element: <ErrorPage />
-  }
+  { path: '*', element: <ErrorPage /> }
 ]);
 
 export default router;
