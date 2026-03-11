@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeftIcon, SunIcon, MoonIcon } from '@heroicons/react/24/outline';
 import { FaceScene } from '../components/Desert/FaceScene';
-import { FaceControls } from '../components/ai-face/controls/FaceControls';
-import { MusicPlayer } from '../components/music/MusicPlayer';
+
+
 
 const DesertFacePage = () => {
   const navigate = useNavigate();
@@ -49,8 +49,7 @@ const DesertFacePage = () => {
       className="fixed inset-0 z-50 w-screen h-screen"
     >
       <FaceScene isDark={isDark} />
-      <FaceControls isDark={isDark} />
-      <MusicPlayer />
+   
 
       <AnimatePresence>
         {(transcript || response) && (

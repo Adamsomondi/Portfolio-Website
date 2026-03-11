@@ -31,13 +31,13 @@ export const projects = [
 
   {
     id: 'demo-desert',
-    title: 'Chip — Desert Environment',
+    title: 'Desert Drift — A 3D Drone Game',
     description:
       'A procedural desert landscape with day/night cycle, driven entirely by GLSL fragment shaders with simplex noise and fractional Brownian motion. Zero textures, zero external assets.',
     longDescription:
       'The desert environment demonstrates real-time procedural sky generation using custom GLSL fragment shaders — simplex noise, fractional Brownian motion, and triple domain warping generate every pixel on the GPU at sixty frames per second with zero textures and zero image files. A day/night toggle swaps the entire shader pipeline, particle palette, and tone mapping strategy, bypassing default ACES filmic compression to preserve color saturation. State management flows through Zustand, driving a seven-light cinematographic rig that lerps between Pantone Color of the Year palettes in real time. Everything executes client-side — the server delivers a static JavaScript bundle once, then the user\'s GPU handles the rest.',
     tech: ['React', 'Three.js', 'React Three Fiber', 'GLSL Shaders', 'Zustand', 'TypeScript', 'Framer Motion', 'Tailwind CSS'],
-    image: '/public/images/projects/screenshot1.png',
+    image: '/images/projects/mavin.png',
     github: '',
     demo: '/demo/desert',
     internal: true,
@@ -56,13 +56,13 @@ export const projects = [
 
   {
     id: 'demo-forest',
-    title: 'Chip — Forest Environment',
+    title: 'Forest Soundscape — A 3D Music Player',
     description:
       'A Ghibli-inspired painterly forest with procedural foliage, ambient particle drift, and a warm hand-painted aesthetic — all generated in real-time GLSL.',
     longDescription:
       'The forest environment draws from Studio Ghibli\'s painterly visual language, recreating a warm hand-painted aesthetic entirely through procedural GLSL shaders. Foliage layers use layered noise functions with soft color ramps, while ambient particles drift through the scene with organic motion curves. The lighting rig uses warm directional light with soft ambient fill to simulate the diffused sunlight seen in hand-painted animation backgrounds. The 3D scene architecture runs on React Three Fiber, with Zustand managing environment state and Framer Motion handling all UI transitions. Like all environments, the forest runs entirely on the client GPU with no external texture dependencies.',
     tech: ['React', 'Three.js', 'React Three Fiber', 'GLSL Shaders', 'Zustand', 'TypeScript', 'Framer Motion', 'Tailwind CSS'],
-    image: '/public/images/projects/screenshot4green.png',
+    image: '/images/projects/green.png',
     github: '',
     demo: '/demo/forest',
     internal: true,
@@ -158,9 +158,9 @@ MongoDB's architecture embraces horizontal scaling as a first-class citizen, pro
 export const profile = {
   name: 'Adams Omondi',
   title: 'Software Engineer',
-  bio: 'I design and build full-stack systems that work in production — from JWT-secured APIs and role-based dashboards to data pipelines that turn raw information into decisions. I care about correctness, performance, and shipping things that last.',
+  bio: 'I design and build full-stack systems that work in production — from JWT-secured APIs and role-based dashboards to data pipelines that turn raw information into decisions. I care about correctness, performance, and shipping things that last. Lately I have been drawn to the creative side of the web — shaders, generative visuals, things that move and react. It is the corner of engineering where logic meets art, and I want to go deeper.',
   skills: [
-    'Python', 'NextJS', 'SQL', 'React', 'AWS', 'Databricks',
+    'Python', 'Graphics Programming', 'NextJS', 'SQL', 'React', 'AWS', 'Databricks',
     'Angular', 'C++', 'Excel', 'Power BI', 'Tableau', 'Looker',
     'Statistics', 'Data Visualization', 'Machine Learning', 'Artificial Intelligence'
   ],

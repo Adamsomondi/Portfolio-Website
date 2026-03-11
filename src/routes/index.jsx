@@ -24,7 +24,6 @@ const BlogPage        = lazy(() => import('../pages/BlogPage'));
 const BlogPostPage    = lazy(() => import('../pages/BlogPostPage'));
 const ContactPage     = lazy(() => import('../pages/ContactPage'));
 const DesertFacePage  = lazy(() => import('../pages/DesertFacePage'));
-const OceanFacePage   = lazy(() => import('../pages/OceanFacePage'));
 const ForestFacePage  = lazy(() => import('../pages/ForestFacePage'));
 
 const wrap = (Component) => (

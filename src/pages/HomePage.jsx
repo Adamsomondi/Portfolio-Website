@@ -12,7 +12,7 @@ export const homeLoader = async () => {
   return { featuredProjects, recentPosts: allPosts.slice(0, 2) };
 };
 
-const FULL_TEXT = 'Software Engineering • Automation • Data Science & Visualization';
+const FULL_TEXT = 'Software Engineering  • Data Science & Visualization';
 
 const STATS = [
   { label: 'Years Of Experience', value: '3+' },
