@@ -89,7 +89,6 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
     let flashI = 0, fx = 0, fy = 0, fz = 0;
 
     for (const m of missiles) {
-      // ── active missiles in flight ──
       if (m.active && mi < MAX_INST) {
         tmpObj.position.set(m.x, m.y, m.z);
         const spd = Math.sqrt(m.vx * m.vx + m.vy * m.vy + m.vz * m.vz);
@@ -102,13 +101,11 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
         missileMeshRef.current.setMatrixAt(mi++, tmpObj.matrix);
       }
 
-      // ── impacts: sand explosion ──
       if (!m.active && m.impactTime > 0) {
         const ea = t - m.impactTime;
         if (ea < EXPLOSION_DURATION) {
           const p = ea / EXPLOSION_DURATION;
 
-          // sand puff — expands upward and flattens
           if (ii < MAX_INST) {
             const s = 0.5 + p * 5.0;
             tmpObj.position.set(m.x, m.y + p * 2.5, m.z);
@@ -118,7 +115,6 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
             impactMeshRef.current.setMatrixAt(ii++, tmpObj.matrix);
           }
 
-          // shockwave ring — fast expanding torus
           if (ringMeshRef.current && ri < MAX_INST) {
             const rs = 0.3 + p * 7.0;
             tmpObj.position.set(m.x, m.y + 0.1, m.z);
@@ -128,7 +124,6 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
             ringMeshRef.current.setMatrixAt(ri++, tmpObj.matrix);
           }
 
-          // bright flash on fresh impacts
           if (ea < 0.25) {
             const fi = (1 - ea / 0.25) * 12;
             if (fi > flashI) { flashI = fi; fx = m.x; fy = m.y + 1.5; fz = m.z; }
@@ -153,7 +148,6 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
 
   return (
     <>
-      {/* missiles in flight */}
       <instancedMesh ref={missileMeshRef} args={[undefined, undefined, MAX_INST]}>
         <cylinderGeometry args={[0.04, 0.07, 0.65, 6]} />
         <meshStandardMaterial
@@ -162,7 +156,6 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
         />
       </instancedMesh>
 
-      {/* sand explosion puffs */}
       <instancedMesh ref={impactMeshRef} args={[undefined, undefined, MAX_INST]}>
         <sphereGeometry args={[0.5, 12, 12]} />
         <meshStandardMaterial
@@ -173,7 +166,6 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
         />
       </instancedMesh>
 
-      {/* shockwave rings */}
       <instancedMesh ref={ringMeshRef} args={[undefined, undefined, MAX_INST]}>
         <torusGeometry args={[1, 0.06, 6, 24]} />
         <meshStandardMaterial
@@ -183,7 +175,6 @@ const MissileVisual = ({ missilesRef, isDark }: MissileVisualProps) => {
         />
       </instancedMesh>
 
-      {/* impact flash light */}
       <pointLight ref={flashRef} color="#ff8833" intensity={0} distance={35} decay={2} />
     </>
   );
@@ -209,7 +200,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
 
   const s = useRef({ st: 'IDLE' as FS, x: PX, y: 0, z: PZ, hd: 0, pt: 0, rl: 0, spd: 0, padY: 0 });
 
-  // ── MISSILE STATE ──
   const missilesRef     = useRef<Missile[]>([]);
   const nextMissileId   = useRef(1);
   const keyState        = useRef<{ [code: string]: boolean }>({});
@@ -217,7 +207,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
   const ammoRef         = useRef(MAX_AMMO);
   const missileFlashT   = useRef(0);
 
-  // ── materials ──
   const bodyM = useMemo(() => new THREE.MeshStandardMaterial({ color: '#1a1a22', metalness: .4, roughness: .6 }), []);
   const wingM = useMemo(() => new THREE.MeshStandardMaterial({ color: '#222230', metalness: .35, roughness: .55 }), []);
   const canM  = useMemo(() => new THREE.MeshStandardMaterial({ color: '#080818', metalness: .9, roughness: .1 }), []);
@@ -229,7 +218,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
   const plM   = useMemo(() => new THREE.MeshStandardMaterial({ color: '#00aaff', emissive: new THREE.Color('#0088ff'), emissiveIntensity: .5 }), []);
   const antM  = useMemo(() => new THREE.MeshStandardMaterial({ color: '#888', metalness: .5, roughness: .3 }), []);
 
-  // ── HUD ──
   useEffect(() => {
     const h = document.createElement('div');
     h.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:999;font-family:"Courier New",monospace;';
@@ -237,7 +225,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
     return () => { h.remove(); hudRef.current = null };
   }, []);
 
-  // ── INPUT — Space + Alt + mouse ──
   useEffect(() => {
     const onM = (e: MouseEvent) => {
       const r = gl.domElement.getBoundingClientRect();
@@ -265,7 +252,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
     };
   }, [gl, onFlyingChange]);
 
-  // ── FRAME ──
   useFrame((state) => {
     const t  = state.clock.elapsedTime;
     const dt = Math.min(t - prevT.current, .05); prevT.current = t;
@@ -273,13 +259,11 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
 
     if (padRef.current) padRef.current.position.set(PX, d.padY, PZ);
 
-    // ═══ IDLE ═══
     if (d.st === 'IDLE') {
       d.x = PX; d.z = PZ; d.y = d.padY + .35; d.hd = 0; d.pt = 0; d.rl = 0; d.spd = 0;
       ammoRef.current = MAX_AMMO;
     }
 
-    // ═══ TAKEOFF ═══
     if (d.st === 'TAKEOFF') {
       d.y += 5 * dt;
       d.spd = LR(d.spd, 10, .02);
@@ -288,14 +272,13 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
       if (d.y > d.padY + 14) { d.st = 'FLY'; d.spd = 20; }
     }
 
-    // ═══ FLY — 360° ROLL + INFINITE ═══
     if (d.st === 'FLY') {
       const mx = Math.abs(mouse.current.x) < .02 ? 0 : mouse.current.x;
       const my = Math.abs(mouse.current.y) < .02 ? 0 : mouse.current.y;
 
-      d.hd += -mx * 2.2 * dt;                          // yaw
-      d.pt  = LR(d.pt, CL(my * .7, -1.0, 1.0), .045); // pitch — wider range
-      d.rl  = LR(d.rl, mx * 2.5, .06);                 // 360° ROLL — NO CLAMP
+      d.hd += -mx * 2.2 * dt;
+      d.pt  = LR(d.pt, CL(my * .7, -1.0, 1.0), .045);
+      d.rl  = LR(d.rl, mx * 2.5, .06);
 
       d.spd = LR(d.spd, 28, .008);
       const cp = Math.cos(d.pt);
@@ -306,10 +289,8 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
       const ty = gth(d.x, d.z, t);
       if (d.y < ty + 2.5) { d.y = ty + 2.5; if (d.pt < 0) d.pt *= .9; }
       if (d.y > 80) d.y = 80;
-      // ── INFINITE: no X/Z clamps ──
     }
 
-    // ═══ MISSILE LAUNCH (Alt) ═══
     if (d.st === 'FLY') {
       const altDown = keyState.current['AltLeft'] || keyState.current['AltRight'];
       if (altDown && ammoRef.current > 0 && t - lastMissileTime.current > MISSILE_COOLDOWN) {
@@ -331,13 +312,12 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
       }
     }
 
-    // ═══ MISSILE SIMULATION ═══
     const missiles = missilesRef.current;
     for (const m of missiles) {
       m.age += dt;
       if (m.active) {
         m.x += m.vx * dt; m.y += m.vy * dt; m.z += m.vz * dt;
-        m.vy -= 4.0 * dt; // gravity
+        m.vy -= 4.0 * dt;
         const ty = gth(m.x, m.z, t);
         if (m.y <= ty + 0.3) { m.y = ty + 0.3; m.active = false; m.impactTime = t; }
         if (m.age > 8) { m.active = false; m.impactTime = -1; }
@@ -347,7 +327,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
       m.active || (m.impactTime > 0 && t - m.impactTime < EXPLOSION_DURATION + 0.5)
     );
 
-    // ═══ LAND ═══
     if (d.st === 'LAND') {
       d.x = LR(d.x, PX, .018); d.y = LR(d.y, d.padY + .35, .018); d.z = LR(d.z, PZ, .018);
       d.hd = LR(d.hd, 0, .025); d.pt = LR(d.pt, 0, .04); d.rl = LR(d.rl, 0, .04);
@@ -361,7 +340,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
       }
     }
 
-    // ── drone mesh ──
     if (droneRef.current) {
       droneRef.current.position.set(d.x, d.y, d.z);
       droneRef.current.rotation.order = 'YXZ';
@@ -369,7 +347,6 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
       dronePosRef.current.set(d.x, d.y, d.z);
     }
 
-    // ── chase cam ──
     if (d.st !== 'IDLE') {
       const sh = Math.sin(d.hd), ch = Math.cos(d.hd);
       const cd = d.st === 'TAKEOFF' ? 5 : 8, chh = d.st === 'TAKEOFF' ? 3 : 2.5;
@@ -382,39 +359,49 @@ export const AndurilDrone = ({ isDark, onFlyingChange, dronePosRef }: Props) => 
       pc.fov = LR(pc.fov, 60 + d.spd * .5, .05); pc.updateProjectionMatrix();
     }
 
-    // ── materials ──
     engM.emissiveIntensity = d.st === 'FLY' ? 2.5 + Math.sin(t * 10) * .4 : d.st === 'TAKEOFF' ? 1.2 : d.st === 'LAND' ? .6 : .02;
     const nl = d.st !== 'IDLE' || isDark ? 1 + Math.sin(t * 2) * .3 : .15;
     nrM.emissiveIntensity = nl; ngM.emissiveIntensity = nl;
     plM.emissiveIntensity = d.st === 'IDLE' ? .4 + Math.sin(t * 1.5) * .2 : 1.2 + Math.sin(t * 4) * .4;
 
-    // ── HUD ──
+    // ── HUD — theme-aware colors ──
     if (hudRef.current) {
-      const c = '#00ff88';
+      const c       = isDark ? '#00ff44' : '#000000';
+      const glow    = isDark ? `0 0 8px #00ff4444` : 'none';
+      const barBg   = isDark ? '#00ff4422' : '#00000015';
+      const barBord = isDark ? '#00ff4433' : '#00000030';
+      const mslFire = isDark ? '#ff6644' : '#cc3300';
+      const mslGlow = isDark ? '0 0 14px #ff440099' : 'none';
+
       const alt = Math.max(0, Math.round(d.y - d.padY));
       const spd = Math.round(d.spd * 10);
       const hdg = Math.round(((d.hd * 180 / Math.PI) % 360 + 360) % 360);
       const mslFlash = t - missileFlashT.current < 0.5;
       const ammo = ammoRef.current;
       const ammoC = ammo <= 3 ? '#ff4444' : ammo <= 6 ? '#ffaa00' : c;
+      const ammoGlow = ammo <= 3
+        ? (isDark ? '0 0 8px #ff444444' : 'none')
+        : ammo <= 6
+          ? (isDark ? '0 0 8px #ffaa0044' : 'none')
+          : glow;
 
       if (d.st === 'IDLE') {
         hudRef.current.innerHTML = `<div style="position:absolute;bottom:14%;left:50%;transform:translateX(-50%);text-align:center;color:${c}">
-<div style="font-size:10px;letter-spacing:5px;opacity:.5;margin-bottom:6px"></div>
-<div style="font-size:14px;letter-spacing:3px;opacity:${(.55 + .45 * Math.sin(t * 3)).toFixed(2)}"></div></div>`;
+<div style="font-size:10px;letter-spacing:5px;opacity:.5;margin-bottom:6px;text-shadow:${glow}"></div>
+<div style="font-size:14px;letter-spacing:3px;opacity:${(.55 + .45 * Math.sin(t * 3)).toFixed(2)};text-shadow:${glow}">PRESS SPACE TO LAUNCH DRONE</div></div>`;
       } else {
         hudRef.current.innerHTML = `<div style="color:${c}">
 
-<div style="position:absolute;top:7%;right:5%;text-align:right;font-size:12px;line-height:2;text-shadow:0 0 8px ${c}44">
+<div style="position:absolute;top:7%;right:5%;text-align:right;font-size:12px;line-height:2;text-shadow:${glow}">
 ALT <b style="font-size:16px">${alt}</b>m<br>
 SPD <b style="font-size:16px">${spd}</b>kts<br>
 HDG <b style="font-size:16px">${String(hdg).padStart(3, '0')}</b>°</div>
 
-<div style="position:absolute;top:7%;left:5%;font-size:12px;text-shadow:0 0 8px ${ammoC}44">
+<div style="position:absolute;top:7%;left:5%;font-size:12px;text-shadow:${ammoGlow}">
 <div style="color:${ammoC}">MSL <b style="font-size:16px">${ammo}</b><span style="opacity:.5">/${MAX_AMMO}</span></div>
-<div style="width:70px;height:4px;background:${c}22;border:1px solid ${c}33;margin-top:4px">
+<div style="width:70px;height:4px;background:${barBg};border:1px solid ${barBord};margin-top:4px">
 <div style="width:${(ammo / MAX_AMMO) * 100}%;height:100%;background:${ammoC};transition:width .2s"></div></div>
-<div style="margin-top:3px;letter-spacing:1px;opacity:.55;font-size:10px">${ammo > 0 ? 'ALT TO FIRE' : 'NO AMMO'}</div>
+<div style="margin-top:3px;letter-spacing:1px;opacity:.55;font-size:10px;color:${c}">${ammo > 0 ? 'ALT TO FIRE' : 'NO AMMO'}</div>
 </div>
 
 <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)" width="60" height="60" viewBox="0 0 60 60">
@@ -426,15 +413,15 @@ HDG <b style="font-size:16px">${String(hdg).padStart(3, '0')}</b>°</div>
 ${ammo > 0 ? `<circle cx="30" cy="30" r="14" fill="none" stroke="${c}" stroke-width=".5" opacity=".3" stroke-dasharray="3 3"/>` : ''}
 </svg>
 
-${mslFlash ? `<div style="position:absolute;top:56%;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;color:#ff6644;text-shadow:0 0 14px #ff440099">▼ MISSILE AWAY ▼</div>` : ''}
+${mslFlash ? `<div style="position:absolute;top:56%;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;color:${mslFire};text-shadow:${mslGlow}">▼ MISSILE AWAY ▼</div>` : ''}
 
-<div style="position:absolute;bottom:6%;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:2px;opacity:${d.st === 'LAND' ? (.5 + .5 * Math.sin(t * 4)).toFixed(2) : '.45'}">
-${d.st === 'FLY' ? '' : ''}</div>
+<div style="position:absolute;bottom:6%;left:50%;transform:translateX(-50%);font-size:14px;letter-spacing:2px;opacity:${d.st === 'LAND' ? (.5 + .5 * Math.sin(t * 4)).toFixed(2) : '.45'};text-shadow:${glow}">
+${d.st === 'FLY' ? 'SPACE TO RETURN TO LANDING' : ' RETURNING '}</div>
 
 <div style="position:absolute;bottom:7%;left:5%;font-size:10px">
-<div style="width:70px;height:4px;background:${c}22;border:1px solid ${c}33">
+<div style="width:70px;height:4px;background:${barBg};border:1px solid ${barBord}">
 <div style="width:${Math.min(100, d.spd * 3.6)}%;height:100%;background:${c}"></div></div>
-<div style="margin-top:2px;letter-spacing:1px;opacity:.6">THR</div></div>
+<div style="margin-top:2px;letter-spacing:1px;opacity:.6;text-shadow:${glow}">THR</div></div>
 
 </div>`;
       }
@@ -491,7 +478,6 @@ ${d.st === 'FLY' ? '' : ''}</div>
         <mesh position={[-.10, -.105, 0]} material={antM}><boxGeometry args={[.005, .003, .60]} /></mesh>
         <mesh position={[.10, -.105, 0]} material={antM}><boxGeometry args={[.005, .003, .60]} /></mesh>
 
-        {/* ── underwing missile hardpoints ── */}
         {ammoRef.current > 0 && <mesh position={[-.55, -.06, .05]} material={bodyM}><boxGeometry args={[.06, .04, .25]} /></mesh>}
         {ammoRef.current > 0 && <mesh position={[.55, -.06, .05]} material={bodyM}><boxGeometry args={[.06, .04, .25]} /></mesh>}
         {ammoRef.current > 8 && <mesh position={[-.35, -.06, .05]} material={bodyM}><boxGeometry args={[.06, .04, .22]} /></mesh>}

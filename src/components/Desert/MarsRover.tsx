@@ -143,18 +143,15 @@ const RoverTracks = ({ tracksRef, isDark }: {
       const age = t - tp.time;
       if (age > TRACK_LIFETIME) continue;
 
-      // fade: full for 60%, then shrink to nothing
       const fadeStart = TRACK_LIFETIME * 0.6;
       const fade = age < fadeStart ? 1.0 : 1.0 - smoothstep(fadeStart, TRACK_LIFETIME, age);
 
-      // left track
       tmpObj.position.set(tp.lx, tp.ly, tp.lz);
       tmpObj.rotation.set(0, tp.yaw, 0);
       tmpObj.scale.set(fade, 1, fade);
       tmpObj.updateMatrix();
       meshRef.current.setMatrixAt(idx++, tmpObj.matrix);
 
-      // right track
       tmpObj.position.set(tp.rx, tp.ry, tp.rz);
       tmpObj.rotation.set(0, tp.yaw, 0);
       tmpObj.scale.set(fade, 1, fade);
@@ -192,18 +189,15 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
   const _v = useMemo(() => new THREE.Vector3(), []);
   const prevT = useRef(0);
 
-  // ── ROVER STATE ──
   const rover = useRef({ x: 4, z: 10, yaw: -0.4, speed: 0, driving: false });
   const mouse = useRef({ x: 0, y: 0 });
   const wheelSpeedRef = useRef(0);
   const canDriveRef = useRef(canDrive);
   canDriveRef.current = canDrive;
 
-  // ── TOGGLE FLAGS ──
   const startFlag = useRef(false);
   const stopFlag  = useRef(false);
 
-  // ── TRACKS ──
   const tracksRef    = useRef<TrackPoint[]>([]);
   const lastTrackPos = useRef({ x: 0, z: 0 });
 
@@ -211,7 +205,6 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
   const GROUND_OFFSET = 0.25;
   const MAX_SPEED = 5;
 
-  // ── materials ──
   const goldMat   = useMemo(() => new THREE.MeshStandardMaterial({ color: '#c8a050', metalness: 0.6, roughness: 0.35 }), []);
   const whiteMat  = useMemo(() => new THREE.MeshStandardMaterial({ color: '#e8e4dc', metalness: 0.1, roughness: 0.65 }), []);
   const darkMat   = useMemo(() => new THREE.MeshStandardMaterial({ color: '#2a2a2a', metalness: 0.3, roughness: 0.55 }), []);
@@ -243,7 +236,7 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
     return () => { h.remove(); hudRef.current = null; };
   }, []);
 
-  // ── INPUT — Ctrl toggle + mouse ──
+  // ── INPUT ──
   useEffect(() => {
     const onM = (e: MouseEvent) => {
       const r = gl.domElement.getBoundingClientRect();
@@ -274,7 +267,6 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
     const dt = Math.min(t - prevT.current, 0.05); prevT.current = t;
     const r  = rover.current;
 
-    // ── CTRL toggle: start ──
     if (startFlag.current) {
       startFlag.current = false;
       r.driving = true;
@@ -282,7 +274,6 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
       lastTrackPos.current = { x: r.x, z: r.z };
     }
 
-    // ── CTRL toggle: stop ──
     if (stopFlag.current) {
       stopFlag.current = false;
       r.driving = false; r.speed = 0;
@@ -292,13 +283,11 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
       pc.fov = 60; pc.updateProjectionMatrix();
     }
 
-    // ── force-stop if drone takes over ──
     if (r.driving && !canDriveRef.current) {
       r.driving = false; r.speed = 0;
       onDrivingChange(false);
     }
 
-    // ── DRIVING ──
     if (r.driving) {
       const mx = Math.abs(mouse.current.x) < 0.05 ? 0 : mouse.current.x;
       const my = Math.abs(mouse.current.y) < 0.05 ? 0 : mouse.current.y;
@@ -309,7 +298,6 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
       r.x -= Math.sin(r.yaw) * r.speed * dt;
       r.z -= Math.cos(r.yaw) * r.speed * dt;
 
-      // ── WHEEL TRACKS: sample by distance ──
       const dx = r.x - lastTrackPos.current.x;
       const dz = r.z - lastTrackPos.current.z;
       if (Math.sqrt(dx * dx + dz * dz) > TRACK_SAMPLE_DIST && Math.abs(r.speed) > 0.3) {
@@ -327,13 +315,11 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
           yaw: r.yaw, time: t,
         });
 
-        // trim
         tracksRef.current = tracksRef.current.filter(
           tp => t - tp.time < TRACK_LIFETIME
         ).slice(-MAX_TRACKS);
       }
 
-      // ── chase camera ──
       const sh = Math.sin(r.yaw), ch = Math.cos(r.yaw);
       const ry = getTerrainHeight(r.x, r.z, t) + GROUND_OFFSET;
       _v.set(r.x + sh * 5, ry + 2.8, r.z + ch * 5);
@@ -344,7 +330,6 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
 
     wheelSpeedRef.current = r.speed;
 
-    // ── terrain position + slope ──
     const y = getTerrainHeight(r.x, r.z, t) + GROUND_OFFSET;
     if (groupRef.current) {
       groupRef.current.position.set(r.x, y, r.z);
@@ -360,31 +345,34 @@ export const MarsRover = ({ isDark, onDrivingChange, canDrive }: Props) => {
       );
     }
 
-    // ── emissive ──
     ledMat.emissiveIntensity = isDark ? 1.5 + Math.sin(t * 2) * 0.5 : 0;
     rtgGlowMat.emissiveIntensity = isDark ? 0.8 + Math.sin(t * 0.8) * 0.2 : 0.1;
 
-    // ── HUD ──
+    // ── HUD — theme-aware colors ──
     if (hudRef.current) {
-      const c = '#ffaa33';
+      const c    = isDark ? '#00ff44' : '#000000';
+      const glow = isDark ? `0 0 8px #00ff4444` : 'none';
+      const barBg   = isDark ? '#00ff4422' : '#00000015';
+      const barBord = isDark ? '#00ff4433' : '#00000030';
+
       if (r.driving) {
         const spd = Math.abs(Math.round(r.speed * 10));
         const hdg = Math.round(((r.yaw * 180 / Math.PI) % 360 + 360) % 360);
         const dir = r.speed >= 0 ? 'FWD' : 'REV';
         hudRef.current.innerHTML = `<div style="color:${c}">
-<div style="position:absolute;top:15%;left:5%;font-size:12px;line-height:2;text-shadow:0 0 8px ${c}44">
-<div style="font-size:10px;letter-spacing:4px;opacity:.6;margin-bottom:4px"></div>
+<div style="position:absolute;top:15%;left:5%;font-size:12px;line-height:2;text-shadow:${glow}">
+<div style="font-size:10px;letter-spacing:4px;opacity:.6;margin-bottom:4px">◆ ROVER ◆</div>
 ${dir} <b style="font-size:16px">${spd}</b>cm/s<br>
 HDG <b style="font-size:16px">${String(hdg).padStart(3, '0')}</b>°
-<div style="width:70px;height:4px;background:${c}22;border:1px solid ${c}33;margin-top:6px">
+<div style="width:70px;height:4px;background:${barBg};border:1px solid ${barBord};margin-top:6px">
 <div style="width:${Math.min(100, Math.abs(r.speed / MAX_SPEED) * 100)}%;height:100%;background:${c}"></div></div>
 <div style="margin-top:2px;letter-spacing:1px;opacity:.5;font-size:10px">THR</div></div>
-<div style="position:absolute;bottom:6%;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:2px;opacity:.45">
-</div></div>`;
+<div style="position:absolute;bottom:6%;left:50%;transform:translateX(-50%);font-size:14px;letter-spacing:2px;opacity:.45">
+CTRL TO EXIT</div></div>`;
       } else if (canDrive) {
         hudRef.current.innerHTML = `<div style="position:absolute;bottom:21%;left:50%;transform:translateX(-50%);text-align:center;color:${c}">
-<div style="font-size:10px;letter-spacing:3px;opacity:${(0.3 + 0.2 * Math.sin(t * 2)).toFixed(2)}">
-</div></div>`;
+<div style="font-size:14px;letter-spacing:3px;opacity:${(0.3 + 0.2 * Math.sin(t * 2)).toFixed(2)};text-shadow:${glow}">
+PRESS CTRL DRIVE ROVER</div></div>`;
       } else {
         hudRef.current.innerHTML = '';
       }
@@ -393,7 +381,6 @@ HDG <b style="font-size:16px">${String(hdg).padStart(3, '0')}</b>°
 
   return (
     <>
-      {/* ── WHEEL TRACKS ── */}
       <RoverTracks tracksRef={tracksRef} isDark={isDark} />
 
       <group ref={groupRef} scale={SCALE}>
