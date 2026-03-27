@@ -15,7 +15,6 @@ import { blogPostLoader }      from '../pages/BlogPostPage';
 import { contactAction }       from '../pages/ContactPage';
 
 // ── Lazy page components ──
-const LandingPage     = lazy(() => import('../pages/LandingPage'));
 const HomePage        = lazy(() => import('../pages/HomePage'));
 const AboutPage       = lazy(() => import('../pages/AboutPage'));
 const ProjectsPage    = lazy(() => import('../pages/ProjectsPage'));
@@ -33,25 +32,21 @@ const wrap = (Component) => (
 );
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: wrap(LandingPage),
-    errorElement: <ErrorPage />,
-  },
-
   // ── Single Layout wrapper — state persists across pages ──
   {
     id: 'layout',
+    path: '/',
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
-      { id: 'home',           path: '/home',          element: wrap(HomePage),      loader: homeLoader },
-      { id: 'about',          path: '/about',         element: wrap(AboutPage),     loader: aboutLoader },
-      { id: 'projects',       path: '/projects',      element: wrap(ProjectsPage),  loader: projectsLoader },
-      { id: 'project-detail', path: '/projects/:id',  element: wrap(ProjectDetail), loader: projectDetailLoader },
-      { id: 'blog',           path: '/blog',          element: wrap(BlogPage),      loader: blogLoader },
-      { id: 'blog-post',      path: '/blog/:id',      element: wrap(BlogPostPage),  loader: blogPostLoader },
-      { id: 'contact',        path: '/contact',       element: wrap(ContactPage),   action: contactAction },
+      { index: true,          element: wrap(HomePage),      loader: homeLoader },
+      { id: 'home',           path: 'home',                 element: wrap(HomePage),      loader: homeLoader },
+      { id: 'about',          path: 'about',                element: wrap(AboutPage),     loader: aboutLoader },
+      { id: 'projects',       path: 'projects',             element: wrap(ProjectsPage),  loader: projectsLoader },
+      { id: 'project-detail', path: 'projects/:id',         element: wrap(ProjectDetail), loader: projectDetailLoader },
+      { id: 'blog',           path: 'blog',                 element: wrap(BlogPage),      loader: blogLoader },
+      { id: 'blog-post',      path: 'blog/:id',             element: wrap(BlogPostPage),  loader: blogPostLoader },
+      { id: 'contact',        path: 'contact',              element: wrap(ContactPage),   action: contactAction },
     ],
   },
 
